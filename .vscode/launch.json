@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Client",
+      "presentation": {
+        "group": "Mod Development - SkyResourceReforge",
+        "order": 0
+      },
+      "projectName": "SkyResourceReforge",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/clientRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dskyresourcereforge%%/Users/chouzz/projects/games/SkyResourceReforge/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Data",
+      "presentation": {
+        "group": "Mod Development - SkyResourceReforge",
+        "order": 1
+      },
+      "projectName": "SkyResourceReforge",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/dataRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/dataRunVmArgs.txt",
+        "-Dfml.modFolders\u003dskyresourcereforge%%/Users/chouzz/projects/games/SkyResourceReforge/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "GameTestServer",
+      "presentation": {
+        "group": "Mod Development - SkyResourceReforge",
+        "order": 2
+      },
+      "projectName": "SkyResourceReforge",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/gameTestServerRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/gameTestServerRunVmArgs.txt",
+        "-Dfml.modFolders\u003dskyresourcereforge%%/Users/chouzz/projects/games/SkyResourceReforge/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Server",
+      "presentation": {
+        "group": "Mod Development - SkyResourceReforge",
+        "order": 3
+      },
+      "projectName": "SkyResourceReforge",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/serverRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/chouzz/projects/games/SkyResourceReforge/build/moddev/serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dskyresourcereforge%%/Users/chouzz/projects/games/SkyResourceReforge/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    }
+  ]
+}
