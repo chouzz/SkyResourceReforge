@@ -18,6 +18,7 @@ public class ModCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.CACTUS_KNIFE.get());
                 output.accept(ModBlocks.COMPRESSED_COAL_BLOCK.get());
+                output.accept(ModBlocks.COMBUSTION_CONTROLLER.get());
             }).build());
 
     public static void register(IEventBus eventBus) {
