@@ -1,9 +1,7 @@
 package com.chouzz.skyresourcereforge.registration;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
-import com.chouzz.skyresourcereforge.block.BaseBlock;
-import com.chouzz.skyresourcereforge.block.CasingBlock;
-import com.chouzz.skyresourcereforge.block.CombustionControllerBlock;
+import com.chouzz.skyresourcereforge.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +20,44 @@ public class ModBlocks {
             () -> new BaseBlock(BlockBehaviour.Properties.of()
                     .strength(6.0f, 6.0f)
                     .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> SANDY_NETHERRACK = registerBlock("sandy_netherrack",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> COAL_INFUSED_BLOCK = registerBlock("coal_infused_block",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0f, 6.0f)
+                    .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> DARK_MATTER_BLOCK = registerBlock("dark_matter_block",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(10.0f, 12.0f)
+                    .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> LIGHT_MATTER_BLOCK = registerBlock("light_matter_block",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(10.0f, 12.0f)
+                    .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> BLAZE_POWDER_BLOCK = registerBlock("blaze_powder_block",
+            () -> new BlazePowderBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.GRAVEL)
+                    .randomTicks()));
+
+    public static final DeferredBlock<Block> MAGMAFIED_STONE = registerBlock("magmafied_stone",
+            () -> new MagmafiedStoneBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 1.0f)
+                    .sound(SoundType.STONE)
+                    .randomTicks()));
+
+    public static final DeferredBlock<Block> DRY_CACTUS = registerBlock("dry_cactus",
+            () -> new DryCactusBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()));
 
     public static final DeferredBlock<CombustionControllerBlock> COMBUSTION_CONTROLLER = registerBlock("combustion_controller",
             () -> new CombustionControllerBlock(BlockBehaviour.Properties.of()

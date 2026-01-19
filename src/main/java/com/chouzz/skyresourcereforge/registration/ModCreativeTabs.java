@@ -18,6 +18,13 @@ public class ModCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.CACTUS_KNIFE.get());
                 output.accept(ModBlocks.COMPRESSED_COAL_BLOCK.get());
+                output.accept(ModBlocks.SANDY_NETHERRACK.get());
+                output.accept(ModBlocks.COAL_INFUSED_BLOCK.get());
+                output.accept(ModBlocks.DARK_MATTER_BLOCK.get());
+                output.accept(ModBlocks.LIGHT_MATTER_BLOCK.get());
+                output.accept(ModBlocks.BLAZE_POWDER_BLOCK.get());
+                output.accept(ModBlocks.MAGMAFIED_STONE.get());
+                output.accept(ModBlocks.DRY_CACTUS.get());
                 output.accept(ModBlocks.COMBUSTION_CONTROLLER.get());
                 output.accept(ModBlocks.CASING.get());
             }).build());
