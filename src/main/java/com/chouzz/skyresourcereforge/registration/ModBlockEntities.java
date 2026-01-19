@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.registration;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.block.entity.CasingBlockEntity;
 import com.chouzz.skyresourcereforge.block.entity.CombustionControllerBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -13,6 +14,9 @@ public class ModBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CombustionControllerBlockEntity>> COMBUSTION_CONTROLLER =
             BLOCK_ENTITIES.register("combustion_controller", () -> BlockEntityType.Builder.of(CombustionControllerBlockEntity::new, ModBlocks.COMBUSTION_CONTROLLER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CasingBlockEntity>> CASING =
+            BLOCK_ENTITIES.register("casing", () -> BlockEntityType.Builder.of(CasingBlockEntity::new, ModBlocks.CASING.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

@@ -2,6 +2,7 @@ package com.chouzz.skyresourcereforge.registration;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.block.BaseBlock;
+import com.chouzz.skyresourcereforge.block.CasingBlock;
 import com.chouzz.skyresourcereforge.block.CombustionControllerBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -25,6 +26,11 @@ public class ModBlocks {
     public static final DeferredBlock<CombustionControllerBlock> COMBUSTION_CONTROLLER = registerBlock("combustion_controller",
             () -> new CombustionControllerBlock(BlockBehaviour.Properties.of()
                     .strength(6.0f, 12.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> CASING = registerBlock("casing",
+            () -> new CasingBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 12.0f)
                     .sound(SoundType.METAL)));
 
     public static void register(IEventBus eventBus) {
