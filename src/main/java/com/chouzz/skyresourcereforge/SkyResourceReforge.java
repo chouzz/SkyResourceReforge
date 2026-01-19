@@ -6,6 +6,8 @@ import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModCreativeTabs;
 import com.chouzz.skyresourcereforge.registration.ModItems;
+import com.chouzz.skyresourcereforge.registration.ModRecipeSerializers;
+import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -30,6 +32,8 @@ public class SkyResourceReforge {
         ModItems.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
