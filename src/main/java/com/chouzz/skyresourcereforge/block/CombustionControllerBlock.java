@@ -1,7 +1,7 @@
 package com.chouzz.skyresourcereforge.block;
 
-import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.block.entity.CombustionControllerBlockEntity;
+import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,14 +23,14 @@ public class CombustionControllerBlock extends BaseEntityBlock {
     public static final MapCodec<CombustionControllerBlock> CODEC = simpleCodec(CombustionControllerBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
     public CombustionControllerBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -58,6 +58,17 @@ public class CombustionControllerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.COMBUSTION_CONTROLLER.get(), CombustionControllerBlockEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.COMBUSTION_CONTROLLER.get(), (level1, pos, state1, blockEntity) -> blockEntity.tick(level1, pos, state1));
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CombustionControllerBlockEntity controller) {
+                controller.dropInventory();
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
     }
 }

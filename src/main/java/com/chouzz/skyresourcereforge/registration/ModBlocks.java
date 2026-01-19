@@ -22,7 +22,7 @@ public class ModBlocks {
                     .strength(6.0f, 6.0f)
                     .sound(SoundType.STONE)));
 
-    public static final DeferredBlock<Block> COMBUSTION_CONTROLLER = registerBlock("combustion_controller",
+    public static final DeferredBlock<CombustionControllerBlock> COMBUSTION_CONTROLLER = registerBlock("combustion_controller",
             () -> new CombustionControllerBlock(BlockBehaviour.Properties.of()
                     .strength(6.0f, 12.0f)
                     .sound(SoundType.METAL)));
