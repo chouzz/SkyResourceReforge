@@ -1,5 +1,7 @@
 package com.chouzz.skyresourcereforge;
 
+import com.chouzz.skyresourcereforge.datagen.ModBlockStateProvider;
+import com.chouzz.skyresourcereforge.datagen.ModItemModelProvider;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModCreativeTabs;
@@ -12,6 +14,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 
 @Mod(SkyResourceReforge.MODID)
@@ -21,6 +24,7 @@ public class SkyResourceReforge {
 
     public SkyResourceReforge(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::gatherData);
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
@@ -35,5 +39,14 @@ public class SkyResourceReforge {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("SkyResource Reforge Initializing...");
+    }
+
+    private void gatherData(GatherDataEvent event) {
+        var generator = event.getGenerator();
+        var packOutput = generator.getPackOutput();
+        var existingFileHelper = event.getExistingFileHelper();
+
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
     }
 }
