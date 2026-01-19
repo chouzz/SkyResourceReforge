@@ -79,7 +79,7 @@ public class CombustionControllerBlockEntity extends BlockEntity {
                     level.addFreshEntity(new ItemEntity(level, posBehind.getX() + 0.5, posBehind.getY() + 0.5, posBehind.getZ() + 0.5, output));
                     
                     // Reduce heat (simplified)
-                    heater.setHeatValue(curHU * 0.8f);
+                    heater.setHeatValue((int) (curHU * 0.8f));
                     cooldownTicks = 20; // 1 second cooldown
                     setChanged();
                     break;

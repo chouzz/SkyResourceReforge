@@ -30,5 +30,6 @@ public class SkyResourceReforge {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("SkyResource Reforge Initializing...");
+        event.enqueueWork(com.chouzz.skyresourcereforge.heat.HeatSources::registerDefaults);
     }
 }
