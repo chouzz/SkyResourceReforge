@@ -1,0 +1,15 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:compressed_coal_block"
+    }
+  ],
+  "parameter": 100.0
+}

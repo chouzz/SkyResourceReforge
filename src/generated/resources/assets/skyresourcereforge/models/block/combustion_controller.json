@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "skyresourcereforge:block/combustion_controller_front",
+    "side": "skyresourcereforge:block/combustion_controller_side",
+    "top": "skyresourcereforge:block/combustion_controller_top"
+  }
+}
