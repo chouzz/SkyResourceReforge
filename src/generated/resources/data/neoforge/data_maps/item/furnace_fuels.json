@@ -1,0 +1,10 @@
+{
+  "values": {
+    "skyresourcereforge:petrified_planks": {
+      "burn_time": 600
+    },
+    "skyresourcereforge:petrified_wood": {
+      "burn_time": 2400
+    }
+  }
+}
