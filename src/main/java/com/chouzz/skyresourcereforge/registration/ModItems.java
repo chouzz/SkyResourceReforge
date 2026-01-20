@@ -38,6 +38,9 @@ public class ModItems {
     public static final DeferredItem<Item> WATER_EXTRACTOR = ITEMS.register("water_extractor",
             () -> new com.chouzz.skyresourcereforge.item.WaterExtractorItem(new Item.Properties().component(ModDataComponents.FLUID_CONTENT.get(), SimpleFluidContent.EMPTY)));
 
+    public static final DeferredItem<Item> CACTUS_FRUIT = ITEMS.register("cactus_fruit",
+            () -> new com.chouzz.skyresourcereforge.item.CactusFruitItem(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

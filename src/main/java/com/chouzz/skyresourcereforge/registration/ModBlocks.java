@@ -59,6 +59,12 @@ public class ModBlocks {
                     .sound(SoundType.GRASS)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> CACTUS_FRUIT_NEEDLE = registerBlock("cactus_fruit_needle",
+            () -> new com.chouzz.skyresourcereforge.block.CactusFruitNeedleBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()));
+
     public static final DeferredBlock<CombustionControllerBlock> COMBUSTION_CONTROLLER = registerBlock("combustion_controller",
             () -> new CombustionControllerBlock(BlockBehaviour.Properties.of()
                     .strength(6.0f, 12.0f)

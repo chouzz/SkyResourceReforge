@@ -24,6 +24,7 @@ public class ModCreativeTabs {
                 output.accept(ModItems.IRON_GRINDER.get());
                 output.accept(ModItems.DIAMOND_GRINDER.get());
                 output.accept(ModItems.WATER_EXTRACTOR.get());
+                output.accept(ModItems.CACTUS_FRUIT.get());
                 output.accept(ModBlocks.COMPRESSED_COAL_BLOCK.get());
                 output.accept(ModBlocks.SANDY_NETHERRACK.get());
                 output.accept(ModBlocks.COAL_INFUSED_BLOCK.get());
@@ -32,6 +33,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.BLAZE_POWDER_BLOCK.get());
                 output.accept(ModBlocks.MAGMAFIED_STONE.get());
                 output.accept(ModBlocks.DRY_CACTUS.get());
+                output.accept(ModBlocks.CACTUS_FRUIT_NEEDLE.get());
                 output.accept(ModBlocks.COMBUSTION_CONTROLLER.get());
                 output.accept(ModBlocks.CASING.get());
             }).build());

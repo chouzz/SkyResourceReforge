@@ -23,6 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.BLAZE_POWDER_BLOCK.get(), cubeAll(ModBlocks.BLAZE_POWDER_BLOCK.get()));
         simpleBlockWithItem(ModBlocks.MAGMAFIED_STONE.get(), cubeAll(ModBlocks.MAGMAFIED_STONE.get()));
         simpleBlockWithItem(ModBlocks.DRY_CACTUS.get(), cubeAll(ModBlocks.DRY_CACTUS.get()));
+        simpleBlockWithItem(ModBlocks.CACTUS_FRUIT_NEEDLE.get(), cubeAll(ModBlocks.CACTUS_FRUIT_NEEDLE.get()));
         
         horizontalBlock(ModBlocks.COMBUSTION_CONTROLLER.get(), 
                 models().orientable("combustion_controller", 
