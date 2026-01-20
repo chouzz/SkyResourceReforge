@@ -1,7 +1,9 @@
 package com.chouzz.skyresourcereforge.block.entity;
 
 import com.chouzz.skyresourcereforge.block.CombustionControllerBlock;
+import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
+import com.chouzz.skyresourcereforge.recipe.ProcessRecipeInput;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -10,8 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +20,6 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CombustionControllerBlockEntity extends BlockEntity {
     private final ItemStackHandler inventory = new ItemStackHandler(5) {
@@ -55,37 +54,46 @@ public class CombustionControllerBlockEntity extends BlockEntity {
         if (heater == null) return;
 
         float curHU = heater.getHeatValue();
-        
-        // Find item entities in the block behind
+
         AABB aabb = new AABB(posBehind);
         List<ItemEntity> itemEntities = level.getEntitiesOfClass(ItemEntity.class, aabb);
         if (itemEntities.isEmpty()) return;
 
-        // Simplify recipe matching for now: only check first item entity
-        // Real implementation should aggregate all items in the AABB
+        List<ItemStack> available = new ArrayList<>();
         for (ItemEntity entity : itemEntities) {
-            ItemStack stack = entity.getItem();
-            Optional<RecipeHolder<ProcessRecipe>> recipeOpt = level.getRecipeManager()
-                    .getRecipeFor(ModRecipeTypes.COMBUSTION.get(), new SimpleItemInput(stack), level);
-
-            if (recipeOpt.isPresent()) {
-                ProcessRecipe recipe = recipeOpt.get().value();
-                if (curHU >= recipe.getParameter()) {
-                    // Craft!
-                    ItemStack output = recipe.getOutputs().get(0).copy();
-                    stack.shrink(1);
-                    if (stack.isEmpty()) entity.discard();
-
-                    level.addFreshEntity(new ItemEntity(level, posBehind.getX() + 0.5, posBehind.getY() + 0.5, posBehind.getZ() + 0.5, output));
-                    
-                    // Reduce heat (simplified)
-                    heater.setHeatValue((int) (curHU * 0.8f));
-                    cooldownTicks = 20; // 1 second cooldown
-                    setChanged();
-                    break;
-                }
+            if (!entity.getItem().isEmpty()) {
+                available.add(entity.getItem().copy());
             }
         }
+        available = mergeStacks(available);
+
+        ProcessRecipe recipe = selectRecipe(available, curHU);
+        if (recipe == null) return;
+
+        List<ItemStack> remaining = consumeInputs(available, recipe);
+        if (remaining == null) return;
+
+        for (ItemEntity entity : itemEntities) {
+            entity.discard();
+        }
+
+        ItemStack output = recipe.getOutputs().get(0).copy();
+        output = tryInsertCollector(posBehind.below(), output);
+        if (!output.isEmpty()) {
+            level.addFreshEntity(new ItemEntity(level, posBehind.getX() + 0.5, posBehind.getY() + 0.5,
+                    posBehind.getZ() + 0.5, output));
+        }
+
+        for (ItemStack stack : remaining) {
+            if (!stack.isEmpty()) {
+                level.addFreshEntity(new ItemEntity(level, posBehind.getX() + 0.5, posBehind.getY() + 0.5,
+                        posBehind.getZ() + 0.5, stack));
+            }
+        }
+
+        heater.setHeatValue((int) (curHU * 0.8f));
+        cooldownTicks = 20;
+        setChanged();
     }
 
     private BlockPos getPosBehind() {
@@ -95,6 +103,90 @@ public class CombustionControllerBlockEntity extends BlockEntity {
     private CasingBlockEntity getHeater(BlockPos posBehind) {
         BlockEntity be = level.getBlockEntity(posBehind.below());
         return be instanceof CasingBlockEntity ? (CasingBlockEntity) be : null;
+    }
+
+    private ProcessRecipe selectRecipe(List<ItemStack> available, float curHU) {
+        if (available.isEmpty()) return null;
+        ProcessRecipeInput recipeInput = new ProcessRecipeInput(available, List.of(), curHU, false, true);
+        var recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COMBUSTION.get());
+        for (var holder : recipes) {
+            ProcessRecipe recipe = holder.value();
+            if (!isOutputAllowed(recipe.getOutputs().get(0))) {
+                continue;
+            }
+            if (recipe.matches(recipeInput, level)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    private boolean isOutputAllowed(ItemStack output) {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            ItemStack filter = inventory.getStackInSlot(i);
+            if (!filter.isEmpty() && ItemStack.isSameItemSameComponents(filter, output)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<ItemStack> consumeInputs(List<ItemStack> available, ProcessRecipe recipe) {
+        List<ItemStack> remaining = new ArrayList<>();
+        for (ItemStack stack : available) {
+            remaining.add(stack.copy());
+        }
+        for (CountedIngredient ingredient : recipe.getInputs()) {
+            int toConsume = ingredient.count();
+            for (int i = 0; i < remaining.size() && toConsume > 0; i++) {
+                ItemStack stack = remaining.get(i);
+                if (ingredient.test(stack)) {
+                    int take = Math.min(stack.getCount(), toConsume);
+                    stack.shrink(take);
+                    toConsume -= take;
+                    if (stack.isEmpty()) {
+                        remaining.remove(i);
+                        i--;
+                    }
+                }
+            }
+            if (toConsume > 0) {
+                return null;
+            }
+        }
+        return remaining;
+    }
+
+    private List<ItemStack> mergeStacks(List<ItemStack> items) {
+        List<ItemStack> merged = new ArrayList<>();
+        for (ItemStack stack : items) {
+            boolean mergedInto = false;
+            for (ItemStack existing : merged) {
+                if (ItemStack.isSameItemSameComponents(existing, stack)) {
+                    existing.grow(stack.getCount());
+                    mergedInto = true;
+                    break;
+                }
+            }
+            if (!mergedInto) {
+                merged.add(stack.copy());
+            }
+        }
+        return merged;
+    }
+
+    private ItemStack tryInsertCollector(BlockPos pos, ItemStack stack) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof CombustionCollectorBlockEntity collector)) {
+            return stack;
+        }
+        for (int i = 0; i < collector.getInventory().getSlots(); i++) {
+            if (stack.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+            stack = collector.getInventory().insertItem(i, stack, false);
+        }
+        return stack;
     }
 
     @Override
@@ -120,11 +212,4 @@ public class CombustionControllerBlockEntity extends BlockEntity {
         }
     }
 
-    // Temporary SimpleItemInput for recipe matching
-    private static record SimpleItemInput(ItemStack stack) implements RecipeInput {
-        @Override
-        public ItemStack getItem(int index) { return stack; }
-        @Override
-        public int size() { return 1; }
-    }
 }

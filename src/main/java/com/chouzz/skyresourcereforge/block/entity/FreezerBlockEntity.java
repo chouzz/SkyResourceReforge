@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.block.entity;
 
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
+import com.chouzz.skyresourcereforge.recipe.ProcessRecipeInput;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,9 +73,6 @@ public class FreezerBlockEntity extends BlockEntity {
             return;
         }
 
-        RecipeManager recipeManager = level.getRecipeManager();
-        var recipeHolders = recipeManager.getAllRecipesFor(ModRecipeTypes.FREEZER.get());
-
         for (int i = 0; i < blockEntity.inventory.getSlots() / 2; i++) {
             ItemStack input = blockEntity.inventory.getStackInSlot(i);
             if (input.isEmpty()) {
@@ -83,14 +80,11 @@ public class FreezerBlockEntity extends BlockEntity {
                 continue;
             }
 
-            ProcessRecipe recipe = null;
-            for (var holder : recipeHolders) {
-                ProcessRecipe r = holder.value();
-                if (!r.getInputs().isEmpty() && r.getInputs().get(0).test(input)) {
-                    recipe = r;
-                    break;
-                }
-            }
+            ProcessRecipeInput recipeInput = new ProcessRecipeInput(List.of(input));
+            ProcessRecipe recipe = level.getRecipeManager()
+                    .getRecipeFor(ModRecipeTypes.FREEZER.get(), recipeInput, level)
+                    .map(holder -> holder.value())
+                    .orElse(null);
 
             if (recipe != null && blockEntity.canProcess(recipe.getOutputs().get(0).copy(), i + blockEntity.inventory.getSlots() / 2)) {
                 int timeReq = blockEntity.getTimeReq(recipe, input);
@@ -103,8 +97,8 @@ public class FreezerBlockEntity extends BlockEntity {
                         }
                     }
                     ItemStack inputStack = blockEntity.inventory.getStackInSlot(i);
-                    // Assume 1 item per recipe input for now (can be enhanced later with count field)
-                    inputStack.shrink(1 * amtProcessed);
+                    int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+                    inputStack.shrink(inputCount * amtProcessed);
                     if (inputStack.getCount() <= 0) {
                         blockEntity.inventory.setStackInSlot(i, ItemStack.EMPTY);
                     }
@@ -133,8 +127,8 @@ public class FreezerBlockEntity extends BlockEntity {
     }
 
     int getGroupsFreezing(ProcessRecipe recipe, ItemStack input) {
-        // Assume 1 item per recipe input for now (can be enhanced later with count field)
-        return input.getCount();
+        int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+        return (int) Math.floor((float) input.getCount() / (float) inputCount);
     }
 
     public int getTimeReq(ProcessRecipe recipe, ItemStack input) {

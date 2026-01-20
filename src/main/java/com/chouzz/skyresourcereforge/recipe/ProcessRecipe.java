@@ -5,24 +5,32 @@ import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProcessRecipe implements Recipe<RecipeInput> {
-    private final List<Ingredient> inputs;
+    private final ResourceLocation recipeTypeId;
+    private final List<CountedIngredient> inputs;
     private final List<ItemStack> outputs;
     private final List<FluidStack> fluidInputs;
     private final List<FluidStack> fluidOutputs;
     private final float parameter;
 
-    public ProcessRecipe(List<Ingredient> inputs, List<ItemStack> outputs, List<FluidStack> fluidInputs, List<FluidStack> fluidOutputs, float parameter) {
+    public ProcessRecipe(ResourceLocation recipeTypeId, List<CountedIngredient> inputs, List<ItemStack> outputs,
+                         List<FluidStack> fluidInputs, List<FluidStack> fluidOutputs, float parameter) {
+        this.recipeTypeId = recipeTypeId;
         this.inputs = inputs;
         this.outputs = outputs;
         this.fluidInputs = fluidInputs;
@@ -32,8 +40,17 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
 
     @Override
     public boolean matches(RecipeInput input, Level level) {
-        // Matching is usually handled by the machine's TileEntity logic in SkyResources
-        return true;
+        if (input instanceof ProcessRecipeInput processInput) {
+            return matches(processInput);
+        }
+        List<ItemStack> items = new ArrayList<>();
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack stack = input.getItem(i);
+            if (!stack.isEmpty()) {
+                items.add(stack);
+            }
+        }
+        return matches(new ProcessRecipeInput(items));
     }
 
     @Override
@@ -58,20 +75,149 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
 
     @Override
     public RecipeType<?> getType() {
-        // This is a bit tricky since one class might be used for multiple types.
-        // For now we'll default to COMBUSTION or make it dynamic if needed.
-        return ModRecipeTypes.COMBUSTION.get();
+        Optional<RecipeType<?>> type = BuiltInRegistries.RECIPE_TYPE.getOptional(recipeTypeId);
+        return type.orElse(ModRecipeTypes.COMBUSTION.get());
     }
 
-    public List<Ingredient> getInputs() { return inputs; }
+    public ResourceLocation getRecipeTypeId() { return recipeTypeId; }
+    public List<CountedIngredient> getInputs() { return inputs; }
     public List<ItemStack> getOutputs() { return outputs; }
     public List<FluidStack> getFluidInputs() { return fluidInputs; }
     public List<FluidStack> getFluidOutputs() { return fluidOutputs; }
     public float getParameter() { return parameter; }
 
+    private boolean matches(ProcessRecipeInput input) {
+        List<ItemStack> items = filterNonEmpty(input.items());
+        List<FluidStack> fluids = filterNonEmptyFluids(input.fluids());
+        if (input.mergeStacks()) {
+            items = mergeStacks(items);
+        }
+        if (input.strict() && items.size() != inputs.size()) {
+            return false;
+        }
+        if (!matchItems(items, input.strict())) {
+            return false;
+        }
+        if (!matchFluids(fluids, input.strict())) {
+            return false;
+        }
+        return input.parameter() >= parameter;
+    }
+
+    private List<ItemStack> filterNonEmpty(List<ItemStack> items) {
+        List<ItemStack> filtered = new ArrayList<>();
+        for (ItemStack stack : items) {
+            if (!stack.isEmpty()) {
+                filtered.add(stack.copy());
+            }
+        }
+        return filtered;
+    }
+
+    private List<FluidStack> filterNonEmptyFluids(List<FluidStack> fluids) {
+        List<FluidStack> filtered = new ArrayList<>();
+        for (FluidStack stack : fluids) {
+            if (!stack.isEmpty()) {
+                filtered.add(stack.copy());
+            }
+        }
+        return filtered;
+    }
+
+    private List<ItemStack> mergeStacks(List<ItemStack> items) {
+        List<ItemStack> merged = new ArrayList<>();
+        for (ItemStack stack : items) {
+            boolean mergedInto = false;
+            for (ItemStack existing : merged) {
+                if (ItemStack.isSameItemSameComponents(existing, stack)) {
+                    existing.grow(stack.getCount());
+                    mergedInto = true;
+                    break;
+                }
+            }
+            if (!mergedInto) {
+                merged.add(stack.copy());
+            }
+        }
+        return merged;
+    }
+
+    private boolean matchItems(List<ItemStack> items, boolean strict) {
+        if (inputs.isEmpty()) {
+            return !strict || items.isEmpty();
+        }
+        List<Integer> used = new ArrayList<>();
+        if (strict) {
+            for (ItemStack stack : items) {
+                boolean valid = false;
+                int index = 0;
+                for (CountedIngredient ingredient : inputs) {
+                    if (!used.contains(index) && ingredient.test(stack) && stack.getCount() >= ingredient.count()) {
+                        used.add(index);
+                        valid = true;
+                        break;
+                    }
+                    index++;
+                }
+                if (!valid) {
+                    return false;
+                }
+            }
+            return used.size() == inputs.size();
+        }
+        for (CountedIngredient ingredient : inputs) {
+            boolean valid = false;
+            for (int i = 0; i < items.size(); i++) {
+                if (used.contains(i)) {
+                    continue;
+                }
+                ItemStack stack = items.get(i);
+                if (ingredient.test(stack) && stack.getCount() >= ingredient.count()) {
+                    used.add(i);
+                    valid = true;
+                    break;
+                }
+            }
+            if (!valid) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean matchFluids(List<FluidStack> fluids, boolean strict) {
+        if (fluidInputs.isEmpty()) {
+            return !strict || fluids.isEmpty();
+        }
+        if (strict && fluids.size() != fluidInputs.size()) {
+            return false;
+        }
+        List<Integer> used = new ArrayList<>();
+        for (FluidStack recipeFluid : fluidInputs) {
+            boolean valid = false;
+            for (int i = 0; i < fluids.size(); i++) {
+                if (used.contains(i)) {
+                    continue;
+                }
+                FluidStack stack = fluids.get(i);
+                if (stack.isFluidEqual(recipeFluid) && stack.getAmount() >= recipeFluid.getAmount()) {
+                    used.add(i);
+                    valid = true;
+                    break;
+                }
+            }
+            if (!valid) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static class Serializer implements RecipeSerializer<ProcessRecipe> {
+        private static final ResourceLocation DEFAULT_TYPE = ModRecipeTypes.COMBUSTION.getId();
         private static final MapCodec<ProcessRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.inputs),
+                ResourceLocation.CODEC.optionalFieldOf("recipeType", DEFAULT_TYPE).forGetter(r -> r.recipeTypeId),
+                CountedIngredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.inputs),
                 ItemStack.STRICT_CODEC.listOf().fieldOf("outputs").forGetter(r -> r.outputs),
                 FluidStack.CODEC.listOf().optionalFieldOf("fluidInputs", List.of()).forGetter(r -> r.fluidInputs),
                 FluidStack.CODEC.listOf().optionalFieldOf("fluidOutputs", List.of()).forGetter(r -> r.fluidOutputs),
@@ -93,9 +239,10 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         }
 
         private static void toNetwork(RegistryFriendlyByteBuf buffer, ProcessRecipe recipe) {
+            ByteBufCodecs.RESOURCE_LOCATION.encode(buffer, recipe.recipeTypeId);
             buffer.writeInt(recipe.inputs.size());
-            for (Ingredient ingredient : recipe.inputs) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
+            for (CountedIngredient ingredient : recipe.inputs) {
+                CountedIngredient.STREAM_CODEC.encode(buffer, ingredient);
             }
             buffer.writeInt(recipe.outputs.size());
             for (ItemStack stack : recipe.outputs) {
@@ -113,10 +260,11 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         }
 
         private static ProcessRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+            ResourceLocation recipeTypeId = ByteBufCodecs.RESOURCE_LOCATION.decode(buffer);
             int inputSize = buffer.readInt();
-            List<Ingredient> inputs = new java.util.ArrayList<>(inputSize);
+            List<CountedIngredient> inputs = new java.util.ArrayList<>(inputSize);
             for (int i = 0; i < inputSize; i++) {
-                inputs.add(Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
+                inputs.add(CountedIngredient.STREAM_CODEC.decode(buffer));
             }
             int outputSize = buffer.readInt();
             List<ItemStack> outputs = new java.util.ArrayList<>(outputSize);
@@ -134,7 +282,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
                 fluidOutputs.add(FluidStack.STREAM_CODEC.decode(buffer));
             }
             float parameter = buffer.readFloat();
-            return new ProcessRecipe(inputs, outputs, fluidInputs, fluidOutputs, parameter);
+            return new ProcessRecipe(recipeTypeId, inputs, outputs, fluidInputs, fluidOutputs, parameter);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.block.entity;
 
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
+import com.chouzz.skyresourcereforge.recipe.ProcessRecipeInput;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -65,30 +65,22 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
     }
 
     private void updateConcentrate(Level level) {
-        RecipeManager recipeManager = level.getRecipeManager();
-        var recipes = recipeManager.getAllRecipesFor(ModRecipeTypes.WATER_EXTRACTOR_INSERT.get());
-
         ItemStack input = inventory.getStackInSlot(0);
         if (input.isEmpty() || tank.getFluid().isEmpty()) {
             progress = 0;
             return;
         }
 
-        ProcessRecipe recipe = null;
-        for (var holder : recipes) {
-            ProcessRecipe r = holder.value();
-            if (!r.getInputs().isEmpty() && r.getInputs().get(0).test(input)) {
-                // Check fluid input
-                if (!r.getFluidInputs().isEmpty()) {
-                    FluidStack requiredFluid = r.getFluidInputs().get(0);
-                    if (tank.getFluid().getFluid() == requiredFluid.getFluid() &&
-                        tank.getFluidAmount() >= requiredFluid.getAmount()) {
-                        recipe = r;
-                        break;
-                    }
-                }
-            }
-        }
+        ProcessRecipeInput recipeInput = new ProcessRecipeInput(
+                List.of(input),
+                List.of(tank.getFluid()),
+                Float.MAX_VALUE,
+                true
+        );
+        ProcessRecipe recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.WATER_EXTRACTOR_INSERT.get(), recipeInput, level)
+                .map(holder -> holder.value())
+                .orElse(null);
 
         if (recipe != null && progress < 100) {
             ItemStack output = recipe.getOutputs().get(0).copy();
@@ -106,7 +98,8 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
             if (inventory.insertItem(1, output, false).isEmpty()) {
                 FluidStack fluidInput = recipe.getFluidInputs().get(0);
                 tank.drain(fluidInput, IFluidHandler.FluidAction.EXECUTE);
-                input.shrink(1);
+                int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+                input.shrink(inputCount);
                 if (input.getCount() <= 0) {
                     inventory.setStackInSlot(0, ItemStack.EMPTY);
                 }
@@ -117,22 +110,16 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
 
     private void updateDeconcentrate(Level level) {
         RecipeManager recipeManager = level.getRecipeManager();
-        var recipes = recipeManager.getAllRecipesFor(ModRecipeTypes.WATER_EXTRACTOR_EXTRACT.get());
-
         ItemStack input = inventory.getStackInSlot(0);
         if (input.isEmpty()) {
             progress = 0;
             return;
         }
 
-        ProcessRecipe recipe = null;
-        for (var holder : recipes) {
-            ProcessRecipe r = holder.value();
-            if (!r.getInputs().isEmpty() && r.getInputs().get(0).test(input)) {
-                recipe = r;
-                break;
-            }
-        }
+        ProcessRecipeInput recipeInput = new ProcessRecipeInput(List.of(input));
+        ProcessRecipe recipe = recipeManager.getRecipeFor(ModRecipeTypes.WATER_EXTRACTOR_EXTRACT.get(), recipeInput, level)
+                .map(holder -> holder.value())
+                .orElse(null);
 
         if (recipe != null && progress < 100) {
             // Check if we can output fluid and item
@@ -160,7 +147,8 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
             if (inventory.insertItem(1, output, false).isEmpty()) {
                 FluidStack fluidOutput = recipe.getFluidOutputs().get(0);
                 tank.fill(fluidOutput, IFluidHandler.FluidAction.EXECUTE);
-                input.shrink(1);
+                int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+                input.shrink(inputCount);
                 if (input.getCount() <= 0) {
                     inventory.setStackInSlot(0, ItemStack.EMPTY);
                 }

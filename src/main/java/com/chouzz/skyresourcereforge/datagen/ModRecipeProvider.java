@@ -1,9 +1,11 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
+import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -29,7 +31,8 @@ public class ModRecipeProvider extends RecipeProvider {
         output.accept(
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/compressed_coal"),
                 new ProcessRecipe(
-                        List.of(Ingredient.of(Items.COAL)),
+                        ModRecipeTypes.COMBUSTION.getId(),
+                        List.of(CountedIngredient.of(Ingredient.of(Items.COAL), 1)),
                         List.of(new ItemStack(ModBlocks.COMPRESSED_COAL_BLOCK.get())),
                         List.of(),
                         List.of(),
