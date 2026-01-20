@@ -39,6 +39,9 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.DRY_CACTUS, "Dry Cactus");
         addBlock(ModBlocks.CACTUS_FRUIT_NEEDLE, "Cactus Fruit Needle");
         addBlock(ModBlocks.DIRT_FURNACE, "Dirt Furnace");
+        addBlock(ModBlocks.MINI_FREEZER, "Mini Freezer");
+        addBlock(ModBlocks.IRON_FREEZER, "Iron Freezer");
+        addBlock(ModBlocks.LIGHT_FREEZER, "Light Freezer");
         addItem(ModItems.CACTUS_FRUIT, "Cactus Fruit");
         addItem(ModItems.BASE_COMPONENT, "Base Component");
         addItem(ModItems.TECH_COMPONENT, "Tech Component");
