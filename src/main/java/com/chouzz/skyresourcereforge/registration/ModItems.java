@@ -56,6 +56,26 @@ public class ModItems {
     public static final DeferredItem<Item> FLESHY_SNOW_NUGGET = ITEMS.register("fleshy_snow_nugget",
             () -> new com.chouzz.skyresourcereforge.item.FleshySnowNuggetItem(new Item.Properties()));
 
+    // Alchemy Items
+    public static final DeferredItem<Item> ALCHEMY_COMPONENT = ITEMS.register("alchemy_component",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem(0, new Item.Properties()));
+
+    public static final DeferredItem<Item> INFUSION_STONE_SANDSTONE = ITEMS.register("infusion_stone_sandstone",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.InfusionStoneItem(100, new Item.Properties().durability(100)));
+
+    public static final DeferredItem<Item> INFUSION_STONE_RED_SANDSTONE = ITEMS.register("infusion_stone_red_sandstone",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.InfusionStoneItem(150, new Item.Properties().durability(150)));
+
+    public static final DeferredItem<Item> INFUSION_STONE_ALCHEMICAL = ITEMS.register("infusion_stone_alchemical",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.InfusionStoneItem(300, new Item.Properties().durability(300)));
+
+    public static final DeferredItem<Item> HEALTH_GEM = ITEMS.register("health_gem",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.HealthGemItem(4, new Item.Properties()));
+
+    // Additional Items
+    public static final DeferredItem<Item> SURVIVALIST_FISHING_ROD = ITEMS.register("survivalist_fishing_rod",
+            () -> new com.chouzz.skyresourcereforge.item.SurvivalistFishingRodItem());
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
