@@ -44,7 +44,10 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.LIGHT_FREEZER, "Light Freezer");
         addBlock(ModBlocks.AQUEOUS_CONCENTRATOR, "Aqueous Concentrator");
         addBlock(ModBlocks.AQUEOUS_DECONCENTRATOR, "Aqueous Deconcentrator");
+        addBlock(ModBlocks.HEAVY_SNOW, "Heavy Snow");
         addItem(ModItems.CACTUS_FRUIT, "Cactus Fruit");
+        addItem(ModItems.HEAVY_SNOWBALL, "Heavy Snowball");
+        addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "Heavy Explosive Snowball");
         addItem(ModItems.BASE_COMPONENT, "Base Component");
         addItem(ModItems.TECH_COMPONENT, "Tech Component");
     }

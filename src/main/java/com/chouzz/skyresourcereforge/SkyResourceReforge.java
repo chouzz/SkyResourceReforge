@@ -23,6 +23,7 @@ public class SkyResourceReforge {
         ModItems.register(modEventBus);
         ModDataComponents.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);

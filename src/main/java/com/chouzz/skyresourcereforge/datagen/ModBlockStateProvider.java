@@ -52,5 +52,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(ModBlocks.AQUEOUS_CONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_CONCENTRATOR.get()));
         horizontalBlock(ModBlocks.AQUEOUS_DECONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_DECONCENTRATOR.get()));
         simpleBlockItem(ModBlocks.AQUEOUS_DECONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_DECONCENTRATOR.get()));
+        simpleBlockWithItem(ModBlocks.HEAVY_SNOW.get(), cubeAll(ModBlocks.HEAVY_SNOW.get()));
     }
 }

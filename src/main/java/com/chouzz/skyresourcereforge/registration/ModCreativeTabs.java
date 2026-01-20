@@ -46,6 +46,9 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.LIGHT_FREEZER.get());
                 output.accept(ModBlocks.AQUEOUS_CONCENTRATOR.get());
                 output.accept(ModBlocks.AQUEOUS_DECONCENTRATOR.get());
+                output.accept(ModBlocks.HEAVY_SNOW.get());
+                output.accept(ModItems.HEAVY_SNOWBALL.get());
+                output.accept(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
                 output.accept(ModBlocks.CASING.get());
             }).build());
 

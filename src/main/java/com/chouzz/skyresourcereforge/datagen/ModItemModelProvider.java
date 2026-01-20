@@ -24,5 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.CACTUS_FRUIT.get());
         basicItem(ModItems.BASE_COMPONENT.get());
         basicItem(ModItems.TECH_COMPONENT.get());
+        basicItem(ModItems.HEAVY_SNOWBALL.get());
+        basicItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
     }
 }

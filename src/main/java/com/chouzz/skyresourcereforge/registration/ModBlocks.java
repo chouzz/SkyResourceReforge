@@ -116,6 +116,11 @@ public class ModBlocks {
                     .strength(2.0f, 2.0f)
                     .sound(SoundType.STONE), false));
 
+    public static final DeferredBlock<Block> HEAVY_SNOW = registerBlock("heavy_snow",
+            () -> new com.chouzz.skyresourcereforge.block.HeavySnowBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.SNOW)));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

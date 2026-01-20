@@ -47,6 +47,12 @@ public class ModItems {
     public static final DeferredItem<Item> TECH_COMPONENT = ITEMS.register("tech_component",
             () -> new com.chouzz.skyresourcereforge.item.TechComponentItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> HEAVY_SNOWBALL = ITEMS.register("heavy_snowball",
+            () -> new com.chouzz.skyresourcereforge.item.HeavySnowballItem(new Item.Properties().stacksTo(8), false));
+
+    public static final DeferredItem<Item> HEAVY_EXPLOSIVE_SNOWBALL = ITEMS.register("heavy_explosive_snowball",
+            () -> new com.chouzz.skyresourcereforge.item.HeavySnowballItem(new Item.Properties().stacksTo(8), true));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
