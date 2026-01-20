@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "skyresourcereforge:base_component"
+    },
+    "Y": {
+      "item": "minecraft:ender_eye"
+    },
+    "Z": {
+      "item": "skyresourcereforge:tech_component"
+    }
+  },
+  "pattern": [
+    " Y ",
+    " Z ",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:silverfish_disruptor"
+  }
+}
