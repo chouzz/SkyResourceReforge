@@ -27,6 +27,7 @@ public class SkyResourceReforge {
         ModCreativeTabs.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

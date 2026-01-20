@@ -5,6 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -23,6 +25,34 @@ public class DirtFurnaceBlockEntity extends BlockEntity {
     private int burnTime = 0;
     private int cookTime = 0;
     private int totalCookTime = 200;
+
+    public final ContainerData dataAccess = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> DirtFurnaceBlockEntity.this.burnTime;
+                case 1 -> DirtFurnaceBlockEntity.this.totalCookTime; // Reuse for max burn time
+                case 2 -> DirtFurnaceBlockEntity.this.cookTime;
+                case 3 -> DirtFurnaceBlockEntity.this.totalCookTime;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0 -> DirtFurnaceBlockEntity.this.burnTime = value;
+                case 1 -> {} // Ignore max burn time set
+                case 2 -> DirtFurnaceBlockEntity.this.cookTime = value;
+                case 3 -> DirtFurnaceBlockEntity.this.totalCookTime = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+    };
 
     public DirtFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DIRT_FURNACE.get(), pos, state);

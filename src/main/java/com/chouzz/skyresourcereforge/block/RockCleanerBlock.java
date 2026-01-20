@@ -4,6 +4,13 @@ import com.chouzz.skyresourcereforge.block.entity.RockCleanerBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -57,7 +64,7 @@ public class RockCleanerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, com.chouzz.skyresourcereforge.registration.ModBlockEntities.ROCK_CLEANER.get(), 
+        return createTickerHelper(type, com.chouzz.skyresourcereforge.registration.ModBlockEntities.ROCK_CLEANER.get(),
                 RockCleanerBlockEntity::tick);
     }
 
@@ -69,5 +76,27 @@ public class RockCleanerBlock extends BaseEntityBlock {
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof RockCleanerBlockEntity cleaner) {
+                player.openMenu(new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.skyresourcereforge.rock_cleaner");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                        return new com.chouzz.skyresourcereforge.menu.RockCleanerMenu(containerId, playerInventory,
+                                ContainerLevelAccess.create(level, pos), cleaner.getInventory());
+                    }
+                });
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

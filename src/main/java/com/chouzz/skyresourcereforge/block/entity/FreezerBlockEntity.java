@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -26,6 +27,26 @@ public class FreezerBlockEntity extends BlockEntity {
 
     private float[] timeFreeze = new float[1];
     private final float speed;
+
+    public final ContainerData dataAccess = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> (int) (speed * 100);
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            // Speed is immutable
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
 
     public FreezerBlockEntity(BlockPos pos, BlockState state, float speed) {
         super(ModBlockEntities.MINI_FREEZER.get(), pos, state);

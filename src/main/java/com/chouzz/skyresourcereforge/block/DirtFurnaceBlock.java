@@ -1,9 +1,17 @@
 package com.chouzz.skyresourcereforge.block;
 
 import com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity;
+import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -75,5 +83,27 @@ public class DirtFurnaceBlock extends BaseEntityBlock {
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof DirtFurnaceBlockEntity furnace) {
+                player.openMenu(new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.skyresourcereforge.dirt_furnace");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                        return new com.chouzz.skyresourcereforge.menu.DirtFurnaceMenu(containerId, playerInventory,
+                                ContainerLevelAccess.create(level, pos), furnace.getInventory(), furnace.dataAccess);
+                    }
+                });
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

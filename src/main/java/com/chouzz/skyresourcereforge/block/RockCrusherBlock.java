@@ -4,6 +4,13 @@ import com.chouzz.skyresourcereforge.block.entity.RockCrusherBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -57,7 +64,7 @@ public class RockCrusherBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, com.chouzz.skyresourcereforge.registration.ModBlockEntities.ROCK_CRUSHER.get(), 
+        return createTickerHelper(type, com.chouzz.skyresourcereforge.registration.ModBlockEntities.ROCK_CRUSHER.get(),
                 RockCrusherBlockEntity::tick);
     }
 
@@ -69,5 +76,27 @@ public class RockCrusherBlock extends BaseEntityBlock {
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof RockCrusherBlockEntity crusher) {
+                player.openMenu(new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.skyresourcereforge.rock_crusher");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                        return new com.chouzz.skyresourcereforge.menu.RockCrusherMenu(containerId, playerInventory,
+                                ContainerLevelAccess.create(level, pos), crusher.getInventory());
+                    }
+                });
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

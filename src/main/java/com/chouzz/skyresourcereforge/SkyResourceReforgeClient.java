@@ -1,6 +1,9 @@
 package com.chouzz.skyresourcereforge;
 
+import com.chouzz.skyresourcereforge.client.screen.*;
+import com.chouzz.skyresourcereforge.menu.*;
 import com.chouzz.skyresourcereforge.registration.ModEntities;
+import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
@@ -10,6 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -29,6 +33,17 @@ public class SkyResourceReforgeClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         SkyResourceReforge.LOGGER.info("HELLO FROM CLIENT SETUP");
         SkyResourceReforge.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    @SubscribeEvent
+    static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenuTypes.DIRT_FURNACE.get(), DirtFurnaceScreen::new);
+        event.register(ModMenuTypes.FREEZER.get(), FreezerScreen::new);
+        event.register(ModMenuTypes.AQUEOUS_CONCENTRATOR.get(), AqueousConcentratorScreen::new);
+        event.register(ModMenuTypes.ROCK_CRUSHER.get(), RockCrusherScreen::new);
+        event.register(ModMenuTypes.ROCK_CLEANER.get(), RockCleanerScreen::new);
+        event.register(ModMenuTypes.COMBUSTION_COLLECTOR.get(), CombustionCollectorScreen::new);
+        event.register(ModMenuTypes.CASING.get(), CasingScreen::new);
     }
 
     @SubscribeEvent
