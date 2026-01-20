@@ -55,6 +55,35 @@ public class ModRecipeTypes {
         }
     });
 
+    // Phase 5: Additional recipe types
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> FUSION = RECIPE_TYPES.register("fusion", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "fusion";
+        }
+    });
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> INFUSION = RECIPE_TYPES.register("infusion", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "infusion";
+        }
+    });
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> CONDENSER = RECIPE_TYPES.register("condenser", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "condenser";
+        }
+    });
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> CRUCIBLE = RECIPE_TYPES.register("crucible", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "crucible";
+        }
+    });
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }

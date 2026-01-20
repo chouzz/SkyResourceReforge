@@ -149,6 +149,55 @@ public class ModBlocks {
                     .sound(SoundType.STONE)
                     .noOcclusion()));
 
+    // Phase 3: Additional Technology Machines
+    public static final DeferredBlock<Block> QUICK_DROPPER = registerBlock("quick_dropper",
+            () -> new QuickDropperBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> FLUID_DROPPER = registerBlock("fluid_dropper",
+            () -> new FluidDropperBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> END_PORTAL_CORE = registerBlock("end_portal_core",
+            () -> new EndPortalCoreBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0f, 12.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> WILDLIFE_ATTRACTOR = registerBlock("wildlife_attractor",
+            () -> new WildlifeAttractorBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> CRUCIBLE_INSERTER = registerBlock("crucible_inserter",
+            () -> new CrucibleInserterBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> DARK_MATTER_WARPER = registerBlock("dark_matter_warper",
+            () -> new DarkMatterWarperBlock(BlockBehaviour.Properties.of()
+                    .strength(10.0f, 12.0f)
+                    .sound(SoundType.METAL)));
+
+    // Phase 4: Alchemy Blocks
+    public static final DeferredBlock<Block> FUSION_TABLE = registerBlock("fusion_table",
+            () -> new com.chouzz.skyresourcereforge.alchemy.block.FusionTableBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.WOOD)));
+
+    public static final DeferredBlock<Block> LIFE_INFUSER = registerBlock("life_infuser",
+            () -> new com.chouzz.skyresourcereforge.alchemy.block.LifeInfuserBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> LIFE_INJECTOR = registerBlock("life_injector",
+            () -> new com.chouzz.skyresourcereforge.alchemy.block.LifeInjectorBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

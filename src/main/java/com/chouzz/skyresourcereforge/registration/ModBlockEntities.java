@@ -57,6 +57,35 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrucibleBlockEntity>> CRUCIBLE =
             BLOCK_ENTITIES.register("crucible", () -> BlockEntityType.Builder.of(CrucibleBlockEntity::new, ModBlocks.CRUCIBLE.get()).build(null));
 
+    // Phase 3: Additional Technology Machine Block Entities
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.QuickDropperBlockEntity>> QUICK_DROPPER =
+            BLOCK_ENTITIES.register("quick_dropper", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.QuickDropperBlockEntity::new, ModBlocks.QUICK_DROPPER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity>> FLUID_DROPPER =
+            BLOCK_ENTITIES.register("fluid_dropper", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity::new, ModBlocks.FLUID_DROPPER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.EndPortalCoreBlockEntity>> END_PORTAL_CORE =
+            BLOCK_ENTITIES.register("end_portal_core", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.EndPortalCoreBlockEntity::new, ModBlocks.END_PORTAL_CORE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.WildlifeAttractorBlockEntity>> WILDLIFE_ATTRACTOR =
+            BLOCK_ENTITIES.register("wildlife_attractor", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.WildlifeAttractorBlockEntity::new, ModBlocks.WILDLIFE_ATTRACTOR.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity>> CRUCIBLE_INSERTER =
+            BLOCK_ENTITIES.register("crucible_inserter", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity::new, ModBlocks.CRUCIBLE_INSERTER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.DarkMatterWarperBlockEntity>> DARK_MATTER_WARPER =
+            BLOCK_ENTITIES.register("dark_matter_warper", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.DarkMatterWarperBlockEntity::new, ModBlocks.DARK_MATTER_WARPER.get()).build(null));
+
+    // Phase 4: Alchemy Block Entities
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.alchemy.block.entity.FusionTableBlockEntity>> FUSION_TABLE =
+            BLOCK_ENTITIES.register("fusion_table", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.alchemy.block.entity.FusionTableBlockEntity::new, ModBlocks.FUSION_TABLE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.alchemy.block.entity.LifeInfuserBlockEntity>> LIFE_INFUSER =
+            BLOCK_ENTITIES.register("life_infuser", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.alchemy.block.entity.LifeInfuserBlockEntity::new, ModBlocks.LIFE_INFUSER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.alchemy.block.entity.LifeInjectorBlockEntity>> LIFE_INJECTOR =
+            BLOCK_ENTITIES.register("life_injector", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.alchemy.block.entity.LifeInjectorBlockEntity::new, ModBlocks.LIFE_INJECTOR.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

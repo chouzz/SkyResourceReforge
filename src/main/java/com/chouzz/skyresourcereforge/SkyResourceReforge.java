@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge;
 
 import com.chouzz.skyresourcereforge.registration.*;
+import com.chouzz.skyresourcereforge.util.ItemHelper;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -18,6 +19,7 @@ public class SkyResourceReforge {
     public SkyResourceReforge(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(this::registerItemHelpers);
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
@@ -42,5 +44,11 @@ public class SkyResourceReforge {
         event.registerItem(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM,
                 (stack, context) -> new net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack(ModDataComponents.FLUID_CONTENT, stack, com.chouzz.skyresourcereforge.item.WaterExtractorItem.CAPACITY),
                 ModItems.WATER_EXTRACTOR.get());
+    }
+
+    private void registerItemHelpers(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            ItemHelper.init();
+        });
     }
 }
