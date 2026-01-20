@@ -106,6 +106,16 @@ public class ModBlocks {
                     .strength(8.0f, 12.0f)
                     .sound(SoundType.METAL), 100.0f));
 
+    public static final DeferredBlock<Block> AQUEOUS_CONCENTRATOR = registerBlock("aqueous_concentrator",
+            () -> new com.chouzz.skyresourcereforge.block.AqueousConcentratorBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE), true));
+
+    public static final DeferredBlock<Block> AQUEOUS_DECONCENTRATOR = registerBlock("aqueous_deconcentrator",
+            () -> new com.chouzz.skyresourcereforge.block.AqueousConcentratorBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE), false));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

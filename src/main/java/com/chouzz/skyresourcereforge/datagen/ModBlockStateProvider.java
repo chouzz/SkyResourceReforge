@@ -48,5 +48,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(ModBlocks.IRON_FREEZER.get(), cubeAll(ModBlocks.IRON_FREEZER.get()));
         horizontalBlock(ModBlocks.LIGHT_FREEZER.get(), cubeAll(ModBlocks.LIGHT_FREEZER.get()));
         simpleBlockItem(ModBlocks.LIGHT_FREEZER.get(), cubeAll(ModBlocks.LIGHT_FREEZER.get()));
+        horizontalBlock(ModBlocks.AQUEOUS_CONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_CONCENTRATOR.get()));
+        simpleBlockItem(ModBlocks.AQUEOUS_CONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_CONCENTRATOR.get()));
+        horizontalBlock(ModBlocks.AQUEOUS_DECONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_DECONCENTRATOR.get()));
+        simpleBlockItem(ModBlocks.AQUEOUS_DECONCENTRATOR.get(), cubeAll(ModBlocks.AQUEOUS_DECONCENTRATOR.get()));
     }
 }

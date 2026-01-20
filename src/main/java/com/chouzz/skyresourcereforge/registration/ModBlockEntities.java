@@ -40,6 +40,16 @@ public class ModBlockEntities {
                     },
                     ModBlocks.MINI_FREEZER.get(), ModBlocks.IRON_FREEZER.get(), ModBlocks.LIGHT_FREEZER.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity>> AQUEOUS_CONCENTRATOR =
+            BLOCK_ENTITIES.register("aqueous_concentrator", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity(pos, state, true),
+                    ModBlocks.AQUEOUS_CONCENTRATOR.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity>> AQUEOUS_DECONCENTRATOR =
+            BLOCK_ENTITIES.register("aqueous_deconcentrator", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity(pos, state, false),
+                    ModBlocks.AQUEOUS_DECONCENTRATOR.get()).build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CasingBlockEntity>> CASING =
             BLOCK_ENTITIES.register("casing", () -> BlockEntityType.Builder.of(CasingBlockEntity::new, ModBlocks.CASING.get()).build(null));
 
