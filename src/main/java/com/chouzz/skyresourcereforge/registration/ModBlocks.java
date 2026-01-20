@@ -121,6 +121,22 @@ public class ModBlocks {
                     .strength(0.5f, 0.5f)
                     .sound(SoundType.SNOW)));
 
+    public static final DeferredBlock<Block> PETRIFIED_WOOD = registerBlock("petrified_wood",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(1.5f, 0.5f)
+                    .sound(SoundType.WOOD)));
+
+    public static final DeferredBlock<Block> PETRIFIED_PLANKS = registerBlock("petrified_planks",
+            () -> new BaseBlock(BlockBehaviour.Properties.of()
+                    .strength(1.5f, 0.5f)
+                    .sound(SoundType.WOOD)));
+
+    public static final DeferredBlock<Block> SILVERFISH_DISRUPTOR = registerBlock("silverfish_disruptor",
+            () -> new com.chouzz.skyresourcereforge.block.SilverfishDisruptorBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.GLASS)
+                    .noOcclusion()));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

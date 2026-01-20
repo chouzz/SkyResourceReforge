@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "skyresourcereforge:petrified_wood"
+    }
+  },
+  "pattern": [
+    "X"
+  ],
+  "result": {
+    "count": 4,
+    "id": "skyresourcereforge:petrified_planks"
+  }
+}

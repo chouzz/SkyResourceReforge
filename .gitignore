@@ -24,3 +24,6 @@ runs
 run-data
 
 repo
+
+# generated cache
+src/generated/resources/.cache/
