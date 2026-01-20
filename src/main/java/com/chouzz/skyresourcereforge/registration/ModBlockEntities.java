@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.registration;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.alchemy.block.entity.CrucibleBlockEntity;
 import com.chouzz.skyresourcereforge.block.entity.CasingBlockEntity;
 import com.chouzz.skyresourcereforge.block.entity.CombustionCollectorBlockEntity;
 import com.chouzz.skyresourcereforge.block.entity.CombustionControllerBlockEntity;
@@ -52,6 +53,9 @@ public class ModBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CasingBlockEntity>> CASING =
             BLOCK_ENTITIES.register("casing", () -> BlockEntityType.Builder.of(CasingBlockEntity::new, ModBlocks.CASING.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrucibleBlockEntity>> CRUCIBLE =
+            BLOCK_ENTITIES.register("crucible", () -> BlockEntityType.Builder.of(CrucibleBlockEntity::new, ModBlocks.CRUCIBLE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

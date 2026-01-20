@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.registration;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.alchemy.block.CrucibleBlock;
 import com.chouzz.skyresourcereforge.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -141,6 +142,12 @@ public class ModBlocks {
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)
                     .sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> CRUCIBLE = registerBlock("crucible",
+            () -> new CrucibleBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 8.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

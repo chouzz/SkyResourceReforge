@@ -28,6 +28,7 @@ public class SkyResourceReforge {
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        // ModFluids.register(modEventBus); // TODO: Implement in future phase
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
