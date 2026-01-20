@@ -75,6 +75,16 @@ public class ModBlocks {
                     .strength(6.0f, 12.0f)
                     .sound(SoundType.METAL)));
 
+    public static final DeferredBlock<Block> ROCK_CRUSHER = registerBlock("rock_crusher",
+            () -> new com.chouzz.skyresourcereforge.block.RockCrusherBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0f, 12.0f)
+                    .sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> ROCK_CLEANER = registerBlock("rock_cleaner",
+            () -> new com.chouzz.skyresourcereforge.block.RockCleanerBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0f, 12.0f)
+                    .sound(SoundType.STONE)));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

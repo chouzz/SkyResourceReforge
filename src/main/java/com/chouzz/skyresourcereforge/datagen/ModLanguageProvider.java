@@ -27,6 +27,8 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.COMPRESSED_COAL_BLOCK, "Compressed Coal Block");
         addBlock(ModBlocks.COMBUSTION_CONTROLLER, "Combustion Controller");
         addBlock(ModBlocks.COMBUSTION_COLLECTOR, "Combustion Collector");
+        addBlock(ModBlocks.ROCK_CRUSHER, "Rock Crusher");
+        addBlock(ModBlocks.ROCK_CLEANER, "Rock Cleaner");
         addBlock(ModBlocks.CASING, "Casing");
         addBlock(ModBlocks.SANDY_NETHERRACK, "Sandy Netherrack");
         addBlock(ModBlocks.COAL_INFUSED_BLOCK, "Coal Infused Block");

@@ -36,5 +36,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         modLoc("block/combustion_controller_front"), 
                         modLoc("block/combustion_controller_top")));
         simpleBlockWithItem(ModBlocks.COMBUSTION_COLLECTOR.get(), cubeAll(ModBlocks.COMBUSTION_COLLECTOR.get()));
+        horizontalBlock(ModBlocks.ROCK_CRUSHER.get(), cubeAll(ModBlocks.ROCK_CRUSHER.get()));
+        simpleBlockItem(ModBlocks.ROCK_CRUSHER.get(), cubeAll(ModBlocks.ROCK_CRUSHER.get()));
+        horizontalBlock(ModBlocks.ROCK_CLEANER.get(), cubeAll(ModBlocks.ROCK_CLEANER.get()));
+        simpleBlockItem(ModBlocks.ROCK_CLEANER.get(), cubeAll(ModBlocks.ROCK_CLEANER.get()));
     }
 }
