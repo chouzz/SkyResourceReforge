@@ -70,6 +70,11 @@ public class ModBlocks {
                     .strength(6.0f, 12.0f)
                     .sound(SoundType.METAL)));
 
+    public static final DeferredBlock<Block> COMBUSTION_COLLECTOR = registerBlock("combustion_collector",
+            () -> new CombustionCollectorBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0f, 12.0f)
+                    .sound(SoundType.METAL)));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

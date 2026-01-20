@@ -35,6 +35,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.DRY_CACTUS.get());
                 output.accept(ModBlocks.CACTUS_FRUIT_NEEDLE.get());
                 output.accept(ModBlocks.COMBUSTION_CONTROLLER.get());
+                output.accept(ModBlocks.COMBUSTION_COLLECTOR.get());
                 output.accept(ModBlocks.CASING.get());
             }).build());
 
