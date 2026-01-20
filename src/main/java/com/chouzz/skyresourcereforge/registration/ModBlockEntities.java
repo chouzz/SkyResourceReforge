@@ -30,6 +30,16 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity>> DIRT_FURNACE =
             BLOCK_ENTITIES.register("dirt_furnace", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity::new, ModBlocks.DIRT_FURNACE.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.FreezerBlockEntity>> MINI_FREEZER =
+            BLOCK_ENTITIES.register("mini_freezer", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> {
+                        if (state.getBlock() instanceof com.chouzz.skyresourcereforge.block.FreezerBlock freezerBlock) {
+                            return new com.chouzz.skyresourcereforge.block.entity.FreezerBlockEntity(pos, state, freezerBlock.getSpeed());
+                        }
+                        return new com.chouzz.skyresourcereforge.block.entity.FreezerBlockEntity(pos, state, 0.25f);
+                    },
+                    ModBlocks.MINI_FREEZER.get(), ModBlocks.IRON_FREEZER.get(), ModBlocks.LIGHT_FREEZER.get()).build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CasingBlockEntity>> CASING =
             BLOCK_ENTITIES.register("casing", () -> BlockEntityType.Builder.of(CasingBlockEntity::new, ModBlocks.CASING.get()).build(null));
 

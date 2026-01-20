@@ -1,0 +1,89 @@
+package com.chouzz.skyresourcereforge.block;
+
+import com.chouzz.skyresourcereforge.block.entity.FreezerBlockEntity;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import org.jetbrains.annotations.Nullable;
+
+public class FreezerBlock extends BaseEntityBlock {
+    // Speed is constant per block instance, so we don't serialize it in codec
+    // Each block registration will provide its own speed
+    public static final MapCodec<FreezerBlock> CODEC = net.minecraft.world.level.block.state.BlockBehaviour.Properties.CODEC
+            .fieldOf("properties")
+            .xmap(props -> new FreezerBlock(props, 0.25f), b -> b.properties); // Default speed for codec, actual set in constructor
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private final float speed;
+    protected final net.minecraft.world.level.block.state.BlockBehaviour.Properties properties;
+
+    public FreezerBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties properties, float speed) {
+        super(properties);
+        this.properties = properties;
+        this.speed = speed;
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new FreezerBlockEntity(pos, state, this.speed);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
+        return (lvl, pos, st, be) -> {
+            if (be instanceof FreezerBlockEntity freezer) {
+                FreezerBlockEntity.tick(lvl, pos, st, freezer);
+            }
+        };
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            if (level.getBlockEntity(pos) instanceof FreezerBlockEntity freezer) {
+                freezer.dropInventory();
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+}

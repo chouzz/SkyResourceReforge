@@ -91,6 +91,21 @@ public class ModBlocks {
                     .sound(SoundType.GRAVEL)
                     .lightLevel(state -> state.getValue(com.chouzz.skyresourcereforge.block.DirtFurnaceBlock.LIT) ? 13 : 0)));
 
+    public static final DeferredBlock<Block> MINI_FREEZER = registerBlock("mini_freezer",
+            () -> new com.chouzz.skyresourcereforge.block.FreezerBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.METAL), 0.25f));
+
+    public static final DeferredBlock<Block> IRON_FREEZER = registerBlock("iron_freezer",
+            () -> new com.chouzz.skyresourcereforge.block.FreezerBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.METAL), 1.0f));
+
+    public static final DeferredBlock<Block> LIGHT_FREEZER = registerBlock("light_freezer",
+            () -> new com.chouzz.skyresourcereforge.block.FreezerBlock(BlockBehaviour.Properties.of()
+                    .strength(8.0f, 12.0f)
+                    .sound(SoundType.METAL), 100.0f));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

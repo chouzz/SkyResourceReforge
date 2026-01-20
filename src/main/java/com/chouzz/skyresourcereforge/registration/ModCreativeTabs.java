@@ -41,6 +41,9 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.ROCK_CRUSHER.get());
                 output.accept(ModBlocks.ROCK_CLEANER.get());
                 output.accept(ModBlocks.DIRT_FURNACE.get());
+                output.accept(ModBlocks.MINI_FREEZER.get());
+                output.accept(ModBlocks.IRON_FREEZER.get());
+                output.accept(ModBlocks.LIGHT_FREEZER.get());
                 output.accept(ModBlocks.CASING.get());
             }).build());
 

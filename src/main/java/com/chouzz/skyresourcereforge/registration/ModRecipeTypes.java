@@ -48,6 +48,13 @@ public class ModRecipeTypes {
         }
     });
 
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> FREEZER = RECIPE_TYPES.register("freezer", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "freezer";
+        }
+    });
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }
