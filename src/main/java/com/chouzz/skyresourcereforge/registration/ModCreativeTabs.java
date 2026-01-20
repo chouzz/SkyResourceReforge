@@ -17,6 +17,7 @@ public class ModCreativeTabs {
             .icon(() -> new ItemStack(ModItems.CACTUS_KNIFE.get()))
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.CACTUS_KNIFE.get());
+                output.accept(ModItems.WATER_EXTRACTOR.get());
                 output.accept(ModBlocks.COMPRESSED_COAL_BLOCK.get());
                 output.accept(ModBlocks.SANDY_NETHERRACK.get());
                 output.accept(ModBlocks.COAL_INFUSED_BLOCK.get());

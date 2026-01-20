@@ -5,8 +5,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.SimpleTier;
 
-import java.util.function.Supplier;
-
 public class ModTiers {
     public static final Tier CACTUS = new SimpleTier(
             BlockTags.INCORRECT_FOR_WOODEN_TOOL,
@@ -16,4 +14,7 @@ public class ModTiers {
             5, // enchantability
             () -> Ingredient.EMPTY // repair ingredient
     );
+
+    // Note: Stone, Iron, and Diamond tiers are provided by vanilla Tiers class
+    // We can reference them directly: Tiers.STONE, Tiers.IRON, Tiers.DIAMOND
 }

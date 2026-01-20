@@ -17,9 +17,11 @@ public class SkyResourceReforge {
 
     public SkyResourceReforge(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerCapabilities);
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        ModDataComponents.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
@@ -31,5 +33,11 @@ public class SkyResourceReforge {
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("SkyResource Reforge Initializing...");
         event.enqueueWork(com.chouzz.skyresourcereforge.heat.HeatSources::registerDefaults);
+    }
+
+    private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        event.registerItem(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM,
+                (stack, context) -> new net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack(ModDataComponents.FLUID_CONTENT, stack, com.chouzz.skyresourcereforge.item.WaterExtractorItem.CAPACITY),
+                ModItems.WATER_EXTRACTOR.get());
     }
 }

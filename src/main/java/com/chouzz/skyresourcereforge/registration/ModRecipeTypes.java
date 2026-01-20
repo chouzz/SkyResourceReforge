@@ -20,6 +20,20 @@ public class ModRecipeTypes {
         }
     });
 
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> WATER_EXTRACTOR_EXTRACT = RECIPE_TYPES.register("water_extractor_extract", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "water_extractor_extract";
+        }
+    });
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> WATER_EXTRACTOR_INSERT = RECIPE_TYPES.register("water_extractor_insert", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "water_extractor_insert";
+        }
+    });
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }
