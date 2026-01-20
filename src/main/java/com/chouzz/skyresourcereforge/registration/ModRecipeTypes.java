@@ -34,6 +34,20 @@ public class ModRecipeTypes {
         }
     });
 
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> ROCK_GRINDER = RECIPE_TYPES.register("rock_grinder", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "rock_grinder";
+        }
+    });
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> CAULDRON_CLEAN = RECIPE_TYPES.register("cauldron_clean", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "cauldron_clean";
+        }
+    });
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }
