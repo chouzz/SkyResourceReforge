@@ -26,5 +26,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.TECH_COMPONENT.get());
         basicItem(ModItems.HEAVY_SNOWBALL.get());
         basicItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
+        basicItem(ModItems.FLESHY_SNOW_NUGGET.get());
     }
 }
