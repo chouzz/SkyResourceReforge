@@ -14,6 +14,12 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.CACTUS_KNIFE.get());
+        basicItem(ModItems.STONE_KNIFE.get());
+        basicItem(ModItems.IRON_KNIFE.get());
+        basicItem(ModItems.DIAMOND_KNIFE.get());
+        basicItem(ModItems.STONE_GRINDER.get());
+        basicItem(ModItems.IRON_GRINDER.get());
+        basicItem(ModItems.DIAMOND_GRINDER.get());
         basicItem(ModItems.WATER_EXTRACTOR.get());
     }
 }

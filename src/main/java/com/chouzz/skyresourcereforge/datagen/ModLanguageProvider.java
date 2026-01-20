@@ -16,6 +16,12 @@ public class ModLanguageProvider extends LanguageProvider {
         add("itemGroup.skyresourcereforge.main", "SkyResource Reforge");
         
         addItem(ModItems.CACTUS_KNIFE, "Cactus Knife");
+        addItem(ModItems.STONE_KNIFE, "Stone Knife");
+        addItem(ModItems.IRON_KNIFE, "Iron Knife");
+        addItem(ModItems.DIAMOND_KNIFE, "Diamond Knife");
+        addItem(ModItems.STONE_GRINDER, "Stone Grinder");
+        addItem(ModItems.IRON_GRINDER, "Iron Grinder");
+        addItem(ModItems.DIAMOND_GRINDER, "Diamond Grinder");
         addItem(ModItems.WATER_EXTRACTOR, "Water Extractor");
         
         addBlock(ModBlocks.COMPRESSED_COAL_BLOCK, "Compressed Coal Block");
