@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skyresourcereforge:block/aqueous_concentrator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skyresourcereforge:block/aqueous_concentrator"
+    },
+    "facing=south": {
+      "model": "skyresourcereforge:block/aqueous_concentrator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skyresourcereforge:block/aqueous_concentrator",
+      "y": 270
+    }
+  }
+}

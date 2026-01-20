@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skyresourcereforge:block/light_freezer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skyresourcereforge:block/light_freezer"
+    },
+    "facing=south": {
+      "model": "skyresourcereforge:block/light_freezer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skyresourcereforge:block/light_freezer",
+      "y": 270
+    }
+  }
+}

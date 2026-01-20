@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skyresourcereforge:block/rock_cleaner",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skyresourcereforge:block/rock_cleaner"
+    },
+    "facing=south": {
+      "model": "skyresourcereforge:block/rock_cleaner",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skyresourcereforge:block/rock_cleaner",
+      "y": 270
+    }
+  }
+}

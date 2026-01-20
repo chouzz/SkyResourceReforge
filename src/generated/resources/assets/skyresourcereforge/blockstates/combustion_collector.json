@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skyresourcereforge:block/combustion_collector"
+    }
+  }
+}

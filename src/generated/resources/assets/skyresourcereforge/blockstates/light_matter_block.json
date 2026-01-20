@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skyresourcereforge:block/light_matter_block"
+    }
+  }
+}
