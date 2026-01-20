@@ -41,6 +41,12 @@ public class ModItems {
     public static final DeferredItem<Item> CACTUS_FRUIT = ITEMS.register("cactus_fruit",
             () -> new com.chouzz.skyresourcereforge.item.CactusFruitItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> BASE_COMPONENT = ITEMS.register("base_component",
+            () -> new com.chouzz.skyresourcereforge.item.BaseComponentItem(new Item.Properties()));
+
+    public static final DeferredItem<Item> TECH_COMPONENT = ITEMS.register("tech_component",
+            () -> new com.chouzz.skyresourcereforge.item.TechComponentItem(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

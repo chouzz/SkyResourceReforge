@@ -38,6 +38,9 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.MAGMAFIED_STONE, "Magmafied Stone");
         addBlock(ModBlocks.DRY_CACTUS, "Dry Cactus");
         addBlock(ModBlocks.CACTUS_FRUIT_NEEDLE, "Cactus Fruit Needle");
+        addBlock(ModBlocks.DIRT_FURNACE, "Dirt Furnace");
         addItem(ModItems.CACTUS_FRUIT, "Cactus Fruit");
+        addItem(ModItems.BASE_COMPONENT, "Base Component");
+        addItem(ModItems.TECH_COMPONENT, "Tech Component");
     }
 }

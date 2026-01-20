@@ -27,6 +27,9 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RockCleanerBlockEntity>> ROCK_CLEANER =
             BLOCK_ENTITIES.register("rock_cleaner", () -> BlockEntityType.Builder.of(RockCleanerBlockEntity::new, ModBlocks.ROCK_CLEANER.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity>> DIRT_FURNACE =
+            BLOCK_ENTITIES.register("dirt_furnace", () -> BlockEntityType.Builder.of(com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity::new, ModBlocks.DIRT_FURNACE.get()).build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CasingBlockEntity>> CASING =
             BLOCK_ENTITIES.register("casing", () -> BlockEntityType.Builder.of(CasingBlockEntity::new, ModBlocks.CASING.get()).build(null));
 

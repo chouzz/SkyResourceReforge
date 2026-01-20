@@ -85,6 +85,12 @@ public class ModBlocks {
                     .strength(6.0f, 12.0f)
                     .sound(SoundType.STONE)));
 
+    public static final DeferredBlock<Block> DIRT_FURNACE = registerBlock("dirt_furnace",
+            () -> new com.chouzz.skyresourcereforge.block.DirtFurnaceBlock(BlockBehaviour.Properties.of()
+                    .strength(0.5f, 0.5f)
+                    .sound(SoundType.GRAVEL)
+                    .lightLevel(state -> state.getValue(com.chouzz.skyresourcereforge.block.DirtFurnaceBlock.LIT) ? 13 : 0)));
+
     public static final DeferredBlock<Block> CASING = registerBlock("casing",
             () -> new CasingBlock(BlockBehaviour.Properties.of()
                     .strength(2.0f, 12.0f)

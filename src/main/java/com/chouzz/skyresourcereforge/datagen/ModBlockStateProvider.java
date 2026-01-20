@@ -40,5 +40,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(ModBlocks.ROCK_CRUSHER.get(), cubeAll(ModBlocks.ROCK_CRUSHER.get()));
         horizontalBlock(ModBlocks.ROCK_CLEANER.get(), cubeAll(ModBlocks.ROCK_CLEANER.get()));
         simpleBlockItem(ModBlocks.ROCK_CLEANER.get(), cubeAll(ModBlocks.ROCK_CLEANER.get()));
+        horizontalBlock(ModBlocks.DIRT_FURNACE.get(), cubeAll(ModBlocks.DIRT_FURNACE.get()));
+        simpleBlockItem(ModBlocks.DIRT_FURNACE.get(), cubeAll(ModBlocks.DIRT_FURNACE.get()));
     }
 }

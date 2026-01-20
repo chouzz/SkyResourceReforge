@@ -22,5 +22,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DIAMOND_GRINDER.get());
         basicItem(ModItems.WATER_EXTRACTOR.get());
         basicItem(ModItems.CACTUS_FRUIT.get());
+        basicItem(ModItems.BASE_COMPONENT.get());
+        basicItem(ModItems.TECH_COMPONENT.get());
     }
 }
