@@ -31,4 +31,16 @@ public class CrucibleInserterBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(net.minecraft.core.BlockPos pos, BlockState state) {
         return new com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity(pos, state);
     }
+
+    @Override
+    public void onRemove(BlockState state, net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+                         BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity inserter) {
+                inserter.dropInventory();
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
+    }
 }

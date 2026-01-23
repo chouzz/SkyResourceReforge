@@ -1,10 +1,14 @@
 package com.chouzz.skyresourcereforge.block;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Fluid Dropper block - drops fluid blocks below.
@@ -30,5 +34,16 @@ public class FluidDropperBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(net.minecraft.core.BlockPos pos, BlockState state) {
         return new com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
+        return (lvl, pos, st, be) -> {
+            if (be instanceof com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity dropper) {
+                com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity.tick(lvl, pos, st, dropper);
+            }
+        };
     }
 }

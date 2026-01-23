@@ -200,7 +200,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
                     continue;
                 }
                 FluidStack stack = fluids.get(i);
-                if (stack.isFluidEqual(recipeFluid) && stack.getAmount() >= recipeFluid.getAmount()) {
+                if (FluidStack.isSameFluidSameComponents(stack, recipeFluid) && stack.getAmount() >= recipeFluid.getAmount()) {
                     used.add(i);
                     valid = true;
                     break;
@@ -239,7 +239,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         }
 
         private static void toNetwork(RegistryFriendlyByteBuf buffer, ProcessRecipe recipe) {
-            ByteBufCodecs.RESOURCE_LOCATION.encode(buffer, recipe.recipeTypeId);
+            ResourceLocation.STREAM_CODEC.encode(buffer, recipe.recipeTypeId);
             buffer.writeInt(recipe.inputs.size());
             for (CountedIngredient ingredient : recipe.inputs) {
                 CountedIngredient.STREAM_CODEC.encode(buffer, ingredient);
@@ -260,7 +260,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         }
 
         private static ProcessRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            ResourceLocation recipeTypeId = ByteBufCodecs.RESOURCE_LOCATION.decode(buffer);
+            ResourceLocation recipeTypeId = ResourceLocation.STREAM_CODEC.decode(buffer);
             int inputSize = buffer.readInt();
             List<CountedIngredient> inputs = new java.util.ArrayList<>(inputSize);
             for (int i = 0; i < inputSize; i++) {
