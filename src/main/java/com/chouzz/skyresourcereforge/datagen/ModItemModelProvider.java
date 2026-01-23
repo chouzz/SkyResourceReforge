@@ -30,5 +30,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // Ore Alchemical Dust - single model for all subtypes
         basicItem(ModItems.ORE_ALCH_DUST.get());
+        basicItem(ModItems.DIRTY_GEM.get());
     }
 }

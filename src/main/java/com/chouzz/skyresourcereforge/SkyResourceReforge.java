@@ -40,7 +40,8 @@ public class SkyResourceReforge {
         event.enqueueWork(() -> {
             com.chouzz.skyresourcereforge.heat.HeatSources.registerDefaults();
             com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.init();
-            com.chouzz.skyresourcereforge.integration.jei.SkyResourceJEIPlugin.init();
+            com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.initGems();
+            // JEI plugin uses @JeiPlugin annotation for auto-registration
         });
     }
 

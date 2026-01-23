@@ -75,6 +75,9 @@ public class ModItems {
     public static final DeferredItem<Item> ORE_ALCH_DUST = ITEMS.register("ore_alch_dust",
             () -> new com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust(new Item.Properties()));
 
+    public static final DeferredItem<Item> DIRTY_GEM = ITEMS.register("dirty_gem",
+            () -> new com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem(new Item.Properties()));
+
     // Additional Items
     public static final DeferredItem<Item> SURVIVALIST_FISHING_ROD = ITEMS.register("survivalist_fishing_rod",
             () -> new com.chouzz.skyresourcereforge.item.SurvivalistFishingRodItem());

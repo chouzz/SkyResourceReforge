@@ -58,6 +58,14 @@ public class ModCreativeTabs {
                         output.accept(stack);
                     }
                 }
+                // Add dirty gems
+                if (com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.getNames() != null) {
+                    for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.getNames().size(); i++) {
+                        ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
+                        stack.setDamageValue(i);
+                        output.accept(stack);
+                    }
+                }
                 output.accept(ModBlocks.CASING.get());
             }).build());
 

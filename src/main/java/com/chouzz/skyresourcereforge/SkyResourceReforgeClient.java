@@ -1,9 +1,11 @@
 package com.chouzz.skyresourcereforge;
 
+import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.client.screen.*;
 import com.chouzz.skyresourcereforge.menu.*;
 import com.chouzz.skyresourcereforge.registration.ModEntities;
 import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
+import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
@@ -13,6 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -50,5 +53,17 @@ public class SkyResourceReforgeClient {
     static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.HEAVY_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(ModEntities.HEAVY_EXPLOSIVE_SNOWBALL.get(), ThrownItemRenderer::new);
+    }
+
+    @SubscribeEvent
+    static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        // Register dirty gem color handler - dynamic color tinting based on damage value
+        event.register((stack, tintIndex) -> {
+            int damage = stack.getDamageValue();
+            if (damage < 0 || damage >= DirtyGemItem.gemInfos.size()) {
+                return -1; // No tint for invalid damage values
+            }
+            return DirtyGemItem.gemInfos.get(damage).color;
+        }, ModItems.DIRTY_GEM.get());
     }
 }

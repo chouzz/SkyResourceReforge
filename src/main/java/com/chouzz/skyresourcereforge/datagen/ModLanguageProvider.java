@@ -77,6 +77,44 @@ public class ModLanguageProvider extends LanguageProvider {
 
         // Tooltip for ore alchemical dust
         add("tooltip.skyresourcereforge.ore_alch_dust.rarity", "Rarity: %s");
+
+        // Alchemy Items
+        addItem(ModItems.ALCHEMY_COMPONENT, "Alchemy Component");
+        addItem(ModItems.HEALTH_GEM, "Health Gem");
+        addItem(ModItems.ORE_ALCH_DUST, "Alchemical Ore Dust");
+        addItem(ModItems.DIRTY_GEM, "Dirty Gem");
+
+        // Dirty Gems - all 44 variants
+        String[] gemNames = {
+            "emerald", "diamond", "ruby", "sapphire", "peridot",
+            "red_garnet", "yellow_garnet", "apatite", "amber", "onyx",
+            "agate", "opal", "amethyst", "aquamarine", "heliodor",
+            "morganite", "beryl", "indicolite", "garnet", "topaz",
+            "iolite", "chaos", "dark", "lapis", "quartz_black", "certus_quartz",
+            "lepidolite", "malachite", "moldavite", "jasper", "turquoise",
+            "moonstone", "carnelian", "golden_beryl", "citrine", "ametrine",
+            "tanzanite", "violet_sapphire", "alexandrite", "blue_topaz",
+            "spinel", "black_diamond", "quartz", "ender_essence"
+        };
+
+        String[] gemDisplayNames = {
+            "Emerald", "Diamond", "Ruby", "Sapphire", "Peridot",
+            "Red Garnet", "Yellow Garnet", "Apatite", "Amber", "Onyx",
+            "Agate", "Opal", "Amethyst", "Aquamarine", "Heliodor",
+            "Morganite", "Beryl", "Indicolite", "Garnet", "Topaz",
+            "Iolite", "Chaos", "Dark", "Lapis Lazuli", "Black Quartz", "Certus Quartz",
+            "Lepidolite", "Malachite", "Moldavite", "Jasper", "Turquoise",
+            "Moonstone", "Carnelian", "Golden Beryl", "Citrine", "Ametrine",
+            "Tanzanite", "Violet Sapphire", "Alexandrite", "Blue Topaz",
+            "Spinel", "Black Diamond", "Quartz", "Ender Essence"
+        };
+
+        for (int i = 0; i < gemNames.length; i++) {
+            add("item.skyresourcereforge.dirty_gem." + gemNames[i], gemDisplayNames[i] + " Gem");
+        }
+
+        // Tooltip for dirty gems
+        add("tooltip.skyresourcereforge.dirty_gem.rarity", "Rarity: %s");
     }
 
     private String capitalizeFirstLetter(String str) {
