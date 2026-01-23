@@ -27,3 +27,4 @@ repo
 
 # generated cache
 src/generated/resources/.cache/
+*.DS_Store

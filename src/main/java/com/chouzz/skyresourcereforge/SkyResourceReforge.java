@@ -37,7 +37,11 @@ public class SkyResourceReforge {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("SkyResource Reforge Initializing...");
-        event.enqueueWork(com.chouzz.skyresourcereforge.heat.HeatSources::registerDefaults);
+        event.enqueueWork(() -> {
+            com.chouzz.skyresourcereforge.heat.HeatSources.registerDefaults();
+            com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.init();
+            com.chouzz.skyresourcereforge.integration.jei.SkyResourceJEIPlugin.init();
+        });
     }
 
     private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {

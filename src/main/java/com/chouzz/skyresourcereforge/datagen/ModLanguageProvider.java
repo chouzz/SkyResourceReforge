@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.data.PackOutput;
@@ -61,5 +62,27 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.PETRIFIED_PLANKS, "Petrified Wood Planks");
         addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "Lepisma Saccharina Teleportation Disruptor");
         addBlock(ModBlocks.CRUCIBLE, "Crucible");
+
+        // Ore Alchemical Dusts - add all subtypes (hardcoded list since data generation runs before item initialization)
+        String[] oreNames = {
+            "iron", "gold", "copper", "tin", "silver", "zinc", "nickel", "platinum", "aluminum", "lead",
+            "cobalt", "ardite", "osmium", "draconium", "titanium", "tungsten", "chrome", "iridium",
+            "boron", "lithium", "magnesium", "mithril", "yellorium", "uranium", "thorium"
+        };
+
+        for (String oreName : oreNames) {
+            String displayName = capitalizeFirstLetter(oreName) + " Alchemical Ore Dust";
+            add("item.skyresourcereforge.ore_alch_dust." + oreName, displayName);
+        }
+
+        // Tooltip for ore alchemical dust
+        add("tooltip.skyresourcereforge.ore_alch_dust.rarity", "Rarity: %s");
+    }
+
+    private String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

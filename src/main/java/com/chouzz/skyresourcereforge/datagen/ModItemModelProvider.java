@@ -27,5 +27,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.HEAVY_SNOWBALL.get());
         basicItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
         basicItem(ModItems.FLESHY_SNOW_NUGGET.get());
+
+        // Ore Alchemical Dust - single model for all subtypes
+        basicItem(ModItems.ORE_ALCH_DUST.get());
     }
 }
