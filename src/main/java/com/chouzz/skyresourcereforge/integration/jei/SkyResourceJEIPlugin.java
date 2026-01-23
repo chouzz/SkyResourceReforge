@@ -70,36 +70,34 @@ public class SkyResourceJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         SkyResourceReforge.LOGGER.info("Registering SkyResource Reforge JEI recipes...");
+        SkyResourceReforge.LOGGER.info("Registered JEI recipes for SkyResource Reforge");
+    }
 
-        // Add all dirty gem variants to JEI item list
-        List<ItemStack> dirtyGems = new ArrayList<>();
-        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
-            ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
-            stack.setDamageValue(i);
-            dirtyGems.add(stack);
-        }
+    @Override
+    public void registerExtraIngredients(mezz.jei.api.registration.IExtraIngredientRegistration registration) {
+        SkyResourceReforge.LOGGER.info("Registering extra ingredients for SkyResource Reforge...");
 
-        // Add all ore alchemical dust variants to JEI item list
-        List<ItemStack> oreDusts = new ArrayList<>();
+        // Add all ore alchemical dust variants
+        java.util.List<ItemStack> oreDusts = new ArrayList<>();
         for (int i = 0; i < ItemOreAlchDust.oreInfos.size(); i++) {
             ItemStack stack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
             stack.setDamageValue(i);
             oreDusts.add(stack);
         }
 
-        SkyResourceReforge.LOGGER.info("Adding {} ore dust variants to JEI with oreInfos size: {}", 
-            oreDusts.size(), ItemOreAlchDust.oreInfos.size());
+        // Add all dirty gem variants
+        java.util.List<ItemStack> dirtyGems = new ArrayList<>();
+        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
+            ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
+            stack.setDamageValue(i);
+            dirtyGems.add(stack);
+        }
 
-        // Register items with JEI
-        List<ItemStack> allVariants = new ArrayList<>();
-        allVariants.addAll(dirtyGems);
-        allVariants.addAll(oreDusts);
+        // Register with JEI
+        registration.addExtraItemStacks(oreDusts);
+        registration.addExtraItemStacks(dirtyGems);
 
-        registration.addIngredientInfo(allVariants, VanillaTypes.ITEM_STACK,
-            Component.literal("Multi-subtype items from SkyResource Reforge")
-        );
-
-        SkyResourceReforge.LOGGER.info("Registered {} gem variants and {} ore dust variants with JEI",
-            dirtyGems.size(), oreDusts.size());
+        SkyResourceReforge.LOGGER.info("Registered {} ore dust and {} dirty gem variants as extra ingredients",
+            oreDusts.size(), dirtyGems.size());
     }
 }

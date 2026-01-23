@@ -17,6 +17,11 @@ public class SkyResourceReforge {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public SkyResourceReforge(IEventBus modEventBus, ModContainer modContainer) {
+        // Initialize data BEFORE registering creative tabs
+        com.chouzz.skyresourcereforge.heat.HeatSources.registerDefaults();
+        com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.init();
+        com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.initGems();
+        
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(this::registerItemHelpers);
@@ -38,9 +43,7 @@ public class SkyResourceReforge {
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("SkyResource Reforge Initializing...");
         event.enqueueWork(() -> {
-            com.chouzz.skyresourcereforge.heat.HeatSources.registerDefaults();
-            com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.init();
-            com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.initGems();
+            ItemHelper.init();
             // JEI plugin uses @JeiPlugin annotation for auto-registration
         });
     }
@@ -53,7 +56,7 @@ public class SkyResourceReforge {
 
     private void registerItemHelpers(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            ItemHelper.init();
+            // Already initialized in constructor
         });
     }
 }
