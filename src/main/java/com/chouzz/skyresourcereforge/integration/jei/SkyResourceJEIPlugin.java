@@ -87,6 +87,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             oreDusts.add(stack);
         }
 
+        SkyResourceReforge.LOGGER.info("Adding {} ore dust variants to JEI with oreInfos size: {}", 
+            oreDusts.size(), ItemOreAlchDust.oreInfos.size());
+
         // Register items with JEI
         List<ItemStack> allVariants = new ArrayList<>();
         allVariants.addAll(dirtyGems);

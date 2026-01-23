@@ -65,5 +65,14 @@ public class SkyResourceReforgeClient {
             }
             return DirtyGemItem.gemInfos.get(damage).color;
         }, ModItems.DIRTY_GEM.get());
+
+        // Register ore alchemical dust color handler - dynamic color tinting based on damage value
+        event.register((stack, tintIndex) -> {
+            int damage = stack.getDamageValue();
+            if (damage < 0 || damage >= com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.size()) {
+                return -1; // No tint for invalid damage values
+            }
+            return com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.get(damage).color;
+        }, ModItems.ORE_ALCH_DUST.get());
     }
 }
