@@ -1,0 +1,125 @@
+package com.chouzz.skyresourcereforge.datagen;
+
+import com.chouzz.skyresourcereforge.registration.ModBlocks;
+import com.chouzz.skyresourcereforge.registration.ModItems;
+import net.minecraft.data.PackOutput;
+
+/**
+ * English language provider.
+ * Contains all English translations for SkyResource Reforge.
+ */
+public class EnglishLanguageProvider extends ModLanguageProvider {
+
+    public EnglishLanguageProvider(PackOutput output) {
+        super(output, "en_us");
+    }
+
+    @Override
+    protected void addCreativeTab() {
+        add("itemGroup.skyresourcereforge.main", "SkyResource Reforge");
+    }
+
+    @Override
+    protected void addKnives() {
+        addItem(ModItems.CACTUS_KNIFE, "Cactus Cutting Knife");
+        addItem(ModItems.STONE_KNIFE, "Stone Cutting Knife");
+        addItem(ModItems.IRON_KNIFE, "Iron Cutting Knife");
+        addItem(ModItems.DIAMOND_KNIFE, "Diamond Cutting Knife");
+    }
+
+    @Override
+    protected void addGrinders() {
+        addItem(ModItems.STONE_GRINDER, "Stone Rock Grinder");
+        addItem(ModItems.IRON_GRINDER, "Iron Rock Grinder");
+        addItem(ModItems.DIAMOND_GRINDER, "Diamond Rock Grinder");
+    }
+
+    @Override
+    protected void addMiscItems() {
+        addItem(ModItems.WATER_EXTRACTOR, "Water Extractor");
+        addItem(ModItems.CACTUS_FRUIT, "Cactus Fruit");
+        addItem(ModItems.HEAVY_SNOWBALL, "Heavy Snowball");
+        addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "Explosive Heavy Snowball");
+        addItem(ModItems.FLESHY_SNOW_NUGGET, "Fleshy Snow Nugget");
+        addItem(ModItems.BASE_COMPONENT, "Base Component");
+        addItem(ModItems.TECH_COMPONENT, "Tech Component");
+    }
+
+    @Override
+    protected void addBlocks() {
+        addBlock(ModBlocks.COMPRESSED_COAL_BLOCK, "Hardened Coal Block");
+        addBlock(ModBlocks.COMBUSTION_CONTROLLER, "Smart Combustion Controller");
+        addBlock(ModBlocks.COMBUSTION_COLLECTOR, "Combustion Collector");
+        addBlock(ModBlocks.ROCK_CRUSHER, "Rock Crusher");
+        addBlock(ModBlocks.ROCK_CLEANER, "Rock Cleaner");
+        addBlock(ModBlocks.CASING, "Casing");
+        addBlock(ModBlocks.SANDY_NETHERRACK, "Sandy Netherrack");
+        addBlock(ModBlocks.COAL_INFUSED_BLOCK, "Alchemical Coal Block");
+        addBlock(ModBlocks.DARK_MATTER_BLOCK, "Dark Matter Block");
+        addBlock(ModBlocks.LIGHT_MATTER_BLOCK, "Light Matter Block");
+        addBlock(ModBlocks.BLAZE_POWDER_BLOCK, "Blaze Powder Block");
+        addBlock(ModBlocks.MAGMAFIED_STONE, "Magmafied Stone");
+        addBlock(ModBlocks.DRY_CACTUS, "Dehydrated Cactus");
+        addBlock(ModBlocks.CACTUS_FRUIT_NEEDLE, "Cactus Fruit On A Needle");
+        addBlock(ModBlocks.DIRT_FURNACE, "Dirt Furnace");
+        addBlock(ModBlocks.MINI_FREEZER, "Mini Freezer");
+        addBlock(ModBlocks.IRON_FREEZER, "Iron Freezer");
+        addBlock(ModBlocks.LIGHT_FREEZER, "Light Matter Freezer");
+        addBlock(ModBlocks.AQUEOUS_CONCENTRATOR, "Aqueous Concentrator");
+        addBlock(ModBlocks.AQUEOUS_DECONCENTRATOR, "Aqueous Deconcentrator");
+        addBlock(ModBlocks.HEAVY_SNOW, "Heavy Snow");
+        addBlock(ModBlocks.PETRIFIED_WOOD, "Petrified Wood");
+        addBlock(ModBlocks.PETRIFIED_PLANKS, "Petrified Wood Planks");
+        addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "Lepisma Saccharina Teleportation Disruptor");
+        addBlock(ModBlocks.CRUCIBLE, "Crucible");
+    }
+
+    @Override
+    protected void addOreAlchemicalDusts() {
+        for (String oreName : ORE_NAMES) {
+            String displayName = capitalizeFirstLetter(oreName) + " Alchemical Ore Dust";
+            add("item.skyresourcereforge.ore_alch_dust." + oreName, displayName);
+        }
+    }
+
+    @Override
+    protected void addAlchemyItems() {
+        addItem(ModItems.ALCHEMY_COMPONENT, "Alchemy Component");
+        addItem(ModItems.HEALTH_GEM, "Health Gem");
+        addItem(ModItems.ORE_ALCH_DUST, "Alchemical Ore Dust");
+        addItem(ModItems.DIRTY_GEM, "Dirty Gem");
+    }
+
+    @Override
+    protected void addDirtyGems() {
+        String[] gemDisplayNames = {
+            "Emerald", "Diamond", "Ruby", "Sapphire", "Peridot",
+            "Red Garnet", "Yellow Garnet", "Apatite", "Amber", "Onyx",
+            "Agate", "Opal", "Amethyst", "Aquamarine", "Heliodor",
+            "Morganite", "Beryl", "Indicolite", "Garnet", "Topaz",
+            "Iolite", "Chaos", "Dark", "Lapis Lazuli", "Black Quartz", "Certus Quartz",
+            "Lepidolite", "Malachite", "Moldavite", "Jasper", "Turquoise",
+            "Moonstone", "Carnelian", "Golden Beryl", "Citrine", "Ametrine",
+            "Tanzanite", "Violet Sapphire", "Alexandrite", "Blue Topaz",
+            "Spinel", "Black Diamond", "Quartz", "Ender Essence"
+        };
+
+        for (int i = 0; i < GEM_NAMES.length; i++) {
+            add("item.skyresourcereforge.dirty_gem." + GEM_NAMES[i], gemDisplayNames[i] + " Gem");
+        }
+    }
+
+    @Override
+    protected void addTooltips() {
+        add("tooltip.skyresourcereforge.ore_alch_dust.rarity", "Rarity: %s");
+        add("tooltip.skyresourcereforge.dirty_gem.rarity", "Rarity: %s");
+    }
+
+    @Override
+    protected void addJEIDescriptions() {
+        add("jei.skyresourcereforge.description.cactus_knife",
+            "Obtained by Shift + Right Clicking a Cactus.\n\n Note: You will take damage during this process.");
+        add("jei.skyresourcereforge.description.blaze_powder_block",
+            "Heat above a heat source to turn into lava.");
+    }
+}

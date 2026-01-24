@@ -6,6 +6,7 @@ import java.util.List;
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
+import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 
 import mezz.jei.api.IModPlugin;
@@ -70,6 +71,18 @@ public class SkyResourceJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         SkyResourceReforge.LOGGER.info("Registering SkyResource Reforge JEI recipes...");
+
+        // Add JEI descriptions for key items
+        // Cactus Knife
+        List<ItemStack> cactusKnives = List.of(new ItemStack(ModItems.CACTUS_KNIFE.get()));
+        registration.addIngredientInfo(cactusKnives, VanillaTypes.ITEM_STACK,
+            Component.translatable("jei.skyresourcereforge.description.cactus_knife"));
+
+        // Blaze Powder Block
+        List<ItemStack> blazePowderBlocks = List.of(new ItemStack(ModBlocks.BLAZE_POWDER_BLOCK.get()));
+        registration.addIngredientInfo(blazePowderBlocks, VanillaTypes.ITEM_STACK,
+            Component.translatable("jei.skyresourcereforge.description.blaze_powder_block"));
+
         SkyResourceReforge.LOGGER.info("Registered JEI recipes for SkyResource Reforge");
     }
 

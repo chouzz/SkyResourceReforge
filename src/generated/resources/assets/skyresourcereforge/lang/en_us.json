@@ -112,6 +112,8 @@
   "item.skyresourcereforge.tech_component": "Tech Component",
   "item.skyresourcereforge.water_extractor": "Water Extractor",
   "itemGroup.skyresourcereforge.main": "SkyResource Reforge",
+  "jei.skyresourcereforge.description.blaze_powder_block": "Heat above a heat source to turn into lava.",
+  "jei.skyresourcereforge.description.cactus_knife": "Obtained by Shift + Right Clicking a Cactus.\n\n Note: You will take damage during this process.",
   "tooltip.skyresourcereforge.dirty_gem.rarity": "Rarity: %s",
   "tooltip.skyresourcereforge.ore_alch_dust.rarity": "Rarity: %s"
 }
