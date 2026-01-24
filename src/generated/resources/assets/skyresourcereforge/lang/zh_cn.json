@@ -148,6 +148,18 @@
   "itemGroup.skyresourcereforge.main": "天际资源：重铸版",
   "jei.skyresourcereforge.description.blaze_powder_block": "在一个热源上方加热将其变为岩浆。",
   "jei.skyresourcereforge.description.cactus_knife": "通过按住 Shift 键右击仙人掌获得。\n\n 提示：这个过程中你会受到伤害。",
+  "jei.skyresourcereforge.recipe.cauldron_clean": "洗矿",
+  "jei.skyresourcereforge.recipe.combustion": "氧化",
+  "jei.skyresourcereforge.recipe.condenser": "冷凝器",
+  "jei.skyresourcereforge.recipe.crucible": "坩埚",
+  "jei.skyresourcereforge.recipe.freezer": "冰箱",
+  "jei.skyresourcereforge.recipe.fusion": "融合",
+  "jei.skyresourcereforge.recipe.handheld_rock_grinder": "手持碎石杵",
+  "jei.skyresourcereforge.recipe.infusion": "注魔",
+  "jei.skyresourcereforge.recipe.knife": "切割刀",
+  "jei.skyresourcereforge.recipe.rock_grinder": "碎石机",
+  "jei.skyresourcereforge.recipe.water_extractor_extract": "抽水器（抽取）",
+  "jei.skyresourcereforge.recipe.water_extractor_insert": "抽水器（注入）",
   "tooltip.skyresourcereforge.dirty_gem.rarity": "稀有度: %s",
   "tooltip.skyresourcereforge.ore_alch_dust.rarity": "稀有度: %s"
 }

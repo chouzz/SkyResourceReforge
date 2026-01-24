@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:acacia_planks"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 6,
+      "id": "minecraft:stick"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}

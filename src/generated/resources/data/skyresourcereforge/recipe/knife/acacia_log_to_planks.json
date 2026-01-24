@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:acacia_log"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 6,
+      "id": "minecraft:acacia_planks"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}

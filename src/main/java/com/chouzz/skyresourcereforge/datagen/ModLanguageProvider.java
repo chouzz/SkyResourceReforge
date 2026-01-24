@@ -74,6 +74,9 @@ public abstract class ModLanguageProvider extends LanguageProvider {
 
         // JEI Descriptions
         addJEIDescriptions();
+
+        // JEI Recipe Categories
+        addJEIRecipeCategories();
     }
 
     // Abstract methods - each language must implement these
@@ -88,6 +91,7 @@ public abstract class ModLanguageProvider extends LanguageProvider {
     protected abstract void addHeatVariants();
     protected abstract void addTooltips();
     protected abstract void addJEIDescriptions();
+    protected abstract void addJEIRecipeCategories();
 
     // Helper methods for common patterns
     protected String capitalizeFirstLetter(String str) {

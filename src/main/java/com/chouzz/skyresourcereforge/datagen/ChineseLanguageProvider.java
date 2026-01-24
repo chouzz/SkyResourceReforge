@@ -145,4 +145,20 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "在一个热源上方加热将其变为岩浆。");
     }
+
+    @Override
+    protected void addJEIRecipeCategories() {
+        add("jei.skyresourcereforge.recipe.combustion", "氧化");
+        add("jei.skyresourcereforge.recipe.water_extractor_extract", "抽水器（抽取）");
+        add("jei.skyresourcereforge.recipe.water_extractor_insert", "抽水器（注入）");
+        add("jei.skyresourcereforge.recipe.rock_grinder", "碎石机");
+        add("jei.skyresourcereforge.recipe.cauldron_clean", "洗矿");
+        add("jei.skyresourcereforge.recipe.freezer", "冰箱");
+        add("jei.skyresourcereforge.recipe.fusion", "融合");
+        add("jei.skyresourcereforge.recipe.infusion", "注魔");
+        add("jei.skyresourcereforge.recipe.condenser", "冷凝器");
+        add("jei.skyresourcereforge.recipe.crucible", "坩埚");
+        add("jei.skyresourcereforge.recipe.knife", "切割刀");
+        add("jei.skyresourcereforge.recipe.handheld_rock_grinder", "手持碎石杵");
+    }
 }

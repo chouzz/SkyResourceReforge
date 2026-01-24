@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:melon"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 9,
+      "id": "minecraft:melon_slice"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}

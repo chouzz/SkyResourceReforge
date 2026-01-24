@@ -84,6 +84,14 @@ public class ModRecipeTypes {
         }
     });
 
+    // Tool-based recipe types
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ProcessRecipe>> KNIFE = RECIPE_TYPES.register("knife", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "knife";
+        }
+    });
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }

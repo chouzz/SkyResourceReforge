@@ -140,4 +140,20 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "Heat above a heat source to turn into lava.");
     }
+
+    @Override
+    protected void addJEIRecipeCategories() {
+        add("jei.skyresourcereforge.recipe.combustion", "Combustion");
+        add("jei.skyresourcereforge.recipe.water_extractor_extract", "Water Extractor (Extract)");
+        add("jei.skyresourcereforge.recipe.water_extractor_insert", "Water Extractor (Insert)");
+        add("jei.skyresourcereforge.recipe.rock_grinder", "Rock Grinder");
+        add("jei.skyresourcereforge.recipe.cauldron_clean", "Cauldron Clean");
+        add("jei.skyresourcereforge.recipe.freezer", "Freezer");
+        add("jei.skyresourcereforge.recipe.fusion", "Fusion");
+        add("jei.skyresourcereforge.recipe.infusion", "Infusion");
+        add("jei.skyresourcereforge.recipe.condenser", "Condenser");
+        add("jei.skyresourcereforge.recipe.crucible", "Crucible");
+        add("jei.skyresourcereforge.recipe.knife", "Knife");
+        add("jei.skyresourcereforge.recipe.handheld_rock_grinder", "Handheld Rock Grinder");
+    }
 }

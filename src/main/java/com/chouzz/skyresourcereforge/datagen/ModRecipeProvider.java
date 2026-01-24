@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -67,5 +68,235 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('Z', ModItems.TECH_COMPONENT.get())
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
+
+        // === KNIFE RECIPES ===
+        // Knife recipes have parameter 0 (not used), fortune affects output count
+
+        // Cactus -> Cactus Fruit (2 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/cactus_to_fruit"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.CACTUS), 1)),
+                List.of(new ItemStack(ModItems.CACTUS_FRUIT.get(), 2)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // Melon Block -> Melon (9 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/melon_block_to_melon"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.MELON), 1)),
+                List.of(new ItemStack(Items.MELON_SLICE, 9)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // Logs to Planks (6 output each) - Oak, Spruce, Birch, Jungle
+        String[] logTypes = {"oak", "spruce", "birch", "jungle"};
+        for (int i = 0; i < logTypes.length; i++) {
+            final int index = i;
+            net.minecraft.world.level.block.Block logBlock = switch (i) {
+                case 0 -> Blocks.OAK_LOG;
+                case 1 -> Blocks.SPRUCE_LOG;
+                case 2 -> Blocks.BIRCH_LOG;
+                case 3 -> Blocks.JUNGLE_LOG;
+                default -> Blocks.OAK_LOG;
+            };
+            net.minecraft.world.item.Item plankItem = switch (i) {
+                case 0 -> Items.OAK_PLANKS;
+                case 1 -> Items.SPRUCE_PLANKS;
+                case 2 -> Items.BIRCH_PLANKS;
+                case 3 -> Items.JUNGLE_PLANKS;
+                default -> Items.OAK_PLANKS;
+            };
+
+            output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/" + logTypes[index] + "_log_to_planks"),
+                new ProcessRecipe(
+                    ModRecipeTypes.KNIFE.getId(),
+                    List.of(CountedIngredient.of(Ingredient.of(logBlock), 1)),
+                    List.of(new ItemStack(plankItem, 6)),
+                    List.of(),
+                    List.of(),
+                    0.0f
+                ),
+                null
+            );
+        }
+
+        // Acacia Log -> Acacia Planks (6 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/acacia_log_to_planks"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.ACACIA_LOG), 1)),
+                List.of(new ItemStack(Items.ACACIA_PLANKS, 6)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // Dark Oak Log -> Dark Oak Planks (6 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/dark_oak_log_to_planks"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.DARK_OAK_LOG), 1)),
+                List.of(new ItemStack(Items.DARK_OAK_PLANKS, 6)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // Planks to Sticks (6 output each) - All 6 plank types
+        net.minecraft.world.item.Item[] planks = {
+            Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS,
+            Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS
+        };
+        for (int i = 0; i < planks.length; i++) {
+            final int index = i;
+            output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/planks_" + index + "_to_sticks"),
+                new ProcessRecipe(
+                    ModRecipeTypes.KNIFE.getId(),
+                    List.of(CountedIngredient.of(Ingredient.of(planks[i]), 1)),
+                    List.of(new ItemStack(Items.STICK, 6)),
+                    List.of(),
+                    List.of(),
+                    0.0f
+                ),
+                null
+            );
+        }
+
+        // Petrified Wood -> Petrified Planks (6 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/petrified_wood_to_planks"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.PETRIFIED_WOOD.get()), 1)),
+                List.of(new ItemStack(ModBlocks.PETRIFIED_PLANKS.get(), 6)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // Petrified Planks -> Sticks (6 output)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/petrified_planks_to_sticks"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.PETRIFIED_PLANKS.get()), 1)),
+                List.of(new ItemStack(Items.STICK, 6)),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        // === ROCK GRINDER RECIPES ===
+        // Rock grinder recipes use parameter as base chance (0.0 to 1.0+), fortune multiplies chance
+
+        // Cobblestone -> Gravel (100% chance)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/cobblestone_to_gravel"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.COBBLESTONE), 1)),
+                List.of(new ItemStack(Blocks.GRAVEL)),
+                List.of(),
+                List.of(),
+                1.0f
+            ),
+            null
+        );
+
+        // Gravel -> Sand (100% chance)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/gravel_to_sand"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.GRAVEL), 1)),
+                List.of(new ItemStack(Blocks.SAND)),
+                List.of(),
+                List.of(),
+                1.0f
+            ),
+            null
+        );
+
+        // Gravel -> Flint (30% chance)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/gravel_to_flint"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.GRAVEL), 1)),
+                List.of(new ItemStack(Items.FLINT)),
+                List.of(),
+                List.of(),
+                0.3f
+            ),
+            null
+        );
+
+        // Stone -> Tech Component variant 0 (44% chance)
+        // Note: Using base component as placeholder since tech component variants aren't fully implemented
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/stone_to_component"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.STONE), 1)),
+                List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
+                List.of(),
+                List.of(),
+                0.44f
+            ),
+            null
+        );
+
+        // Netherrack -> Base Component (44% chance)
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/netherrack_to_component"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.NETHERRACK), 1)),
+                List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
+                List.of(),
+                List.of(),
+                0.44f
+            ),
+            null
+        );
+
+        // Logs -> Base Component (150% chance, can get 1-2 outputs)
+        // Using oak log as representative for all logs
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/log_to_component"),
+            new ProcessRecipe(
+                ModRecipeTypes.ROCK_GRINDER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.OAK_LOG), 1)),
+                List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
+                List.of(),
+                List.of(),
+                1.5f
+            ),
+            null
+        );
     }
 }

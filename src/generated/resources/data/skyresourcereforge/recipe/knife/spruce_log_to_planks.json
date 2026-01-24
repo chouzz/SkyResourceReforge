@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:spruce_log"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 6,
+      "id": "minecraft:spruce_planks"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}

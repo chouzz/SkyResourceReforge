@@ -148,6 +148,18 @@
   "itemGroup.skyresourcereforge.main": "SkyResource Reforge",
   "jei.skyresourcereforge.description.blaze_powder_block": "Heat above a heat source to turn into lava.",
   "jei.skyresourcereforge.description.cactus_knife": "Obtained by Shift + Right Clicking a Cactus.\n\n Note: You will take damage during this process.",
+  "jei.skyresourcereforge.recipe.cauldron_clean": "Cauldron Clean",
+  "jei.skyresourcereforge.recipe.combustion": "Combustion",
+  "jei.skyresourcereforge.recipe.condenser": "Condenser",
+  "jei.skyresourcereforge.recipe.crucible": "Crucible",
+  "jei.skyresourcereforge.recipe.freezer": "Freezer",
+  "jei.skyresourcereforge.recipe.fusion": "Fusion",
+  "jei.skyresourcereforge.recipe.handheld_rock_grinder": "Handheld Rock Grinder",
+  "jei.skyresourcereforge.recipe.infusion": "Infusion",
+  "jei.skyresourcereforge.recipe.knife": "Knife",
+  "jei.skyresourcereforge.recipe.rock_grinder": "Rock Grinder",
+  "jei.skyresourcereforge.recipe.water_extractor_extract": "Water Extractor (Extract)",
+  "jei.skyresourcereforge.recipe.water_extractor_insert": "Water Extractor (Insert)",
   "tooltip.skyresourcereforge.dirty_gem.rarity": "Rarity: %s",
   "tooltip.skyresourcereforge.ore_alch_dust.rarity": "Rarity: %s"
 }

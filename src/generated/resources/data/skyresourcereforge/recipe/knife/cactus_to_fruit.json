@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:cactus"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 2,
+      "id": "skyresourcereforge:cactus_fruit"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}
