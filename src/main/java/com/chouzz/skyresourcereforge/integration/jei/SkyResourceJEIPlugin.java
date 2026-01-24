@@ -14,14 +14,9 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-import net.neoforged.fml.ModList;
 
 /**
  * JEI Plugin for SkyResourceReforge
@@ -47,9 +42,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(
             ModItems.DIRTY_GEM.get(),
             (stack, context) -> {
-                int damage = stack.getDamageValue();
-                if (damage >= 0 && damage < DirtyGemItem.gemInfos.size()) {
-                    return DirtyGemItem.gemInfos.get(damage).name;
+                int index = DirtyGemItem.getGemIndex(stack);
+                if (index >= 0 && index < DirtyGemItem.gemInfos.size()) {
+                    return DirtyGemItem.gemInfos.get(index).name;
                 }
                 return "unknown";
             }
@@ -59,9 +54,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(
             ModItems.ORE_ALCH_DUST.get(),
             (stack, context) -> {
-                int damage = stack.getDamageValue();
-                if (damage >= 0 && damage < ItemOreAlchDust.oreInfos.size()) {
-                    return ItemOreAlchDust.oreInfos.get(damage).name;
+                int index = ItemOreAlchDust.getDustIndex(stack);
+                if (index >= 0 && index < ItemOreAlchDust.oreInfos.size()) {
+                    return ItemOreAlchDust.oreInfos.get(index).name;
                 }
                 return "unknown";
             }
@@ -94,7 +89,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         java.util.List<ItemStack> oreDusts = new ArrayList<>();
         for (int i = 0; i < ItemOreAlchDust.oreInfos.size(); i++) {
             ItemStack stack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
-            stack.setDamageValue(i);
+            ItemOreAlchDust.setDustIndex(stack, i);
             oreDusts.add(stack);
         }
 
@@ -102,7 +97,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         java.util.List<ItemStack> dirtyGems = new ArrayList<>();
         for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
             ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
-            stack.setDamageValue(i);
+            DirtyGemItem.setGemIndex(stack, i);
             dirtyGems.add(stack);
         }
 

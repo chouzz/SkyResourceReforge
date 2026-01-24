@@ -3,6 +3,7 @@ package com.chouzz.skyresourcereforge.alchemy.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chouzz.skyresourcereforge.registration.ModDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -91,6 +92,18 @@ public class DirtyGemItem extends Item {
         return gemInfos.get(index);
     }
 
+    public static int getGemIndex(ItemStack stack) {
+        Integer index = stack.get(ModDataComponents.DIRTY_GEM_INDEX.get());
+        if (index != null) {
+            return index;
+        }
+        return stack.getDamageValue();
+    }
+
+    public static void setGemIndex(ItemStack stack, int index) {
+        stack.set(ModDataComponents.DIRTY_GEM_INDEX.get(), index);
+    }
+
     private static void ensureNamesInitialized() {
         if (names.isEmpty()) {
             for (GemRegisterInfo gem : gemInfos) {
@@ -102,18 +115,18 @@ public class DirtyGemItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         ensureNamesInitialized();
-        int damage = stack.getDamageValue();
-        if (damage >= 0 && damage < names.size()) {
-            return Component.translatable("item.skyresourcereforge.dirty_gem." + names.get(damage));
+        int index = getGemIndex(stack);
+        if (index >= 0 && index < names.size()) {
+            return Component.translatable("item.skyresourcereforge.dirty_gem." + names.get(index));
         }
         return super.getName(stack);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        int damage = stack.getDamageValue();
-        if (damage >= 0 && damage < gemInfos.size()) {
-            GemRegisterInfo info = gemInfos.get(damage);
+        int index = getGemIndex(stack);
+        if (index >= 0 && index < gemInfos.size()) {
+            GemRegisterInfo info = gemInfos.get(index);
             tooltip.add(Component.translatable("tooltip.skyresourcereforge.dirty_gem.rarity",
                     String.format("%.2f%%", info.rarity * 100)));
         }
@@ -125,7 +138,7 @@ public class DirtyGemItem extends Item {
         int index = names.indexOf(name);
         if (index >= 0) {
             ItemStack stack = new ItemStack(instance, 1);
-            stack.setDamageValue(index);
+            setGemIndex(stack, index);
             return stack;
         }
         return ItemStack.EMPTY;

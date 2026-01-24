@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import java.util.List;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SkyResourceReforge.MODID);
@@ -54,7 +53,7 @@ public class ModCreativeTabs {
                 if (com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames() != null) {
                     for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames().size(); i++) {
                         ItemStack stack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
-                        stack.setDamageValue(i);
+                        com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.setDustIndex(stack, i);
                         output.accept(stack);
                     }
                 }
@@ -62,7 +61,7 @@ public class ModCreativeTabs {
                 if (com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.getNames() != null) {
                     for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.getNames().size(); i++) {
                         ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
-                        stack.setDamageValue(i);
+                        com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem.setGemIndex(stack, i);
                         output.accept(stack);
                     }
                 }

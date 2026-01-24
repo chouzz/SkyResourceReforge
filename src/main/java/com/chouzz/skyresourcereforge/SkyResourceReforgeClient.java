@@ -2,7 +2,6 @@ package com.chouzz.skyresourcereforge;
 
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.client.screen.*;
-import com.chouzz.skyresourcereforge.menu.*;
 import com.chouzz.skyresourcereforge.registration.ModEntities;
 import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import com.chouzz.skyresourcereforge.registration.ModItems;
@@ -59,20 +58,20 @@ public class SkyResourceReforgeClient {
     static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         // Register dirty gem color handler - dynamic color tinting based on damage value
         event.register((stack, tintIndex) -> {
-            int damage = stack.getDamageValue();
-            if (damage < 0 || damage >= DirtyGemItem.gemInfos.size()) {
+            int index = DirtyGemItem.getGemIndex(stack);
+            if (index < 0 || index >= DirtyGemItem.gemInfos.size()) {
                 return -1; // No tint for invalid damage values
             }
-            return DirtyGemItem.gemInfos.get(damage).color;
+            return DirtyGemItem.gemInfos.get(index).color;
         }, ModItems.DIRTY_GEM.get());
 
         // Register ore alchemical dust color handler - dynamic color tinting based on damage value
         event.register((stack, tintIndex) -> {
-            int damage = stack.getDamageValue();
-            if (damage < 0 || damage >= com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.size()) {
+            int index = com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getDustIndex(stack);
+            if (index < 0 || index >= com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.size()) {
                 return -1; // No tint for invalid damage values
             }
-            return com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.get(damage).color;
+            return com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.get(index).color;
         }, ModItems.ORE_ALCH_DUST.get());
     }
 }

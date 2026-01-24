@@ -5,19 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.registration.ModDataComponents;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.registries.DeferredItem;
-
-import java.util.function.Supplier;
 
 public class ItemOreAlchDust extends Item {
 
@@ -113,6 +107,18 @@ public class ItemOreAlchDust extends Item {
         return null;
     }
 
+    public static int getDustIndex(ItemStack stack) {
+        Integer index = stack.get(ModDataComponents.ORE_ALCH_DUST_INDEX.get());
+        if (index != null) {
+            return index;
+        }
+        return stack.getDamageValue();
+    }
+
+    public static void setDustIndex(ItemStack stack, int index) {
+        stack.set(ModDataComponents.ORE_ALCH_DUST_INDEX.get(), index);
+    }
+
     private void itemList() {
         if (names.size() == 0) {
             for (int i = 0; i < oreInfos.size(); i++) {
@@ -123,16 +129,18 @@ public class ItemOreAlchDust extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if (stack.getDamageValue() < names.size()) {
-            return Component.translatable("item.skyresourcereforge.ore_alch_dust." + names.get(stack.getDamageValue()));
+        int index = getDustIndex(stack);
+        if (index >= 0 && index < names.size()) {
+            return Component.translatable("item.skyresourcereforge.ore_alch_dust." + names.get(index));
         }
         return super.getName(stack);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> tooltip, TooltipFlag flag) {
-        if (stack.getDamageValue() < oreInfos.size()) {
-            OreRegisterInfo info = oreInfos.get(stack.getDamageValue());
+        int index = getDustIndex(stack);
+        if (index >= 0 && index < oreInfos.size()) {
+            OreRegisterInfo info = oreInfos.get(index);
             tooltip.add(Component.translatable("tooltip.skyresourcereforge.ore_alch_dust.rarity", info.rarity));
         }
         super.appendHoverText(stack, context, tooltip, flag);
@@ -143,7 +151,7 @@ public class ItemOreAlchDust extends Item {
         int index = names.indexOf(name);
         if (index >= 0) {
             ItemStack stack = new ItemStack(Instance, 1);
-            stack.setDamageValue(index);
+            setDustIndex(stack, index);
             return stack;
         }
         return ItemStack.EMPTY;
@@ -155,9 +163,9 @@ public class ItemOreAlchDust extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        int damage = stack.getDamageValue();
-        if (damage >= 0 && damage < names.size()) {
-            return "item.skyresourcereforge.ore_alch_dust." + names.get(damage);
+        int index = getDustIndex(stack);
+        if (index >= 0 && index < names.size()) {
+            return "item.skyresourcereforge.ore_alch_dust." + names.get(index);
         }
         return super.getDescriptionId(stack);
     }
