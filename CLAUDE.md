@@ -134,8 +134,40 @@ public static final RegistryObject<RecipeType<ProcessRecipe>> MY_TYPE = RECIPE_T
     () -> new RecipeType<>() {});
 ```
 
+### Adding a recipe (use Data Generation):
+Create recipes in `ModRecipeProvider.java` and run `./gradlew runData`.
+This will write JSON to `src/generated/resources` (do not hand-edit).
+```java
+output.accept(
+    ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "my_recipe_id"),
+    new ProcessRecipe(
+        ModRecipeTypes.MY_TYPE.getId(),
+        List.of(CountedIngredient.of(Ingredient.of(Items.IRON_INGOT), 1)),
+        List.of(new ItemStack(Items.GOLD_INGOT, 1)),
+        List.of(),
+        List.of(),
+        0.0f
+    ),
+    null
+);
+```
+For normal crafting recipes, use `ShapedRecipeBuilder` or `ShapelessRecipeBuilder`:
+```java
+ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.IRON_KNIFE.get())
+    .pattern("#  ")
+    .pattern("#X ")
+    .pattern(" #X")
+    .define('#', Items.IRON_INGOT)
+    .define('X', Items.STICK)
+    .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+    .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "iron_knife"));
+```
+
 ## Development Context
 
 Always use:
 - Use context7 mcp server to check Neoforge documents and apis
 - Check the origin 1.12.2 version of Skyresource source code in /Users/chouzz/projects/games/SkyResources
+- JEI wiki: https://github.com/mezz/JustEnoughItems/wiki/Getting-Started-%5BJEI-for-Minecraft-1.21-for-NeoForge,-Forge,-or-Fabric%5D
+- DO NOT modify or create json file and consider use Data Generation unless it's neccessary.
+- After your modification, you should consider use ./gradlew build or ./gradlew runData to check your modification.

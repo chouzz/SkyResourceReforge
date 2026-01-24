@@ -51,6 +51,34 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_snowball", has(Items.SNOWBALL))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fleshy_snow_nugget"));
 
+        // Shaped: knives (tool crafting)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.STONE_KNIFE.get())
+                .pattern("#  ")
+                .pattern("#X ")
+                .pattern(" #X")
+                .define('#', Blocks.COBBLESTONE)
+                .define('X', Items.STICK)
+                .unlockedBy("has_cobblestone", has(Blocks.COBBLESTONE))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "stone_knife"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.IRON_KNIFE.get())
+                .pattern("#  ")
+                .pattern("#X ")
+                .pattern(" #X")
+                .define('#', Items.IRON_INGOT)
+                .define('X', Items.STICK)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "iron_knife"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_KNIFE.get())
+                .pattern("#  ")
+                .pattern("#X ")
+                .pattern(" #X")
+                .define('#', Items.DIAMOND)
+                .define('X', Items.STICK)
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "diamond_knife"));
+
         // Shaped: petrified_planks (1 petrified_wood -> 4)
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PETRIFIED_PLANKS.get(), 4)
                 .pattern("X")

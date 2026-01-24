@@ -112,7 +112,11 @@ public class SkyResourceJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         SkyResourceReforge.LOGGER.info("Registering SkyResource Reforge JEI recipes...");
 
-        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        RecipeManager recipeManager = getClientRecipeManager();
+        if (recipeManager == null) {
+            SkyResourceReforge.LOGGER.warn("JEI recipe registration skipped: client recipe manager not available yet.");
+            return;
+        }
 
         // Register recipes for each type
         registration.addRecipes(COMBUSTION_TYPE, getRecipes(recipeManager, ModRecipeTypes.COMBUSTION));
@@ -140,6 +144,16 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             Component.translatable("jei.skyresourcereforge.description.blaze_powder_block"));
 
         SkyResourceReforge.LOGGER.info("Registered JEI recipes for SkyResource Reforge");
+    }
+
+    private RecipeManager getClientRecipeManager() {
+        if (Minecraft.getInstance().getConnection() != null) {
+            return Minecraft.getInstance().getConnection().getRecipeManager();
+        }
+        if (Minecraft.getInstance().level != null) {
+            return Minecraft.getInstance().level.getRecipeManager();
+        }
+        return null;
     }
 
     private List<ProcessRecipe> getRecipes(RecipeManager recipeManager, net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.item.crafting.RecipeType<?>, net.minecraft.world.item.crafting.RecipeType<ProcessRecipe>> recipeTypeHolder) {

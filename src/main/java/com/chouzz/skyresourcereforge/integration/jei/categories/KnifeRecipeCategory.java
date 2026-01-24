@@ -21,15 +21,22 @@ import net.minecraft.world.item.ItemStack;
 public class KnifeRecipeCategory implements IRecipeCategory<ProcessRecipe> {
     private final IDrawable background;
     private final IDrawable icon;
+    private final List<ItemStack> knifeStacks;
 
     public KnifeRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/blank.png"),
-            0, 0, 100, 40
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/infusion.png"),
+            32, 0, 96, 50
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
             new ItemStack(ModItems.IRON_KNIFE.get())
+        );
+        this.knifeStacks = List.of(
+            new ItemStack(ModItems.CACTUS_KNIFE.get()),
+            new ItemStack(ModItems.STONE_KNIFE.get()),
+            new ItemStack(ModItems.IRON_KNIFE.get()),
+            new ItemStack(ModItems.DIAMOND_KNIFE.get())
         );
     }
 
@@ -55,15 +62,24 @@ public class KnifeRecipeCategory implements IRecipeCategory<ProcessRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 0, 1)
+            .addItemStacks(knifeStacks);
+
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
-            builder.addSlot(RecipeIngredientRole.INPUT, 7 + i * 18, 12)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+            List<ItemStack> inputStacks = new java.util.ArrayList<>();
+            for (ItemStack stack : ingredient.ingredient().getItems()) {
+                ItemStack copy = stack.copy();
+                copy.setCount(ingredient.count());
+                inputStacks.add(copy);
+            }
+            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 29)
+                .addIngredients(VanillaTypes.ITEM_STACK, inputStacks);
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 70, 12)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 15)
                 .addItemStack(outputs.get(0));
         }
     }
