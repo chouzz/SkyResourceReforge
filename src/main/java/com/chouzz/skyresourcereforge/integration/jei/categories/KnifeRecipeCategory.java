@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class KnifeRecipeCategory implements IRecipeCategory<ProcessRecipe> {
+    private static final int SLOT_PIXEL_OFFSET = 1;
     private final IDrawable background;
     private final IDrawable icon;
     private final List<ItemStack> knifeStacks;
@@ -62,7 +63,7 @@ public class KnifeRecipeCategory implements IRecipeCategory<ProcessRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 0, 1)
+        builder.addSlot(RecipeIngredientRole.INPUT, 0 + SLOT_PIXEL_OFFSET, 1 + SLOT_PIXEL_OFFSET)
             .addItemStacks(knifeStacks);
 
         for (int i = 0; i < recipe.getInputs().size(); i++) {
@@ -73,13 +74,13 @@ public class KnifeRecipeCategory implements IRecipeCategory<ProcessRecipe> {
                 copy.setCount(ingredient.count());
                 inputStacks.add(copy);
             }
-            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 29)
+            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18 + SLOT_PIXEL_OFFSET, 29 + SLOT_PIXEL_OFFSET)
                 .addIngredients(VanillaTypes.ITEM_STACK, inputStacks);
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 15)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 74 + SLOT_PIXEL_OFFSET, 15 + SLOT_PIXEL_OFFSET)
                 .addItemStack(outputs.get(0));
         }
     }
