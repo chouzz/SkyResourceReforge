@@ -6,7 +6,9 @@ import com.chouzz.skyresourcereforge.registration.ModEntities;
 import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -35,6 +37,14 @@ public class SkyResourceReforgeClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         SkyResourceReforge.LOGGER.info("HELLO FROM CLIENT SETUP");
         SkyResourceReforge.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        ItemProperties.register(ModItems.HEAT_COMPONENT.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_variant"),
+                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.item.HeatComponentItem.getVariantIndex(stack) + 1);
+
+        ItemProperties.register(ModItems.HEAT_PROVIDER.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_variant"),
+                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.item.HeatProviderItem.getVariantIndex(stack) + 1);
     }
 
     @SubscribeEvent

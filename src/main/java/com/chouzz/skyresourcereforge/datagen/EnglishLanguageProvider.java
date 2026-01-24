@@ -43,6 +43,8 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.FLESHY_SNOW_NUGGET, "Fleshy Snow Nugget");
         addItem(ModItems.BASE_COMPONENT, "Base Component");
         addItem(ModItems.TECH_COMPONENT, "Tech Component");
+        addItem(ModItems.HEAT_COMPONENT, "Heat Component");
+        addItem(ModItems.HEAT_PROVIDER, "Heat Provider");
     }
 
     @Override
@@ -106,6 +108,22 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
 
         for (int i = 0; i < GEM_NAMES.length; i++) {
             add("item.skyresourcereforge.dirty_gem." + GEM_NAMES[i], gemDisplayNames[i] + " Gem");
+        }
+    }
+
+    @Override
+    protected void addHeatVariants() {
+        String[] variantDisplayNames = {
+            "Wood", "Stone", "Bronze", "Iron", "Steel", "Electrum", "Nether Brick", "Lead",
+            "Manyullyn", "Signalum", "End Stone", "Enderium", "Dark Matter", "Light Matter",
+            "Osmium", "Refined Obsidian"
+        };
+
+        for (int i = 0; i < HEAT_VARIANT_NAMES.length; i++) {
+            add("item.skyresourcereforge.heat_component." + HEAT_VARIANT_NAMES[i],
+                variantDisplayNames[i] + " Heat Component");
+            add("item.skyresourcereforge.heat_provider." + HEAT_VARIANT_NAMES[i],
+                variantDisplayNames[i] + " Heat Provider");
         }
     }
 

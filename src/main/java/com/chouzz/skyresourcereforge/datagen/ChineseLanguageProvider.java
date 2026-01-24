@@ -43,6 +43,8 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.FLESHY_SNOW_NUGGET, "沾满血肉的雪球");
         addItem(ModItems.BASE_COMPONENT, "基础组件");
         addItem(ModItems.TECH_COMPONENT, "科技组件");
+        addItem(ModItems.HEAT_COMPONENT, "加热组件");
+        addItem(ModItems.HEAT_PROVIDER, "热量供应器");
     }
 
     @Override
@@ -111,6 +113,22 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
 
         for (int i = 0; i < GEM_NAMES.length; i++) {
             add("item.skyresourcereforge.dirty_gem." + GEM_NAMES[i], "污浊的" + gemCnNames[i]);
+        }
+    }
+
+    @Override
+    protected void addHeatVariants() {
+        String[] variantCnNames = {
+            "木质", "石质", "青铜", "铁质", "钢制", "琥珀金", "地狱砖", "铅质",
+            "玛玉灵", "信素", "末地石", "末影合金", "暗物质", "亮物质",
+            "锇", "精炼黑曜石"
+        };
+
+        for (int i = 0; i < HEAT_VARIANT_NAMES.length; i++) {
+            add("item.skyresourcereforge.heat_component." + HEAT_VARIANT_NAMES[i],
+                variantCnNames[i] + "加热组件");
+            add("item.skyresourcereforge.heat_provider." + HEAT_VARIANT_NAMES[i],
+                variantCnNames[i] + "热量供应器");
         }
     }
 

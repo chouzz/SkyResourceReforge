@@ -1,0 +1,105 @@
+{
+  "parent": "skyresourcereforge:item/heat_provider_base",
+  "overrides": [
+    {
+      "model": "skyresourcereforge:item/heat_provider_wood",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 1.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_stone",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 2.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_bronze",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 3.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_iron",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 4.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_steel",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 5.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_electrum",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 6.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_netherbrick",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 7.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_lead",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 8.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_manyullyn",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 9.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_signalum",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 10.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_endstone",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 11.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_enderium",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 12.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_darkmatter",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 13.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_lightmatter",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 14.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_osmium",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 15.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/heat_provider_refinedobsidian",
+      "predicate": {
+        "skyresourcereforge:heat_variant": 16.0
+      }
+    }
+  ],
+  "textures": {
+    "all": "minecraft:block/oak_log",
+    "part": "skyresourcereforge:item/heat_provider"
+  }
+}

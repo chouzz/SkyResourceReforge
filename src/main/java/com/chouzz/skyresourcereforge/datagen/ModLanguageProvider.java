@@ -1,8 +1,6 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
-import com.chouzz.skyresourcereforge.registration.ModBlocks;
-import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -30,6 +28,12 @@ public abstract class ModLanguageProvider extends LanguageProvider {
         "moonstone", "carnelian", "golden_beryl", "citrine", "ametrine",
         "tanzanite", "violet_sapphire", "alexandrite", "blue_topaz",
         "spinel", "black_diamond", "quartz", "ender_essence"
+    };
+
+    protected static final String[] HEAT_VARIANT_NAMES = {
+        "wood", "stone", "bronze", "iron", "steel", "electrum", "netherbrick", "lead",
+        "manyullyn", "signalum", "endstone", "enderium", "darkmatter", "lightmatter",
+        "osmium", "refinedobsidian"
     };
 
     public ModLanguageProvider(PackOutput output, String locale) {
@@ -62,6 +66,9 @@ public abstract class ModLanguageProvider extends LanguageProvider {
         // Dirty Gems
         addDirtyGems();
 
+        // Heat Component / Provider variants
+        addHeatVariants();
+
         // Tooltips
         addTooltips();
 
@@ -78,6 +85,7 @@ public abstract class ModLanguageProvider extends LanguageProvider {
     protected abstract void addOreAlchemicalDusts();
     protected abstract void addAlchemyItems();
     protected abstract void addDirtyGems();
+    protected abstract void addHeatVariants();
     protected abstract void addTooltips();
     protected abstract void addJEIDescriptions();
 

@@ -27,6 +27,9 @@ public class ModCreativeTabs {
                 output.accept(ModItems.CACTUS_FRUIT.get());
                 output.accept(ModItems.BASE_COMPONENT.get());
                 output.accept(ModItems.TECH_COMPONENT.get());
+                for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.item.HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get()));
+                }
                 output.accept(ModBlocks.COMPRESSED_COAL_BLOCK.get());
                 output.accept(ModBlocks.SANDY_NETHERRACK.get());
                 output.accept(ModBlocks.COAL_INFUSED_BLOCK.get());
@@ -44,6 +47,9 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.MINI_FREEZER.get());
                 output.accept(ModBlocks.IRON_FREEZER.get());
                 output.accept(ModBlocks.LIGHT_FREEZER.get());
+                for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.item.HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get()));
+                }
                 output.accept(ModBlocks.AQUEOUS_CONCENTRATOR.get());
                 output.accept(ModBlocks.AQUEOUS_DECONCENTRATOR.get());
                 output.accept(ModBlocks.HEAVY_SNOW.get());

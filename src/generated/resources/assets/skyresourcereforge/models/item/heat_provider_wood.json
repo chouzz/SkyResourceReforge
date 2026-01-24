@@ -1,0 +1,7 @@
+{
+  "parent": "skyresourcereforge:item/heat_provider_base",
+  "textures": {
+    "all": "minecraft:block/oak_log",
+    "part": "skyresourcereforge:item/heat_provider"
+  }
+}

@@ -47,6 +47,9 @@ public class ModItems {
     public static final DeferredItem<Item> TECH_COMPONENT = ITEMS.register("tech_component",
             () -> new com.chouzz.skyresourcereforge.item.TechComponentItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> HEAT_COMPONENT = ITEMS.register("heat_component",
+            () -> new com.chouzz.skyresourcereforge.item.HeatComponentItem(new Item.Properties()));
+
     public static final DeferredItem<Item> HEAVY_SNOWBALL = ITEMS.register("heavy_snowball",
             () -> new com.chouzz.skyresourcereforge.item.HeavySnowballItem(new Item.Properties().stacksTo(8), false));
 
@@ -77,6 +80,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> DIRTY_GEM = ITEMS.register("dirty_gem",
             () -> new com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem(new Item.Properties()));
+
+    public static final DeferredItem<Item> HEAT_PROVIDER = ITEMS.register("heat_provider",
+            () -> new com.chouzz.skyresourcereforge.item.HeatProviderItem(new Item.Properties().stacksTo(1)));
 
     // Additional Items
     public static final DeferredItem<Item> SURVIVALIST_FISHING_ROD = ITEMS.register("survivalist_fishing_rod",

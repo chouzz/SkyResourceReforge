@@ -1,0 +1,7 @@
+{
+  "parent": "skyresourcereforge:item/heat_provider_base",
+  "textures": {
+    "all": "skyresourcereforge:block/signalummachine",
+    "part": "skyresourcereforge:item/heat_provider"
+  }
+}

@@ -25,6 +25,14 @@ public class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("dirty_gem_index",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> HEAT_COMPONENT_INDEX =
+            DATA_COMPONENTS.registerComponentType("heat_component_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> HEAT_PROVIDER_INDEX =
+            DATA_COMPONENTS.registerComponentType("heat_provider_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static void register(IEventBus eventBus) {
         DATA_COMPONENTS.register(eventBus);
     }

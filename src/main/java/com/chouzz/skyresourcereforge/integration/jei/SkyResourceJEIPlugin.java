@@ -6,6 +6,9 @@ import java.util.List;
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
+import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.item.HeatComponentItem;
+import com.chouzz.skyresourcereforge.item.HeatProviderItem;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 
@@ -61,6 +64,16 @@ public class SkyResourceJEIPlugin implements IModPlugin {
                 return "unknown";
             }
         );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.HEAT_COMPONENT.get(),
+            (stack, context) -> HeatVariants.getName(HeatComponentItem.getVariantIndex(stack))
+        );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.HEAT_PROVIDER.get(),
+            (stack, context) -> HeatVariants.getName(HeatProviderItem.getVariantIndex(stack))
+        );
     }
 
     @Override
@@ -101,9 +114,23 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             dirtyGems.add(stack);
         }
 
+        // Add all heat component variants
+        java.util.List<ItemStack> heatComponents = new ArrayList<>();
+        for (int i = 0; i < HeatVariants.size(); i++) {
+            heatComponents.add(HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get()));
+        }
+
+        // Add all heat provider variants
+        java.util.List<ItemStack> heatProviders = new ArrayList<>();
+        for (int i = 0; i < HeatVariants.size(); i++) {
+            heatProviders.add(HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get()));
+        }
+
         // Register with JEI
         registration.addExtraItemStacks(oreDusts);
         registration.addExtraItemStacks(dirtyGems);
+        registration.addExtraItemStacks(heatComponents);
+        registration.addExtraItemStacks(heatProviders);
 
         SkyResourceReforge.LOGGER.info("Registered {} ore dust and {} dirty gem variants as extra ingredients",
             oreDusts.size(), dirtyGems.size());
