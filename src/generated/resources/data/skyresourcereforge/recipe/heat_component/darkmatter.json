@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:obsidian"
+    },
+    "Y": {
+      "item": "minecraft:glowstone_dust"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:heat_component_index": 12
+    },
+    "count": 1,
+    "id": "skyresourcereforge:heat_component"
+  }
+}

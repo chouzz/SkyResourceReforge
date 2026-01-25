@@ -1,11 +1,14 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -13,6 +16,9 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -354,5 +360,98 @@ public class ModRecipeProvider extends RecipeProvider {
             ),
             null
         );
+
+        addHeatComponentRecipes(output);
+    }
+
+    private void addHeatComponentRecipes(RecipeOutput output) {
+        for (int i = 0; i < HeatVariants.size(); i++) {
+            Ingredient material;
+            Item dust;
+
+            switch (i) {
+                case 0 -> {
+                    material = Ingredient.of(ItemTags.PLANKS);
+                    dust = Items.GUNPOWDER;
+                }
+                case 1 -> {
+                    material = Ingredient.of(Blocks.STONE);
+                    dust = Items.GUNPOWDER;
+                }
+                case 2 -> {
+                    material = Ingredient.of(cTag("ingots/bronze"));
+                    dust = Items.GUNPOWDER;
+                }
+                case 3 -> {
+                    material = Ingredient.of(Items.IRON_INGOT);
+                    dust = Items.GUNPOWDER;
+                }
+                case 4 -> {
+                    material = Ingredient.of(cTag("ingots/steel"));
+                    dust = Items.BLAZE_POWDER;
+                }
+                case 5 -> {
+                    material = Ingredient.of(cTag("ingots/electrum"));
+                    dust = Items.BLAZE_POWDER;
+                }
+                case 6 -> {
+                    material = Ingredient.of(Items.NETHER_BRICK);
+                    dust = Items.BLAZE_POWDER;
+                }
+                case 7 -> {
+                    material = Ingredient.of(cTag("ingots/lead"));
+                    dust = Items.BLAZE_POWDER;
+                }
+                case 8 -> {
+                    material = Ingredient.of(cTag("ingots/manyullyn"));
+                    dust = Items.REDSTONE;
+                }
+                case 9 -> {
+                    material = Ingredient.of(cTag("ingots/signalum"));
+                    dust = Items.REDSTONE;
+                }
+                case 10 -> {
+                    material = Ingredient.of(Blocks.END_STONE);
+                    dust = Items.REDSTONE;
+                }
+                case 11 -> {
+                    material = Ingredient.of(cTag("ingots/enderium"));
+                    dust = Items.REDSTONE;
+                }
+                case 12 -> {
+                    material = Ingredient.of(Blocks.OBSIDIAN);
+                    dust = Items.GLOWSTONE_DUST;
+                }
+                case 13 -> {
+                    material = Ingredient.of(Items.QUARTZ);
+                    dust = Items.GLOWSTONE_DUST;
+                }
+                case 14 -> {
+                    material = Ingredient.of(cTag("ingots/osmium"));
+                    dust = Items.BLAZE_POWDER;
+                }
+                case 15 -> {
+                    material = Ingredient.of(cTag("ingots/refined_obsidian"));
+                    dust = Items.REDSTONE;
+                }
+                default -> {
+                    continue;
+                }
+            }
+
+            ItemStack outputStack = HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get());
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XXX")
+                .define('X', material)
+                .define('Y', Ingredient.of(dust))
+                .unlockedBy("has_" + dust.builtInRegistryHolder().key().location().getPath(), has(dust))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_component/" + HeatVariants.getName(i)));
+        }
+    }
+
+    private static TagKey<Item> cTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", path));
     }
 }

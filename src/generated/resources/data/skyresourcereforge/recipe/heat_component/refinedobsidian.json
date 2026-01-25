@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "tag": "c:ingots/refined_obsidian"
+    },
+    "Y": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:heat_component_index": 15
+    },
+    "count": 1,
+    "id": "skyresourcereforge:heat_component"
+  }
+}

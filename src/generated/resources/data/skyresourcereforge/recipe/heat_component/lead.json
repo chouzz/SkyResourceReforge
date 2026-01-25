@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "tag": "c:ingots/lead"
+    },
+    "Y": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:heat_component_index": 7
+    },
+    "count": 1,
+    "id": "skyresourcereforge:heat_component"
+  }
+}
