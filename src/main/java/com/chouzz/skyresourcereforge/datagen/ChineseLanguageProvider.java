@@ -146,6 +146,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
             "通过按住 Shift 键右击仙人掌获得。\n\n 提示：这个过程中你会受到伤害。");
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "在一个热源上方加热将其变为岩浆。");
+        add("jei.skyresourcereforge.heat_source.value", "%s 热值");
     }
 
     @Override
@@ -160,6 +161,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.recipe.infusion", "注魔");
         add("jei.skyresourcereforge.recipe.condenser", "冷凝器");
         add("jei.skyresourcereforge.recipe.crucible", "坩埚");
+        add("jei.skyresourcereforge.recipe.heat_sources", "热源");
         add("jei.skyresourcereforge.recipe.knife", "切割刀");
         add("jei.skyresourcereforge.recipe.handheld_rock_grinder", "手持碎石杵");
     }

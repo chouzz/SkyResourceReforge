@@ -6,13 +6,16 @@ import java.util.List;
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
+import com.chouzz.skyresourcereforge.heat.HeatSources;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.integration.jei.HeatSourceRecipe;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CauldronCleanRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CombustionRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CondenserRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CrucibleRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.FreezerRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.FusionRecipeCategory;
+import com.chouzz.skyresourcereforge.integration.jei.categories.HeatSourcesRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.HandheldRockGrinderRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.InfusionRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.KnifeRecipeCategory;
@@ -52,6 +55,10 @@ import net.minecraft.world.item.crafting.RecipeManager;
 public class SkyResourceJEIPlugin implements IModPlugin {
 
     private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "plugin");
+    private static final int[] HEAT_PROVIDER_VALUES = {
+        100, 600, 950, 1538, 1370, 1878, 3072, 328,
+        2324, 1362, 2164, 3166, 4042, 1566, 3033, 3768
+    };
 
     // JEI Recipe Types
     public static final RecipeType<ProcessRecipe> COMBUSTION_TYPE =
@@ -74,6 +81,8 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         RecipeType.create(SkyResourceReforge.MODID, "condenser", ProcessRecipe.class);
     public static final RecipeType<ProcessRecipe> CRUCIBLE_TYPE =
         RecipeType.create(SkyResourceReforge.MODID, "crucible", ProcessRecipe.class);
+    public static final RecipeType<HeatSourceRecipe> HEAT_SOURCES_TYPE =
+        RecipeType.create(SkyResourceReforge.MODID, "heat_sources", HeatSourceRecipe.class);
 
     // Tool-based recipe types
     public static final RecipeType<ProcessRecipe> KNIFE_TYPE =
@@ -101,6 +110,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             new InfusionRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
             new CondenserRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
             new CrucibleRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+            new HeatSourcesRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
             new KnifeRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
             new HandheldRockGrinderRecipeCategory(registration.getJeiHelpers().getGuiHelper())
         );
@@ -129,6 +139,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addRecipes(INFUSION_TYPE, getRecipes(recipeManager, ModRecipeTypes.INFUSION));
         registration.addRecipes(CONDENSER_TYPE, getRecipes(recipeManager, ModRecipeTypes.CONDENSER));
         registration.addRecipes(CRUCIBLE_TYPE, getRecipes(recipeManager, ModRecipeTypes.CRUCIBLE));
+        registration.addRecipes(HEAT_SOURCES_TYPE, getHeatSourceRecipes());
 
         // Register tool-based recipes
         registration.addRecipes(KNIFE_TYPE, getRecipes(recipeManager, ModRecipeTypes.KNIFE));
@@ -161,6 +172,24 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             .stream()
             .map(RecipeHolder::value)
             .toList();
+    }
+
+    private List<HeatSourceRecipe> getHeatSourceRecipes() {
+        List<HeatSourceRecipe> recipes = new ArrayList<>();
+
+        HeatSources.getHeatSources().forEach((state, heat) -> {
+            ItemStack stack = new ItemStack(state.getBlock());
+            Component name = Component.translatable(state.getBlock().getDescriptionId());
+            recipes.add(new HeatSourceRecipe(stack, name, heat));
+        });
+
+        int variantCount = Math.min(HeatVariants.size(), HEAT_PROVIDER_VALUES.length);
+        for (int i = 0; i < variantCount; i++) {
+            ItemStack stack = HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get());
+            recipes.add(new HeatSourceRecipe(stack, stack.getHoverName(), HEAT_PROVIDER_VALUES[i]));
+        }
+
+        return recipes;
     }
 
     @Override
@@ -201,6 +230,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
         // Crucible
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CRUCIBLE.get()), CRUCIBLE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModItems.HEAT_PROVIDER.get()), HEAT_SOURCES_TYPE);
 
         // Knife tools
         registration.addRecipeCatalyst(new ItemStack(ModItems.CACTUS_KNIFE.get()), KNIFE_TYPE);

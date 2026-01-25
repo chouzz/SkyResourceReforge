@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "skyresourcereforge:heat_component"
+    }
+  },
+  "pattern": [
+    "XYX",
+    "XYX",
+    "X X"
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:heat_provider_index": 3
+    },
+    "count": 1,
+    "id": "skyresourcereforge:heat_provider"
+  }
+}

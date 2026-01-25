@@ -3,6 +3,7 @@ package com.chouzz.skyresourcereforge.datagen;
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
+import com.chouzz.skyresourcereforge.item.HeatProviderItem;
 import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
@@ -424,6 +425,7 @@ public class ModRecipeProvider extends RecipeProvider {
         );
 
         addHeatComponentRecipes(output);
+        addHeatProviderRecipes(output);
     }
 
     private void addHeatComponentRecipes(RecipeOutput output) {
@@ -458,6 +460,41 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('Y', Ingredient.of(recipe.dust()))
                 .unlockedBy("has_" + recipe.dust().builtInRegistryHolder().key().location().getPath(), has(recipe.dust()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_component/" + HeatVariants.getName(i)));
+        }
+    }
+
+    private void addHeatProviderRecipes(RecipeOutput output) {
+        List<Ingredient> materials = List.of(
+            Ingredient.of(ItemTags.LOGS),
+            Ingredient.of(Blocks.STONE),
+            Ingredient.of(cTag("ingots/bronze")),
+            Ingredient.of(Items.IRON_INGOT),
+            Ingredient.of(cTag("ingots/steel")),
+            Ingredient.of(cTag("ingots/electrum")),
+            Ingredient.of(Items.NETHER_BRICK),
+            Ingredient.of(cTag("ingots/lead")),
+            Ingredient.of(cTag("ingots/manyullyn")),
+            Ingredient.of(cTag("ingots/signalum")),
+            Ingredient.of(Blocks.END_STONE),
+            Ingredient.of(cTag("ingots/enderium")),
+            Ingredient.of(ModItems.DARK_MATTER.get()),
+            Ingredient.of(ModItems.LIGHT_MATTER.get()),
+            Ingredient.of(cTag("ingots/osmium")),
+            Ingredient.of(cTag("ingots/refined_obsidian"))
+        );
+
+        int variantCount = Math.min(HeatVariants.size(), materials.size());
+        for (int i = 0; i < variantCount; i++) {
+            ItemStack outputStack = HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get());
+            ItemStack heatComponent = HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get());
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
+                .pattern("XYX")
+                .pattern("XYX")
+                .pattern("X X")
+                .define('X', materials.get(i))
+                .define('Y', Ingredient.of(heatComponent))
+                .unlockedBy("has_heat_component_" + HeatVariants.getName(i), has(ModItems.HEAT_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_provider/" + HeatVariants.getName(i)));
         }
     }
 

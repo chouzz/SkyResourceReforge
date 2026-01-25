@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "tag": "c:ingots/signalum"
+    },
+    "Y": {
+      "item": "skyresourcereforge:heat_component"
+    }
+  },
+  "pattern": [
+    "XYX",
+    "XYX",
+    "X X"
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:heat_provider_index": 9
+    },
+    "count": 1,
+    "id": "skyresourcereforge:heat_provider"
+  }
+}

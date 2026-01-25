@@ -141,6 +141,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
             "Obtained by Shift + Right Clicking a Cactus.\n\n Note: You will take damage during this process.");
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "Heat above a heat source to turn into lava.");
+        add("jei.skyresourcereforge.heat_source.value", "%s Heat");
     }
 
     @Override
@@ -155,6 +156,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.recipe.infusion", "Infusion");
         add("jei.skyresourcereforge.recipe.condenser", "Condenser");
         add("jei.skyresourcereforge.recipe.crucible", "Crucible");
+        add("jei.skyresourcereforge.recipe.heat_sources", "Heat Sources");
         add("jei.skyresourcereforge.recipe.knife", "Knife");
         add("jei.skyresourcereforge.recipe.handheld_rock_grinder", "Handheld Rock Grinder");
     }

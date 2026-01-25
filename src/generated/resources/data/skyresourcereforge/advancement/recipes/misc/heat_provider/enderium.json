@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_heat_component_enderium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skyresourcereforge:heat_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "skyresourcereforge:heat_provider/enderium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_heat_component_enderium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "skyresourcereforge:heat_provider/enderium"
+    ]
+  }
+}
