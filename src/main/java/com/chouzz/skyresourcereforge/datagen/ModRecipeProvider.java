@@ -365,93 +365,44 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addHeatComponentRecipes(RecipeOutput output) {
-        for (int i = 0; i < HeatVariants.size(); i++) {
-            Ingredient material;
-            Item dust;
+        List<HeatComponentRecipe> recipes = List.of(
+            new HeatComponentRecipe(Ingredient.of(ItemTags.PLANKS), Items.GUNPOWDER),
+            new HeatComponentRecipe(Ingredient.of(Blocks.STONE), Items.GUNPOWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/bronze")), Items.GUNPOWDER),
+            new HeatComponentRecipe(Ingredient.of(Items.IRON_INGOT), Items.GUNPOWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/steel")), Items.BLAZE_POWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/electrum")), Items.BLAZE_POWDER),
+            new HeatComponentRecipe(Ingredient.of(Items.NETHER_BRICK), Items.BLAZE_POWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/lead")), Items.BLAZE_POWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/manyullyn")), Items.REDSTONE),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/signalum")), Items.REDSTONE),
+            new HeatComponentRecipe(Ingredient.of(Blocks.END_STONE), Items.REDSTONE),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/enderium")), Items.REDSTONE),
+            new HeatComponentRecipe(Ingredient.of(Blocks.OBSIDIAN), Items.GLOWSTONE_DUST),
+            new HeatComponentRecipe(Ingredient.of(Items.QUARTZ), Items.GLOWSTONE_DUST),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/osmium")), Items.BLAZE_POWDER),
+            new HeatComponentRecipe(Ingredient.of(cTag("ingots/refined_obsidian")), Items.REDSTONE)
+        );
 
-            switch (i) {
-                case 0 -> {
-                    material = Ingredient.of(ItemTags.PLANKS);
-                    dust = Items.GUNPOWDER;
-                }
-                case 1 -> {
-                    material = Ingredient.of(Blocks.STONE);
-                    dust = Items.GUNPOWDER;
-                }
-                case 2 -> {
-                    material = Ingredient.of(cTag("ingots/bronze"));
-                    dust = Items.GUNPOWDER;
-                }
-                case 3 -> {
-                    material = Ingredient.of(Items.IRON_INGOT);
-                    dust = Items.GUNPOWDER;
-                }
-                case 4 -> {
-                    material = Ingredient.of(cTag("ingots/steel"));
-                    dust = Items.BLAZE_POWDER;
-                }
-                case 5 -> {
-                    material = Ingredient.of(cTag("ingots/electrum"));
-                    dust = Items.BLAZE_POWDER;
-                }
-                case 6 -> {
-                    material = Ingredient.of(Items.NETHER_BRICK);
-                    dust = Items.BLAZE_POWDER;
-                }
-                case 7 -> {
-                    material = Ingredient.of(cTag("ingots/lead"));
-                    dust = Items.BLAZE_POWDER;
-                }
-                case 8 -> {
-                    material = Ingredient.of(cTag("ingots/manyullyn"));
-                    dust = Items.REDSTONE;
-                }
-                case 9 -> {
-                    material = Ingredient.of(cTag("ingots/signalum"));
-                    dust = Items.REDSTONE;
-                }
-                case 10 -> {
-                    material = Ingredient.of(Blocks.END_STONE);
-                    dust = Items.REDSTONE;
-                }
-                case 11 -> {
-                    material = Ingredient.of(cTag("ingots/enderium"));
-                    dust = Items.REDSTONE;
-                }
-                case 12 -> {
-                    material = Ingredient.of(Blocks.OBSIDIAN);
-                    dust = Items.GLOWSTONE_DUST;
-                }
-                case 13 -> {
-                    material = Ingredient.of(Items.QUARTZ);
-                    dust = Items.GLOWSTONE_DUST;
-                }
-                case 14 -> {
-                    material = Ingredient.of(cTag("ingots/osmium"));
-                    dust = Items.BLAZE_POWDER;
-                }
-                case 15 -> {
-                    material = Ingredient.of(cTag("ingots/refined_obsidian"));
-                    dust = Items.REDSTONE;
-                }
-                default -> {
-                    continue;
-                }
-            }
-
+        int variantCount = Math.min(HeatVariants.size(), recipes.size());
+        for (int i = 0; i < variantCount; i++) {
+            HeatComponentRecipe recipe = recipes.get(i);
             ItemStack outputStack = HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get());
             ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XXX")
-                .define('X', material)
-                .define('Y', Ingredient.of(dust))
-                .unlockedBy("has_" + dust.builtInRegistryHolder().key().location().getPath(), has(dust))
+                .define('X', recipe.material())
+                .define('Y', Ingredient.of(recipe.dust()))
+                .unlockedBy("has_" + recipe.dust().builtInRegistryHolder().key().location().getPath(), has(recipe.dust()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_component/" + HeatVariants.getName(i)));
         }
     }
 
     private static TagKey<Item> cTag(String path) {
         return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", path));
+    }
+
+    private record HeatComponentRecipe(Ingredient material, Item dust) {
     }
 }
