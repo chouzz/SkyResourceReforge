@@ -1,0 +1,28 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/tin"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:blaze_powder"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:ore_alch_dust_index": 3
+      },
+      "count": 1,
+      "id": "skyresourcereforge:ore_alch_dust"
+    }
+  ],
+  "parameter": 0.0062999995,
+  "recipeType": "skyresourcereforge:fusion"
+}

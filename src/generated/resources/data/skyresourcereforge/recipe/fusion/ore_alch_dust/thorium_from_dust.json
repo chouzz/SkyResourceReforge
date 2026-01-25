@@ -1,0 +1,28 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/thorium"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:lapis_lazuli"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:ore_alch_dust_index": 24
+      },
+      "count": 1,
+      "id": "skyresourcereforge:ore_alch_dust"
+    }
+  ],
+  "parameter": 0.014699999,
+  "recipeType": "skyresourcereforge:fusion"
+}

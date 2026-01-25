@@ -1,0 +1,28 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:tech_component"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "skyresourcereforge:dark_matter"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:ore_alch_dust_index": 17
+      },
+      "count": 1,
+      "id": "skyresourcereforge:ore_alch_dust"
+    }
+  ],
+  "parameter": 0.0088,
+  "recipeType": "skyresourcereforge:fusion"
+}

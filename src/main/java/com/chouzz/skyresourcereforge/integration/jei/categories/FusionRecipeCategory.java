@@ -24,8 +24,8 @@ public class FusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
 
     public FusionRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/blank.png"),
-            0, 0, 100, 40
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/combustion.png"),
+            0, 0, 120, 71
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
@@ -55,15 +55,22 @@ public class FusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
-        for (int i = 0; i < recipe.getInputs().size(); i++) {
-            var ingredient = recipe.getInputs().get(i);
-            builder.addSlot(RecipeIngredientRole.INPUT, 7 + i * 18, 12)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+        List<?> inputs = recipe.getInputs();
+        for (int i = 0; i < 9; i++) {
+            int x = (i % 3) * 18 + 3;
+            int y = (i / 3) * 18 + 9;
+            var slot = builder.addSlot(RecipeIngredientRole.INPUT, x, y);
+            if (i < inputs.size()) {
+                var ingredient = recipe.getInputs().get(i);
+                slot.addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+            }
         }
+
+        builder.addSlot(RecipeIngredientRole.CATALYST, 66, 7);
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 70, 12)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 97, 27)
                 .addItemStack(outputs.get(0));
         }
     }

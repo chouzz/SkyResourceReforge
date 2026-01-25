@@ -1,0 +1,28 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/boron"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:glowstone_dust"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:ore_alch_dust_index": 18
+      },
+      "count": 1,
+      "id": "skyresourcereforge:ore_alch_dust"
+    }
+  ],
+  "parameter": 0.0105,
+  "recipeType": "skyresourcereforge:fusion"
+}

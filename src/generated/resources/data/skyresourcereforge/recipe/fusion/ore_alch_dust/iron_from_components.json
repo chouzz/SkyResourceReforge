@@ -1,0 +1,28 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:rotten_flesh"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:blaze_powder"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:ore_alch_dust_index": 0
+      },
+      "count": 1,
+      "id": "skyresourcereforge:ore_alch_dust"
+    }
+  ],
+  "parameter": 0.0023999999,
+  "recipeType": "skyresourcereforge:fusion"
+}

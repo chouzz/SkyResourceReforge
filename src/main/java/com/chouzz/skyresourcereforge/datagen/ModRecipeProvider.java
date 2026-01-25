@@ -2,6 +2,8 @@ package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
+import com.chouzz.skyresourcereforge.alchemy.item.OreRegisterInfo;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatProviderItem;
 import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
@@ -426,6 +428,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         addHeatComponentRecipes(output);
         addHeatProviderRecipes(output);
+        addOreAlchDustRecipes(output);
     }
 
     private void addHeatComponentRecipes(RecipeOutput output) {
@@ -496,6 +499,94 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_heat_component_" + HeatVariants.getName(i), has(ModItems.HEAT_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_provider/" + HeatVariants.getName(i)));
         }
+    }
+
+    private void addOreAlchDustRecipes(RecipeOutput output) {
+        List<Ingredient> components = List.of(
+            Ingredient.of(Items.ROTTEN_FLESH),
+            Ingredient.of(Items.WHEAT),
+            Ingredient.of(Items.PUMPKIN_SEEDS),
+            Ingredient.of(Items.BONE),
+            Ingredient.of(Items.SUGAR),
+            Ingredient.of(Items.WHEAT),
+            Ingredient.of(Items.IRON_INGOT),
+            Ingredient.of(Items.GOLD_INGOT),
+            Ingredient.of(ModItems.BASE_COMPONENT.get()),
+            Ingredient.of(Blocks.CLAY),
+            Ingredient.of(Items.LAPIS_LAZULI),
+            Ingredient.of(Items.MAGMA_CREAM),
+            Ingredient.of(Items.CLAY_BALL),
+            Ingredient.of(Items.DRAGON_BREATH),
+            Ingredient.of(Items.CHARCOAL),
+            Ingredient.of(Blocks.OBSIDIAN),
+            Ingredient.of(Items.SUGAR),
+            Ingredient.of(ModItems.TECH_COMPONENT.get()),
+            Ingredient.of(Blocks.SOUL_SAND),
+            Ingredient.of(Items.PRISMARINE_SHARD),
+            Ingredient.of(ModItems.BASE_COMPONENT.get()),
+            Ingredient.of(Items.DIAMOND),
+            Ingredient.of(Items.GLOWSTONE_DUST),
+            Ingredient.of(Items.ROTTEN_FLESH),
+            Ingredient.of(ModItems.BASE_COMPONENT.get())
+        );
+
+        int variantCount = Math.min(ItemOreAlchDust.oreInfos.size(), components.size());
+        for (int i = 0; i < variantCount; i++) {
+            OreRegisterInfo info = ItemOreAlchDust.oreInfos.get(i);
+            ItemStack outputStack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
+            ItemOreAlchDust.setDustIndex(outputStack, i);
+
+            ItemStack oreDust = getOreItemDust(info.rarity);
+            List<CountedIngredient> inputs = List.of(
+                CountedIngredient.of(components.get(i), 1),
+                CountedIngredient.of(Ingredient.of(oreDust), oreDust.getCount())
+            );
+
+            output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/ore_alch_dust/" + info.name + "_from_components"),
+                new ProcessRecipe(
+                    ModRecipeTypes.FUSION.getId(),
+                    inputs,
+                    List.of(outputStack),
+                    List.of(),
+                    List.of(),
+                    info.rarity * 0.0008f
+                ),
+                null
+            );
+
+            output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/ore_alch_dust/" + info.name + "_from_dust"),
+                new ProcessRecipe(
+                    ModRecipeTypes.FUSION.getId(),
+                    List.of(
+                        CountedIngredient.of(Ingredient.of(cTag("dusts/" + info.name)), 1),
+                        CountedIngredient.of(Ingredient.of(oreDust), oreDust.getCount())
+                    ),
+                    List.of(outputStack),
+                    List.of(),
+                    List.of(),
+                    info.rarity * 0.0021f
+                ),
+                null
+            );
+        }
+    }
+
+    private static ItemStack getOreItemDust(int rarity) {
+        if (rarity <= 2) {
+            return new ItemStack(Items.GUNPOWDER, 2);
+        }
+        if (rarity <= 4) {
+            return new ItemStack(Items.BLAZE_POWDER, 2);
+        }
+        if (rarity <= 6) {
+            return new ItemStack(Items.GLOWSTONE_DUST, 2);
+        }
+        if (rarity <= 8) {
+            return new ItemStack(Items.LAPIS_LAZULI, 2);
+        }
+        return new ItemStack(ModItems.DARK_MATTER.get(), 2);
     }
 
     private static TagKey<Item> cTag(String path) {
