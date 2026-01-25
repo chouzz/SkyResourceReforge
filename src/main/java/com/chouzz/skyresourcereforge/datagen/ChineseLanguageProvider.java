@@ -42,6 +42,8 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "爆炸性重型雪球");
         addItem(ModItems.FLESHY_SNOW_NUGGET, "沾满血肉的雪球");
         addItem(ModItems.BASE_COMPONENT, "基础组件");
+        addItem(ModItems.DARK_MATTER, "暗物质");
+        addItem(ModItems.LIGHT_MATTER, "亮物质");
         addItem(ModItems.TECH_COMPONENT, "科技组件");
         addItem(ModItems.HEAT_COMPONENT, "加热组件");
         addItem(ModItems.HEAT_PROVIDER, "热量供应器");

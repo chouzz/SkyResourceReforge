@@ -42,6 +42,8 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "Explosive Heavy Snowball");
         addItem(ModItems.FLESHY_SNOW_NUGGET, "Fleshy Snow Nugget");
         addItem(ModItems.BASE_COMPONENT, "Base Component");
+        addItem(ModItems.DARK_MATTER, "Dark Matter");
+        addItem(ModItems.LIGHT_MATTER, "Light Matter");
         addItem(ModItems.TECH_COMPONENT, "Tech Component");
         addItem(ModItems.HEAT_COMPONENT, "Heat Component");
         addItem(ModItems.HEAT_PROVIDER, "Heat Provider");

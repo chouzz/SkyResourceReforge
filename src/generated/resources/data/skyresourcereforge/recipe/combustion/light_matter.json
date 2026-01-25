@@ -1,0 +1,36 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "skyresourcereforge:heavy_snow"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "skyresourcereforge:tech_component"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "skyresourcereforge:alchemy_component"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:end_stone"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:light_matter"
+    }
+  ],
+  "parameter": 3400.0
+}

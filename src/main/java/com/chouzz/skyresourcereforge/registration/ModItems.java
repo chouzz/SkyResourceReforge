@@ -44,6 +44,12 @@ public class ModItems {
     public static final DeferredItem<Item> BASE_COMPONENT = ITEMS.register("base_component",
             () -> new com.chouzz.skyresourcereforge.item.BaseComponentItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> DARK_MATTER = ITEMS.register("dark_matter",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> LIGHT_MATTER = ITEMS.register("light_matter",
+            () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> TECH_COMPONENT = ITEMS.register("tech_component",
             () -> new com.chouzz.skyresourcereforge.item.TechComponentItem(new Item.Properties()));
 

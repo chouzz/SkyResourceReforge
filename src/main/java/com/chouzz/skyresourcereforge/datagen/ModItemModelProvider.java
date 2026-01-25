@@ -26,6 +26,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.WATER_EXTRACTOR.get());
         basicItem(ModItems.CACTUS_FRUIT.get());
         basicItem(ModItems.BASE_COMPONENT.get());
+        getBuilder("dark_matter")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", modLoc("item/dark_matter"));
+        getBuilder("light_matter")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", modLoc("item/light_matter"));
         basicItem(ModItems.TECH_COMPONENT.get());
         basicItem(ModItems.HEAVY_SNOWBALL.get());
         basicItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());

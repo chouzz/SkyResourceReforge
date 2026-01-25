@@ -15,6 +15,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -44,6 +45,41 @@ public class ModRecipeProvider extends RecipeProvider {
                         List.of(),
                         List.of(),
                         100.0f
+                ),
+                null
+        );
+
+        output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/dark_matter"),
+                new ProcessRecipe(
+                        ModRecipeTypes.COMBUSTION.getId(),
+                        List.of(
+                                CountedIngredient.of(Ingredient.of(Items.SOUL_SAND), 5),
+                                CountedIngredient.of(Ingredient.of(ModBlocks.COMPRESSED_COAL_BLOCK.get()), 3),
+                                CountedIngredient.of(Ingredient.of(Items.NETHERITE_INGOT), 7)
+                        ),
+                        List.of(new ItemStack(ModItems.DARK_MATTER.get())),
+                        List.of(),
+                        List.of(),
+                        2900.0f
+                ),
+                null
+        );
+
+        output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/light_matter"),
+                new ProcessRecipe(
+                        ModRecipeTypes.COMBUSTION.getId(),
+                        List.of(
+                                CountedIngredient.of(Ingredient.of(ModBlocks.HEAVY_SNOW.get()), 5),
+                                CountedIngredient.of(Ingredient.of(ModItems.TECH_COMPONENT.get()), 4),
+                                CountedIngredient.of(Ingredient.of(ModItems.ALCHEMY_COMPONENT.get()), 4),
+                                CountedIngredient.of(Ingredient.of(Blocks.END_STONE), 3)
+                        ),
+                        List.of(new ItemStack(ModItems.LIGHT_MATTER.get())),
+                        List.of(),
+                        List.of(),
+                        3400.0f
                 ),
                 null
         );
@@ -130,6 +166,32 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('Z', ModItems.TECH_COMPONENT.get())
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DARK_MATTER_BLOCK.get())
+                .pattern("XXX")
+                .pattern("XXX")
+                .pattern("XXX")
+                .define('X', ModItems.DARK_MATTER.get())
+                .unlockedBy("has_dark_matter", has(ModItems.DARK_MATTER.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LIGHT_MATTER_BLOCK.get())
+                .pattern("XXX")
+                .pattern("XXX")
+                .pattern("XXX")
+                .define('X', ModItems.LIGHT_MATTER.get())
+                .unlockedBy("has_light_matter", has(ModItems.LIGHT_MATTER.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_matter_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.DARK_MATTER.get(), 9)
+                .requires(ModBlocks.DARK_MATTER_BLOCK.get())
+                .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_block_to_items"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LIGHT_MATTER.get(), 9)
+                .requires(ModBlocks.LIGHT_MATTER_BLOCK.get())
+                .unlockedBy("has_light_matter_block", has(ModBlocks.LIGHT_MATTER_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_matter_block_to_items"));
 
         // === KNIFE RECIPES ===
         // Knife recipes have parameter 0 (not used), fortune affects output count

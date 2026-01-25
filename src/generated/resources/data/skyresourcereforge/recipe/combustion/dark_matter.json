@@ -1,0 +1,30 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "minecraft:soul_sand"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "skyresourcereforge:compressed_coal_block"
+      }
+    },
+    {
+      "count": 7,
+      "ingredient": {
+        "item": "minecraft:netherite_ingot"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:dark_matter"
+    }
+  ],
+  "parameter": 2900.0
+}
