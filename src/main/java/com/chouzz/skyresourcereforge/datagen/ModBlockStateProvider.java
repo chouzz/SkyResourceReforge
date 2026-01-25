@@ -56,5 +56,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.PETRIFIED_WOOD.get(), cubeAll(ModBlocks.PETRIFIED_WOOD.get()));
         simpleBlockWithItem(ModBlocks.PETRIFIED_PLANKS.get(), cubeAll(ModBlocks.PETRIFIED_PLANKS.get()));
         simpleBlockWithItem(ModBlocks.SILVERFISH_DISRUPTOR.get(), cubeAll(ModBlocks.SILVERFISH_DISRUPTOR.get()));
+        simpleBlockWithItem(ModBlocks.LIFE_INFUSER.get(), cubeAll(ModBlocks.LIFE_INFUSER.get()));
     }
 }

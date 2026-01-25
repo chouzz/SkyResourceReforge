@@ -170,6 +170,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LIFE_INFUSER.get())
+                .pattern("XXX")
+                .pattern(" X ")
+                .pattern(" Y ")
+                .define('X', ItemTags.LOGS)
+                .define('Y', ModItems.INFUSION_STONE_ALCHEMICAL.get())
+                .unlockedBy("has_infusion_stone_alchemical", has(ModItems.INFUSION_STONE_ALCHEMICAL.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "life_infuser"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DARK_MATTER_BLOCK.get())
                 .pattern("XXX")
                 .pattern("XXX")

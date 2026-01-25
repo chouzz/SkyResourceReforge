@@ -76,6 +76,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addBlock(ModBlocks.PETRIFIED_PLANKS, "石化木板");
         addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "蠹虫传送干扰器");
         addBlock(ModBlocks.CRUCIBLE, "坩埚");
+        addBlock(ModBlocks.LIFE_INFUSER, "生命灌注台");
     }
 
     @Override

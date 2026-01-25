@@ -22,11 +22,16 @@ import net.minecraft.world.item.ItemStack;
 public class InfusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
     private final IDrawable background;
     private final IDrawable icon;
+    private final IDrawable heartIcon;
 
     public InfusionRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/infusion.png"),
             0, 0, 130, 48
+        );
+        this.heartIcon = guiHelper.createDrawable(
+            ResourceLocation.withDefaultNamespace("textures/gui/icons.png"),
+            53, 1, 8, 8
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
@@ -84,5 +89,10 @@ public class InfusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 106, 15)
                 .addItemStack(outputs.get(0));
         }
+    }
+
+    @Override
+    public void draw(ProcessRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        heartIcon.draw(guiGraphics, 70, 0);
     }
 }

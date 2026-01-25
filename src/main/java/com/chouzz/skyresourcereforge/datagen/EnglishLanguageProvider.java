@@ -76,6 +76,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addBlock(ModBlocks.PETRIFIED_PLANKS, "Petrified Wood Planks");
         addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "Lepisma Saccharina Teleportation Disruptor");
         addBlock(ModBlocks.CRUCIBLE, "Crucible");
+        addBlock(ModBlocks.LIFE_INFUSER, "Life Infuser");
     }
 
     @Override
