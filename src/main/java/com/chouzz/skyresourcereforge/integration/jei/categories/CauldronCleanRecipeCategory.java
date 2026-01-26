@@ -16,6 +16,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 
 public class CauldronCleanRecipeCategory implements IRecipeCategory<ProcessRecipe> {
@@ -24,8 +25,8 @@ public class CauldronCleanRecipeCategory implements IRecipeCategory<ProcessRecip
 
     public CauldronCleanRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/blank.png"),
-            0, 0, 100, 40
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/condenser.png"),
+            0, 0, 126, 50
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
@@ -57,14 +58,17 @@ public class CauldronCleanRecipeCategory implements IRecipeCategory<ProcessRecip
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
-            builder.addSlot(RecipeIngredientRole.INPUT, 7 + i * 18, 12)
+            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 0)
                 .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 70, 12)
-                .addItemStack(outputs.get(0));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 84, 11)
+                .addItemStacks(outputs);
         }
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 21, 20)
+            .addItemStack(new ItemStack(Items.CAULDRON));
     }
 }

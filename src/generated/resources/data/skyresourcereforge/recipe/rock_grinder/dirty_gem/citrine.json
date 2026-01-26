@@ -1,0 +1,22 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:netherrack"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:dirty_gem_index": 34
+      },
+      "count": 1,
+      "id": "skyresourcereforge:dirty_gem"
+    }
+  ],
+  "parameter": 0.015,
+  "recipeType": "skyresourcereforge:rock_grinder"
+}

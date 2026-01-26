@@ -2,6 +2,8 @@ package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
+import com.chouzz.skyresourcereforge.alchemy.item.GemRegisterInfo;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
 import com.chouzz.skyresourcereforge.alchemy.item.OreRegisterInfo;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
@@ -401,6 +403,8 @@ public class ModRecipeProvider extends RecipeProvider {
             null
         );
 
+        addDirtyGemRecipes(output);
+
         // Stone -> Tech Component variant 0 (44% chance)
         // Note: Using base component as placeholder since tech component variants aren't fully implemented
         output.accept(
@@ -448,6 +452,26 @@ public class ModRecipeProvider extends RecipeProvider {
         addHeatComponentRecipes(output);
         addHeatProviderRecipes(output);
         addOreAlchDustRecipes(output);
+    }
+
+    private void addDirtyGemRecipes(RecipeOutput output) {
+        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
+            GemRegisterInfo info = DirtyGemItem.gemInfos.get(i);
+            ItemStack outputStack = new ItemStack(ModItems.DIRTY_GEM.get());
+            DirtyGemItem.setGemIndex(outputStack, i);
+            output.accept(
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/dirty_gem/" + info.name),
+                new ProcessRecipe(
+                    ModRecipeTypes.ROCK_GRINDER.getId(),
+                    List.of(CountedIngredient.of(Ingredient.of(info.parentBlock), 1)),
+                    List.of(outputStack),
+                    List.of(),
+                    List.of(),
+                    info.rarity
+                ),
+                null
+            );
+        }
     }
 
     private void addHeatComponentRecipes(RecipeOutput output) {

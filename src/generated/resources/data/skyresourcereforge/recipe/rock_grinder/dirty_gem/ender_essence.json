@@ -1,0 +1,22 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:end_stone"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:dirty_gem_index": 43
+      },
+      "count": 1,
+      "id": "skyresourcereforge:dirty_gem"
+    }
+  ],
+  "parameter": 0.009,
+  "recipeType": "skyresourcereforge:rock_grinder"
+}

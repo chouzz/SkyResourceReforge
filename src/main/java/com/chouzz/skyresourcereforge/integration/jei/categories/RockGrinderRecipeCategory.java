@@ -24,8 +24,8 @@ public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe>
 
     public RockGrinderRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/blank.png"),
-            0, 0, 100, 40
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "textures/gui/jei/infusion.png"),
+            32, 0, 96, 50
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
@@ -57,13 +57,13 @@ public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe>
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
-            builder.addSlot(RecipeIngredientRole.INPUT, 7 + i * 18, 12)
+            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 29)
                 .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 70, 12)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 15)
                 .addItemStack(outputs.get(0));
         }
     }

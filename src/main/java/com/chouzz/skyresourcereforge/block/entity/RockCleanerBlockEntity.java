@@ -4,6 +4,7 @@ import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipeInput;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
+import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -69,6 +70,33 @@ public class RockCleanerBlockEntity extends BlockEntity {
 
         if (blockEntity.tank.getFluidAmount() < 250) {
             blockEntity.progress = 0;
+            blockEntity.setChanged();
+            return;
+        }
+
+        if (DirtyGemItem.isDirtyGem(input)) {
+            int gemIndex = DirtyGemItem.getGemIndex(input);
+            List<ItemStack> outputs = DirtyGemItem.getCleanGemOutputs(gemIndex);
+            if (outputs.isEmpty()) {
+                blockEntity.progress = 0;
+                blockEntity.setChanged();
+                return;
+            }
+
+            if (blockEntity.progress < 100) {
+                blockEntity.progress += 5;
+            }
+
+            if (blockEntity.progress >= 100) {
+                ItemStack output = outputs.get(level.random.nextInt(outputs.size())).copy();
+                blockEntity.bufferStacks.add(output);
+                blockEntity.tank.drain(250, IFluidHandler.FluidAction.EXECUTE);
+                input.shrink(1);
+                if (input.isEmpty()) {
+                    blockEntity.inventory.setStackInSlot(0, ItemStack.EMPTY);
+                }
+                blockEntity.progress = 0;
+            }
             blockEntity.setChanged();
             return;
         }

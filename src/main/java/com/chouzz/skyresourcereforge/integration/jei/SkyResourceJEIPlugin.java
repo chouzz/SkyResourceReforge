@@ -24,6 +24,7 @@ import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorEx
 import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorInsertRecipeCategory;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatProviderItem;
+import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
@@ -41,6 +42,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -133,7 +135,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addRecipes(WATER_EXTRACTOR_EXTRACT_TYPE, getRecipes(recipeManager, ModRecipeTypes.WATER_EXTRACTOR_EXTRACT));
         registration.addRecipes(WATER_EXTRACTOR_INSERT_TYPE, getRecipes(recipeManager, ModRecipeTypes.WATER_EXTRACTOR_INSERT));
         registration.addRecipes(ROCK_GRINDER_TYPE, getRecipes(recipeManager, ModRecipeTypes.ROCK_GRINDER));
-        registration.addRecipes(CAULDRON_CLEAN_TYPE, getRecipes(recipeManager, ModRecipeTypes.CAULDRON_CLEAN));
+        List<ProcessRecipe> cauldronCleanRecipes = new ArrayList<>(getRecipes(recipeManager, ModRecipeTypes.CAULDRON_CLEAN));
+        cauldronCleanRecipes.addAll(getDirtyGemCleanRecipes());
+        registration.addRecipes(CAULDRON_CLEAN_TYPE, cauldronCleanRecipes);
         registration.addRecipes(FREEZER_TYPE, getRecipes(recipeManager, ModRecipeTypes.FREEZER));
         registration.addRecipes(FUSION_TYPE, getRecipes(recipeManager, ModRecipeTypes.FUSION));
         registration.addRecipes(INFUSION_TYPE, getRecipes(recipeManager, ModRecipeTypes.INFUSION));
@@ -172,6 +176,27 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             .stream()
             .map(RecipeHolder::value)
             .toList();
+    }
+
+    private List<ProcessRecipe> getDirtyGemCleanRecipes() {
+        List<ProcessRecipe> recipes = new ArrayList<>();
+        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
+            List<ItemStack> outputs = DirtyGemItem.getCleanGemOutputs(i);
+            if (outputs.isEmpty()) {
+                continue;
+            }
+            ItemStack input = new ItemStack(ModItems.DIRTY_GEM.get());
+            DirtyGemItem.setGemIndex(input, i);
+            recipes.add(new ProcessRecipe(
+                ModRecipeTypes.CAULDRON_CLEAN.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(input), 1)),
+                outputs,
+                List.of(),
+                List.of(),
+                1.0f
+            ));
+        }
+        return recipes;
     }
 
     private List<HeatSourceRecipe> getHeatSourceRecipes() {

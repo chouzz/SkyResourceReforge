@@ -2,9 +2,15 @@ package com.chouzz.skyresourcereforge.alchemy.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.chouzz.skyresourcereforge.registration.ModDataComponents;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -147,5 +153,65 @@ public class DirtyGemItem extends Item {
     public static ArrayList<String> getNames() {
         ensureNamesInitialized();
         return names;
+    }
+
+    public static boolean isDirtyGem(ItemStack stack) {
+        return stack.getItem() instanceof DirtyGemItem;
+    }
+
+    public static List<ItemStack> getCleanGemOutputs(int index) {
+        GemRegisterInfo info = getGemInfo(index);
+        if (info == null) {
+            return List.of();
+        }
+        return getCleanGemOutputs(info);
+    }
+
+    public static ItemStack getPreferredCleanGemOutput(int index) {
+        List<ItemStack> outputs = getCleanGemOutputs(index);
+        if (outputs.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+        return outputs.get(0).copy();
+    }
+
+    private static List<ItemStack> getCleanGemOutputs(GemRegisterInfo info) {
+        List<ItemStack> outputs = new ArrayList<>();
+        for (TagKey<Item> tagKey : getGemTags(info)) {
+            Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.getTag(tagKey);
+            if (tag.isEmpty()) {
+                continue;
+            }
+            for (var holder : tag.get()) {
+                outputs.add(new ItemStack(holder.value()));
+            }
+        }
+        return outputs;
+    }
+
+    private static List<TagKey<Item>> getGemTags(GemRegisterInfo info) {
+        List<TagKey<Item>> tags = new ArrayList<>();
+        if (info.oreOverride != null && !info.oreOverride.isBlank()) {
+            if ("crystalCertusQuartz".equals(info.oreOverride)) {
+                tags.add(cTag("crystals/certus_quartz"));
+                tags.add(cTag("gems/certus_quartz"));
+            }
+        } else {
+            tags.add(cTag("gems/" + info.name));
+            if ("lapis".equals(info.name)) {
+                tags.add(cTag("gems/lapis_lazuli"));
+            }
+            if ("quartz".equals(info.name)) {
+                tags.add(cTag("gems/nether_quartz"));
+            }
+            if ("quartz_black".equals(info.name)) {
+                tags.add(cTag("gems/black_quartz"));
+            }
+        }
+        return tags;
+    }
+
+    private static TagKey<Item> cTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", path));
     }
 }
