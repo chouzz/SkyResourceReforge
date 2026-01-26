@@ -151,6 +151,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.recipe.combustion", "Combustion");
         add("jei.skyresourcereforge.recipe.water_extractor_extract", "Water Extractor (Extract)");
         add("jei.skyresourcereforge.recipe.water_extractor_insert", "Water Extractor (Insert)");
+        add("jei.skyresourcereforge.recipe.rock_crusher", "Rock Crusher");
         add("jei.skyresourcereforge.recipe.rock_grinder", "Rock Grinder");
         add("jei.skyresourcereforge.recipe.cauldron_clean", "Cauldron Clean");
         add("jei.skyresourcereforge.recipe.freezer", "Freezer");

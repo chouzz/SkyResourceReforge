@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:oak_log"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:base_component"
+    }
+  ],
+  "parameter": 1.5,
+  "recipeType": "skyresourcereforge:rock_crusher"
+}

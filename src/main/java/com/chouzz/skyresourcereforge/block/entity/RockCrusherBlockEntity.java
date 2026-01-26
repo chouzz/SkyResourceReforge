@@ -59,7 +59,7 @@ public class RockCrusherBlockEntity extends BlockEntity {
         }
 
         ProcessRecipeInput recipeInput = new ProcessRecipeInput(List.of(input));
-        List<ProcessRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.ROCK_GRINDER.get())
+        List<ProcessRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.ROCK_CRUSHER.get())
                 .stream()
                 .map(holder -> holder.value())
                 .toList();

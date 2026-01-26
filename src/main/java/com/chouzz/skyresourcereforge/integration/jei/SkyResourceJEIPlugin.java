@@ -69,8 +69,8 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         RecipeType.create(SkyResourceReforge.MODID, "water_extractor_extract", ProcessRecipe.class);
     public static final RecipeType<ProcessRecipe> WATER_EXTRACTOR_INSERT_TYPE =
         RecipeType.create(SkyResourceReforge.MODID, "water_extractor_insert", ProcessRecipe.class);
-    public static final RecipeType<ProcessRecipe> ROCK_GRINDER_TYPE =
-        RecipeType.create(SkyResourceReforge.MODID, "rock_grinder", ProcessRecipe.class);
+    public static final RecipeType<ProcessRecipe> ROCK_CRUSHER_TYPE =
+        RecipeType.create(SkyResourceReforge.MODID, "rock_crusher", ProcessRecipe.class);
     public static final RecipeType<ProcessRecipe> CAULDRON_CLEAN_TYPE =
         RecipeType.create(SkyResourceReforge.MODID, "cauldron_clean", ProcessRecipe.class);
     public static final RecipeType<ProcessRecipe> FREEZER_TYPE =
@@ -134,7 +134,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addRecipes(COMBUSTION_TYPE, getRecipes(recipeManager, ModRecipeTypes.COMBUSTION));
         registration.addRecipes(WATER_EXTRACTOR_EXTRACT_TYPE, getRecipes(recipeManager, ModRecipeTypes.WATER_EXTRACTOR_EXTRACT));
         registration.addRecipes(WATER_EXTRACTOR_INSERT_TYPE, getRecipes(recipeManager, ModRecipeTypes.WATER_EXTRACTOR_INSERT));
-        registration.addRecipes(ROCK_GRINDER_TYPE, getRecipes(recipeManager, ModRecipeTypes.ROCK_GRINDER));
+        registration.addRecipes(ROCK_CRUSHER_TYPE, getRecipes(recipeManager, ModRecipeTypes.ROCK_CRUSHER));
         List<ProcessRecipe> cauldronCleanRecipes = new ArrayList<>(getRecipes(recipeManager, ModRecipeTypes.CAULDRON_CLEAN));
         cauldronCleanRecipes.addAll(getDirtyGemCleanRecipes());
         registration.addRecipes(CAULDRON_CLEAN_TYPE, cauldronCleanRecipes);
@@ -234,7 +234,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.AQUEOUS_DECONCENTRATOR.get()), WATER_EXTRACTOR_INSERT_TYPE);
 
         // Rock Grinder
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ROCK_CRUSHER.get()), ROCK_GRINDER_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ROCK_CRUSHER.get()), ROCK_CRUSHER_TYPE);
 
         // Cauldron Clean
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ROCK_CLEANER.get()), CAULDRON_CLEAN_TYPE);

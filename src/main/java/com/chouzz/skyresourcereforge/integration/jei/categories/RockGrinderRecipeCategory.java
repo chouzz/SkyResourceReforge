@@ -6,6 +6,7 @@ import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.integration.jei.SkyResourceJEIPlugin;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
+import com.chouzz.skyresourcereforge.registration.ModItems;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -14,13 +15,16 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe> {
+    private static final int SLOT_PIXEL_OFFSET = 1;
     private final IDrawable background;
     private final IDrawable icon;
+    private final List<ItemStack> grinderStacks;
 
     public RockGrinderRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(
@@ -31,16 +35,21 @@ public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe>
             VanillaTypes.ITEM_STACK,
             new ItemStack(ModBlocks.ROCK_CRUSHER.get())
         );
+        this.grinderStacks = List.of(
+            new ItemStack(ModItems.STONE_GRINDER.get()),
+            new ItemStack(ModItems.IRON_GRINDER.get()),
+            new ItemStack(ModItems.DIAMOND_GRINDER.get())
+        );
     }
 
     @Override
     public mezz.jei.api.recipe.RecipeType<ProcessRecipe> getRecipeType() {
-        return SkyResourceJEIPlugin.ROCK_GRINDER_TYPE;
+        return SkyResourceJEIPlugin.ROCK_CRUSHER_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("jei.skyresourcereforge.recipe.rock_grinder");
+        return Component.translatable("jei.skyresourcereforge.recipe.rock_crusher");
     }
 
     @Override
@@ -55,16 +64,27 @@ public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ProcessRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 0 + SLOT_PIXEL_OFFSET, 1 + SLOT_PIXEL_OFFSET)
+            .addItemStacks(grinderStacks);
+
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
-            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 29)
+            builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18 + SLOT_PIXEL_OFFSET, 29 + SLOT_PIXEL_OFFSET)
                 .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 15)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 74 + SLOT_PIXEL_OFFSET, 15 + SLOT_PIXEL_OFFSET)
                 .addItemStack(outputs.get(0));
         }
+    }
+
+    @Override
+    public void draw(ProcessRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        String text = Math.round(recipe.getParameter() * 100000f) / 1000f + "%";
+        var font = Minecraft.getInstance().font;
+        int textWidth = font.width(text);
+        guiGraphics.drawString(font, text, 96 - textWidth, 4, 0x808080, false);
     }
 }

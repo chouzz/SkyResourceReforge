@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:cauldron"
+    },
+    "Z": {
+      "item": "skyresourcereforge:base_component"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XZX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:rock_cleaner"
+  }
+}

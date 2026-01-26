@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:netherrack"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:base_component"
+    }
+  ],
+  "parameter": 0.44,
+  "recipeType": "skyresourcereforge:rock_crusher"
+}

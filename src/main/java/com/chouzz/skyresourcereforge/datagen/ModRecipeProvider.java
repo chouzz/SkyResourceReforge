@@ -172,6 +172,26 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ROCK_CRUSHER.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XZX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', ModItems.DIAMOND_GRINDER.get())
+                .define('Z', ModItems.BASE_COMPONENT.get())
+                .unlockedBy("has_diamond_grinder", has(ModItems.DIAMOND_GRINDER.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_crusher"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ROCK_CLEANER.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XZX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.CAULDRON)
+                .define('Z', ModItems.BASE_COMPONENT.get())
+                .unlockedBy("has_cauldron", has(Items.CAULDRON))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_cleaner"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LIFE_INFUSER.get())
                 .pattern("XXX")
                 .pattern(" X ")
@@ -358,14 +378,24 @@ public class ModRecipeProvider extends RecipeProvider {
             null
         );
 
-        // === ROCK GRINDER RECIPES ===
+        addRockGrinderRecipes(output, ModRecipeTypes.ROCK_GRINDER.getId());
+        addRockGrinderRecipes(output, ModRecipeTypes.ROCK_CRUSHER.getId());
+        addDirtyGemRecipes(output, ModRecipeTypes.ROCK_GRINDER.getId());
+
+        addHeatComponentRecipes(output);
+        addHeatProviderRecipes(output);
+        addOreAlchDustRecipes(output);
+    }
+
+    private void addRockGrinderRecipes(RecipeOutput output, ResourceLocation recipeTypeId) {
         // Rock grinder recipes use parameter as base chance (0.0 to 1.0+), fortune multiplies chance
+        String prefix = recipeTypeId.getPath();
 
         // Cobblestone -> Gravel (100% chance)
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/cobblestone_to_gravel"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/cobblestone_to_gravel"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.COBBLESTONE), 1)),
                 List.of(new ItemStack(Blocks.GRAVEL)),
                 List.of(),
@@ -377,9 +407,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Gravel -> Sand (100% chance)
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/gravel_to_sand"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/gravel_to_sand"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.GRAVEL), 1)),
                 List.of(new ItemStack(Blocks.SAND)),
                 List.of(),
@@ -391,9 +421,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Gravel -> Flint (30% chance)
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/gravel_to_flint"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/gravel_to_flint"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.GRAVEL), 1)),
                 List.of(new ItemStack(Items.FLINT)),
                 List.of(),
@@ -403,14 +433,12 @@ public class ModRecipeProvider extends RecipeProvider {
             null
         );
 
-        addDirtyGemRecipes(output);
-
         // Stone -> Tech Component variant 0 (44% chance)
         // Note: Using base component as placeholder since tech component variants aren't fully implemented
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/stone_to_component"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/stone_to_component"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.STONE), 1)),
                 List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
                 List.of(),
@@ -422,9 +450,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Netherrack -> Base Component (44% chance)
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/netherrack_to_component"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/netherrack_to_component"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.NETHERRACK), 1)),
                 List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
                 List.of(),
@@ -437,9 +465,9 @@ public class ModRecipeProvider extends RecipeProvider {
         // Logs -> Base Component (150% chance, can get 1-2 outputs)
         // Using oak log as representative for all logs
         output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/log_to_component"),
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, prefix + "/log_to_component"),
             new ProcessRecipe(
-                ModRecipeTypes.ROCK_GRINDER.getId(),
+                recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.OAK_LOG), 1)),
                 List.of(new ItemStack(ModItems.BASE_COMPONENT.get())),
                 List.of(),
@@ -448,13 +476,9 @@ public class ModRecipeProvider extends RecipeProvider {
             ),
             null
         );
-
-        addHeatComponentRecipes(output);
-        addHeatProviderRecipes(output);
-        addOreAlchDustRecipes(output);
     }
 
-    private void addDirtyGemRecipes(RecipeOutput output) {
+    private void addDirtyGemRecipes(RecipeOutput output, ResourceLocation recipeTypeId) {
         for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
             GemRegisterInfo info = DirtyGemItem.gemInfos.get(i);
             ItemStack outputStack = new ItemStack(ModItems.DIRTY_GEM.get());
@@ -462,7 +486,7 @@ public class ModRecipeProvider extends RecipeProvider {
             output.accept(
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_grinder/dirty_gem/" + info.name),
                 new ProcessRecipe(
-                    ModRecipeTypes.ROCK_GRINDER.getId(),
+                    recipeTypeId,
                     List.of(CountedIngredient.of(Ingredient.of(info.parentBlock), 1)),
                     List.of(outputStack),
                     List.of(),

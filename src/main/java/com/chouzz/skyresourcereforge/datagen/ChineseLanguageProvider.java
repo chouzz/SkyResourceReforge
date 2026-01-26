@@ -156,6 +156,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         add("jei.skyresourcereforge.recipe.combustion", "氧化");
         add("jei.skyresourcereforge.recipe.water_extractor_extract", "抽水器（抽取）");
         add("jei.skyresourcereforge.recipe.water_extractor_insert", "抽水器（注入）");
+        add("jei.skyresourcereforge.recipe.rock_crusher", "碎石机");
         add("jei.skyresourcereforge.recipe.rock_grinder", "碎石机");
         add("jei.skyresourcereforge.recipe.cauldron_clean", "洗矿");
         add("jei.skyresourcereforge.recipe.freezer", "冰箱");
