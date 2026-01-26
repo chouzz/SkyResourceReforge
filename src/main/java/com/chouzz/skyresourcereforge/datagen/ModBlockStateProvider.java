@@ -60,8 +60,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.FUSION_TABLE.get(), models().cubeBottomTop(
             "fusion_table",
             modLoc("block/fusion_table_side"),
-            modLoc("block/fusion_table_top"),
-            mcLoc("block/oak_planks")
+            mcLoc("block/oak_planks"),
+            modLoc("block/fusion_table_top")
         ));
     }
 }
