@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "skyresourcereforge:base_component"
+    },
+    "Z": {
+      "item": "skyresourcereforge:iron_freezer"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XZX",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:light_freezer"
+  }
+}

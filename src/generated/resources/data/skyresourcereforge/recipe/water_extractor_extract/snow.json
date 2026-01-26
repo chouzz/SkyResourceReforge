@@ -1,0 +1,20 @@
+{
+  "type": "skyresourcereforge:process",
+  "fluidOutputs": [
+    {
+      "amount": 50,
+      "id": "minecraft:water"
+    }
+  ],
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:snow"
+      }
+    }
+  ],
+  "outputs": [],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:water_extractor_extract"
+}

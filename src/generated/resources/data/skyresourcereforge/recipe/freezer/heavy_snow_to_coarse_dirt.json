@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:heavy_snow"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:coarse_dirt"
+    }
+  ],
+  "parameter": 800.0,
+  "recipeType": "skyresourcereforge:freezer"
+}

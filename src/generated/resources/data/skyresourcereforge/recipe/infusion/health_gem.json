@@ -1,0 +1,25 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:alchemy_component"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:chorus_flower"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:health_gem"
+    }
+  ],
+  "parameter": 15.0,
+  "recipeType": "skyresourcereforge:infusion"
+}

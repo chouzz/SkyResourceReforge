@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:sandy_netherrack"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:soul_sand"
+    }
+  ],
+  "parameter": 1500.0,
+  "recipeType": "skyresourcereforge:freezer"
+}

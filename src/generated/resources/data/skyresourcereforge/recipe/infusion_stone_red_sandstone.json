@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "skyresourcereforge:alchemy_component"
+    },
+    "Y": {
+      "item": "minecraft:red_sandstone"
+    }
+  },
+  "pattern": [
+    "X",
+    "Y"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:infusion_stone_red_sandstone"
+  }
+}

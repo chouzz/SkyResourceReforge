@@ -1,0 +1,20 @@
+{
+  "type": "skyresourcereforge:process",
+  "fluidOutputs": [
+    {
+      "amount": 1000,
+      "id": "minecraft:lava"
+    }
+  ],
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:blaze_powder_block"
+      }
+    }
+  ],
+  "outputs": [],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:crucible"
+}

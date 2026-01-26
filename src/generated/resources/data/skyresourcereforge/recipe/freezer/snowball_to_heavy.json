@@ -1,0 +1,19 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:snowball"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:heavy_snowball"
+    }
+  ],
+  "parameter": 40.0,
+  "recipeType": "skyresourcereforge:freezer"
+}

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "skyresourcereforge:alchemy_component"
+    },
+    "B": {
+      "item": "minecraft:quartz_block"
+    },
+    "X": {
+      "item": "skyresourcereforge:dark_matter_block"
+    },
+    "Y": {
+      "item": "minecraft:ender_eye"
+    },
+    "Z": {
+      "item": "skyresourcereforge:base_component"
+    }
+  },
+  "pattern": [
+    "BYB",
+    "AZA",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:end_portal_core"
+  }
+}

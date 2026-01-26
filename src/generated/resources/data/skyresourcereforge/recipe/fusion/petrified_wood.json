@@ -1,0 +1,31 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "minecraft:logs"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:rotten_flesh"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:coal"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:petrified_wood"
+    }
+  ],
+  "parameter": 0.001,
+  "recipeType": "skyresourcereforge:fusion"
+}

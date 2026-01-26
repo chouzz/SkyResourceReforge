@@ -1,0 +1,25 @@
+{
+  "type": "skyresourcereforge:process",
+  "fluidInputs": [
+    {
+      "amount": 200,
+      "id": "minecraft:water"
+    }
+  ],
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:dirt"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:clay"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:water_extractor_insert"
+}

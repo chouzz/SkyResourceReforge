@@ -232,6 +232,8 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.AQUEOUS_DECONCENTRATOR.get()), WATER_EXTRACTOR_EXTRACT_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.AQUEOUS_CONCENTRATOR.get()), WATER_EXTRACTOR_INSERT_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.AQUEOUS_DECONCENTRATOR.get()), WATER_EXTRACTOR_INSERT_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModItems.WATER_EXTRACTOR.get()), WATER_EXTRACTOR_EXTRACT_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModItems.WATER_EXTRACTOR.get()), WATER_EXTRACTOR_INSERT_TYPE);
 
         // Rock Grinder
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ROCK_CRUSHER.get()), ROCK_CRUSHER_TYPE);

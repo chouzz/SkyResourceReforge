@@ -21,6 +21,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -29,6 +30,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -99,6 +102,13 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fleshy_snow_nugget"));
 
         // Shaped: knives (tool crafting)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CACTUS_KNIFE.get())
+                .pattern(" #")
+                .pattern("# ")
+                .define('#', ModItems.ALCHEMY_COMPONENT.get())
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "cactus_knife"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.STONE_KNIFE.get())
                 .pattern("#  ")
                 .pattern("#X ")
@@ -154,6 +164,38 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "diamond_grinder"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CACTUS_FRUIT_NEEDLE.get())
+                .pattern("X")
+                .pattern("Y")
+                .define('X', ModItems.CACTUS_FRUIT.get())
+                .define('Y', ModItems.ALCHEMY_COMPONENT.get())
+                .unlockedBy("has_cactus_fruit", has(ModItems.CACTUS_FRUIT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "cactus_fruit_needle"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_SANDSTONE.get())
+                .pattern("X")
+                .pattern("Y")
+                .define('X', ModItems.ALCHEMY_COMPONENT.get())
+                .define('Y', Blocks.SANDSTONE)
+                .unlockedBy("has_sandstone", has(Blocks.SANDSTONE))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_sandstone"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_RED_SANDSTONE.get())
+                .pattern("X")
+                .pattern("Y")
+                .define('X', ModItems.ALCHEMY_COMPONENT.get())
+                .define('Y', Blocks.RED_SANDSTONE)
+                .unlockedBy("has_red_sandstone", has(Blocks.RED_SANDSTONE))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_red_sandstone"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_ALCHEMICAL.get())
+                .pattern("X")
+                .pattern("Y")
+                .define('X', ModItems.ALCHEMY_COMPONENT.get())
+                .define('Y', ModItems.ALCHEMY_COMPONENT.get())
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_alchemical"));
+
         // Shaped: petrified_planks (1 petrified_wood -> 4)
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PETRIFIED_PLANKS.get(), 4)
                 .pattern("X")
@@ -179,6 +221,209 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('X', Items.IRON_INGOT)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "casing"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.BLAZE_POWDER_BLOCK.get())
+                .pattern("XX")
+                .pattern("XX")
+                .define('X', Items.BLAZE_POWDER)
+                .unlockedBy("has_blaze_powder", has(Items.BLAZE_POWDER))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "blaze_powder_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COAL_INFUSED_BLOCK.get())
+                .pattern("XXX")
+                .pattern("XXX")
+                .pattern("XXX")
+                .define('X', ModItems.ALCHEMY_COMPONENT.get())
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "coal_infused_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HEAVY_SNOW.get())
+                .pattern("XX")
+                .pattern("XX")
+                .define('X', ModItems.HEAVY_SNOWBALL.get())
+                .unlockedBy("has_heavy_snowball", has(ModItems.HEAVY_SNOWBALL.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heavy_snow"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MINI_FREEZER.get())
+                .pattern("X")
+                .pattern("X")
+                .define('X', Blocks.SNOW)
+                .unlockedBy("has_snow", has(Blocks.SNOW))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "mini_freezer"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.IRON_FREEZER.get())
+                .pattern("XXX")
+                .pattern("XZX")
+                .pattern("XXX")
+                .define('X', ModItems.BASE_COMPONENT.get())
+                .define('Z', ModBlocks.MINI_FREEZER.get())
+                .unlockedBy("has_mini_freezer", has(ModBlocks.MINI_FREEZER.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "iron_freezer"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LIGHT_FREEZER.get())
+                .pattern("XXX")
+                .pattern("XZX")
+                .pattern("XXX")
+                .define('X', ModItems.BASE_COMPONENT.get())
+                .define('Z', ModBlocks.IRON_FREEZER.get())
+                .unlockedBy("has_iron_freezer", has(ModBlocks.IRON_FREEZER.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_freezer"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.AQUEOUS_CONCENTRATOR.get())
+                .pattern("XAX")
+                .pattern("XZX")
+                .pattern("XYX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', ModItems.BASE_COMPONENT.get())
+                .define('Z', ModItems.WATER_EXTRACTOR.get())
+                .define('A', Blocks.SNOW)
+                .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "aqueous_concentrator"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.AQUEOUS_DECONCENTRATOR.get())
+                .pattern("XAX")
+                .pattern("XZX")
+                .pattern("XYX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', ModItems.BASE_COMPONENT.get())
+                .define('Z', ModItems.WATER_EXTRACTOR.get())
+                .define('A', Blocks.SAND)
+                .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "aqueous_deconcentrator"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.COMBUSTION_CONTROLLER.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XYX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Items.REDSTONE)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion_controller"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.WILDLIFE_ATTRACTOR.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XZX")
+                .define('X', Blocks.HAY_BLOCK)
+                .define('Y', Blocks.CHEST)
+                .define('Z', Items.REDSTONE)
+                .unlockedBy("has_hay_block", has(Blocks.HAY_BLOCK))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "wildlife_attractor"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.END_PORTAL_CORE.get())
+                .pattern("BYB")
+                .pattern("AZA")
+                .pattern("XXX")
+                .define('X', ModBlocks.DARK_MATTER_BLOCK.get())
+                .define('Y', Items.ENDER_EYE)
+                .define('Z', ModItems.BASE_COMPONENT.get())
+                .define('A', ModItems.ALCHEMY_COMPONENT.get())
+                .define('B', Blocks.QUARTZ_BLOCK)
+                .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "end_portal_core"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SANDY_NETHERRACK.get(), 4)
+                .pattern("XY")
+                .pattern("ZX")
+                .define('X', Blocks.SAND)
+                .define('Y', Items.NETHER_WART)
+                .define('Z', Blocks.NETHERRACK)
+                .unlockedBy("has_netherrack", has(Blocks.NETHERRACK))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "sandy_netherrack"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LIFE_INJECTOR.get())
+                .pattern(" Y ")
+                .pattern(" X ")
+                .pattern("XXX")
+                .define('X', ItemTags.LOGS)
+                .define('Y', Items.DIAMOND_SWORD)
+                .unlockedBy("has_diamond_sword", has(Items.DIAMOND_SWORD))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "life_injector"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CRUCIBLE_INSERTER.get())
+                .pattern("XYX")
+                .pattern("X X")
+                .pattern("X X")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Blocks.DROPPER)
+                .unlockedBy("has_dropper", has(Blocks.DROPPER))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "crucible_inserter"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.WATER_EXTRACTOR.get())
+                .pattern("XXX")
+                .pattern(" XX")
+                .define('X', ItemTags.PLANKS)
+                .unlockedBy("has_planks", has(ItemTags.PLANKS))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CRUCIBLE.get())
+                .pattern("X X")
+                .pattern("X X")
+                .pattern("XXX")
+                .define('X', Items.BRICK)
+                .unlockedBy("has_brick", has(Items.BRICK))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "crucible"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLUID_DROPPER.get())
+                .pattern("XXX")
+                .pattern("X X")
+                .pattern("X X")
+                .define('X', Blocks.COBBLESTONE)
+                .unlockedBy("has_cobblestone", has(Blocks.COBBLESTONE))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fluid_dropper"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.COMBUSTION_COLLECTOR.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XXX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Blocks.HOPPER)
+                .unlockedBy("has_hopper", has(Blocks.HOPPER))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion_collector"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.QUICK_DROPPER.get())
+                .pattern("XXX")
+                .pattern("XZX")
+                .pattern("XYX")
+                .define('X', Items.IRON_INGOT)
+                .define('Y', Blocks.DROPPER)
+                .define('Z', Blocks.GLOWSTONE)
+                .unlockedBy("has_dropper", has(Blocks.DROPPER))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "quick_dropper"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DARK_MATTER_WARPER.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XXX")
+                .define('X', Blocks.OBSIDIAN)
+                .define('Y', ModItems.BASE_COMPONENT.get())
+                .unlockedBy("has_base_component", has(ModItems.BASE_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_warper"));
+
+        ItemStack stoneHeatComponent = HeatComponentItem.createStack(0, ModItems.HEAT_COMPONENT.get());
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DIRT_FURNACE.get())
+                .pattern("X")
+                .pattern("Y")
+                .define('X', Items.DIRT)
+                .define('Y', Ingredient.of(stoneHeatComponent))
+                .unlockedBy("has_heat_component", has(ModItems.HEAT_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dirt_furnace"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SURVIVALIST_FISHING_ROD.get())
+                .pattern(" X")
+                .pattern("XY")
+                .define('X', Items.STICK)
+                .define('Y', Items.STRING)
+                .unlockedBy("has_string", has(Items.STRING))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "survivalist_fishing_rod"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get(), 3)
+                .requires(ModItems.HEAVY_SNOWBALL.get())
+                .requires(ModItems.HEAVY_SNOWBALL.get())
+                .requires(ModItems.HEAVY_SNOWBALL.get())
+                .requires(Items.GUNPOWDER)
+                .unlockedBy("has_heavy_snowball", has(ModItems.HEAVY_SNOWBALL.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heavy_explosive_snowball"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ROCK_CRUSHER.get())
                 .pattern("XXX")
@@ -390,9 +635,249 @@ public class ModRecipeProvider extends RecipeProvider {
         addRockGrinderRecipes(output, ModRecipeTypes.ROCK_CRUSHER.getId());
         addDirtyGemRecipes(output, ModRecipeTypes.ROCK_GRINDER.getId());
 
+        addCombustionExtras(output);
+        addWaterExtractorRecipes(output);
+        addFreezerRecipes(output);
+        addCrucibleRecipes(output);
+        addFusionExtras(output);
+        addInfusionExtras(output);
         addHeatComponentRecipes(output);
         addHeatProviderRecipes(output);
         addOreAlchDustRecipes(output);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.DRY_CACTUS.get()), RecipeCategory.MISC, Items.BLACK_DYE, 0.2f, 200)
+                .unlockedBy("has_dry_cactus", has(ModBlocks.DRY_CACTUS.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dry_cactus_to_black_dye"));
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.PETRIFIED_WOOD.get()), RecipeCategory.MISC, Items.COAL, 0.1f, 200)
+                .unlockedBy("has_petrified_wood", has(ModBlocks.PETRIFIED_WOOD.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "petrified_wood_to_coal"));
+    }
+
+    private void addCombustionExtras(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/dry_cactus"),
+            new ProcessRecipe(
+                ModRecipeTypes.COMBUSTION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Blocks.BONE_BLOCK), 1),
+                    CountedIngredient.of(Ingredient.of(Items.BLACK_DYE), 8),
+                    CountedIngredient.of(Ingredient.of(ModItems.BASE_COMPONENT.get()), 8)
+                ),
+                List.of(new ItemStack(ModBlocks.DRY_CACTUS.get())),
+                List.of(),
+                List.of(),
+                400.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/alchemy_component"),
+            new ProcessRecipe(
+                ModRecipeTypes.COMBUSTION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Items.GUNPOWDER), 3),
+                    CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 2),
+                    CountedIngredient.of(Ingredient.of(Items.COAL), 1)
+                ),
+                List.of(new ItemStack(ModItems.ALCHEMY_COMPONENT.get(), 5)),
+                List.of(),
+                List.of(),
+                335.0f
+            ),
+            null
+        );
+    }
+
+    private void addWaterExtractorRecipes(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor_extract/dry_cactus"),
+            new ProcessRecipe(
+                ModRecipeTypes.WATER_EXTRACTOR_EXTRACT.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.DRY_CACTUS.get()), 1)),
+                List.of(new ItemStack(Blocks.CACTUS)),
+                List.of(),
+                List.of(new FluidStack(Fluids.WATER, 50)),
+                0.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor_extract/snow"),
+            new ProcessRecipe(
+                ModRecipeTypes.WATER_EXTRACTOR_EXTRACT.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.SNOW), 1)),
+                List.of(),
+                List.of(),
+                List.of(new FluidStack(Fluids.WATER, 50)),
+                0.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor_extract/leaves"),
+            new ProcessRecipe(
+                ModRecipeTypes.WATER_EXTRACTOR_EXTRACT.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ItemTags.LEAVES), 1)),
+                List.of(),
+                List.of(),
+                List.of(new FluidStack(Fluids.WATER, 20)),
+                0.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor_insert/dirt_to_clay"),
+            new ProcessRecipe(
+                ModRecipeTypes.WATER_EXTRACTOR_INSERT.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.DIRT), 1)),
+                List.of(new ItemStack(Blocks.CLAY)),
+                List.of(new FluidStack(Fluids.WATER, 200)),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "water_extractor_insert/cactus"),
+            new ProcessRecipe(
+                ModRecipeTypes.WATER_EXTRACTOR_INSERT.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.DRY_CACTUS.get()), 1)),
+                List.of(new ItemStack(Blocks.CACTUS)),
+                List.of(new FluidStack(Fluids.WATER, 1200)),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+    }
+
+    private void addFreezerRecipes(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "freezer/snowball_to_heavy"),
+            new ProcessRecipe(
+                ModRecipeTypes.FREEZER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Items.SNOWBALL), 4)),
+                List.of(new ItemStack(ModItems.HEAVY_SNOWBALL.get())),
+                List.of(),
+                List.of(),
+                40.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "freezer/heavy_snow_to_coarse_dirt"),
+            new ProcessRecipe(
+                ModRecipeTypes.FREEZER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.HEAVY_SNOW.get()), 1)),
+                List.of(new ItemStack(Blocks.COARSE_DIRT)),
+                List.of(),
+                List.of(),
+                800.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "freezer/sandy_netherrack_to_soul_sand"),
+            new ProcessRecipe(
+                ModRecipeTypes.FREEZER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.SANDY_NETHERRACK.get()), 1)),
+                List.of(new ItemStack(Blocks.SOUL_SAND)),
+                List.of(),
+                List.of(),
+                1500.0f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "freezer/iron_ingot_to_tech_component"),
+            new ProcessRecipe(
+                ModRecipeTypes.FREEZER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Items.IRON_INGOT), 1)),
+                List.of(new ItemStack(ModItems.TECH_COMPONENT.get())),
+                List.of(),
+                List.of(),
+                3000.0f
+            ),
+            null
+        );
+    }
+
+    private void addCrucibleRecipes(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "crucible/blaze_powder_block"),
+            new ProcessRecipe(
+                ModRecipeTypes.CRUCIBLE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(ModBlocks.BLAZE_POWDER_BLOCK.get()), 1)),
+                List.of(),
+                List.of(),
+                List.of(new FluidStack(Fluids.LAVA, 1000)),
+                0.0f
+            ),
+            null
+        );
+    }
+
+    private void addFusionExtras(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/magmafied_stone"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Blocks.MAGMA_BLOCK), 1),
+                    CountedIngredient.of(Ingredient.of(Blocks.STONE), 1),
+                    CountedIngredient.of(Ingredient.of(ModItems.ALCHEMY_COMPONENT.get()), 2)
+                ),
+                List.of(new ItemStack(ModBlocks.MAGMAFIED_STONE.get())),
+                List.of(),
+                List.of(),
+                0.009f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/petrified_wood"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(ItemTags.LOGS), 1),
+                    CountedIngredient.of(Ingredient.of(Items.ROTTEN_FLESH), 1),
+                    CountedIngredient.of(Ingredient.of(Items.COAL), 1)
+                ),
+                List.of(new ItemStack(ModBlocks.PETRIFIED_WOOD.get())),
+                List.of(),
+                List.of(),
+                0.001f
+            ),
+            null
+        );
+    }
+
+    private void addInfusionExtras(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion/health_gem"),
+            new ProcessRecipe(
+                ModRecipeTypes.INFUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(ModItems.ALCHEMY_COMPONENT.get()), 1),
+                    CountedIngredient.of(Ingredient.of(Blocks.CHORUS_FLOWER), 1)
+                ),
+                List.of(new ItemStack(ModItems.HEALTH_GEM.get())),
+                List.of(),
+                List.of(),
+                15.0f
+            ),
+            null
+        );
     }
 
     private void addRockGrinderRecipes(RecipeOutput output, ResourceLocation recipeTypeId) {

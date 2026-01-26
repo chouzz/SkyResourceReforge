@@ -1,0 +1,30 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:bone_block"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "minecraft:black_dye"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "skyresourcereforge:base_component"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:dry_cactus"
+    }
+  ],
+  "parameter": 400.0
+}

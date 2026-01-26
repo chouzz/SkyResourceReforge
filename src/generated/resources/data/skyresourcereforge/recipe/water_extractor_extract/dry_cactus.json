@@ -1,0 +1,25 @@
+{
+  "type": "skyresourcereforge:process",
+  "fluidOutputs": [
+    {
+      "amount": 50,
+      "id": "minecraft:water"
+    }
+  ],
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "skyresourcereforge:dry_cactus"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:cactus"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:water_extractor_extract"
+}

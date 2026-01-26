@@ -1,0 +1,30 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:gunpowder"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:blaze_powder"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:coal"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 5,
+      "id": "skyresourcereforge:alchemy_component"
+    }
+  ],
+  "parameter": 335.0
+}

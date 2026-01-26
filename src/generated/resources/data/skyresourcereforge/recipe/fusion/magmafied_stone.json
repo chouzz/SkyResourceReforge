@@ -1,0 +1,31 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:magma_block"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:stone"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "skyresourcereforge:alchemy_component"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "skyresourcereforge:magmafied_stone"
+    }
+  ],
+  "parameter": 0.009,
+  "recipeType": "skyresourcereforge:fusion"
+}

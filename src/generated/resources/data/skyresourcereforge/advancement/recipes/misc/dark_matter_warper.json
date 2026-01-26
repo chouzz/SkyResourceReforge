@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_base_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skyresourcereforge:base_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "skyresourcereforge:dark_matter_warper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_base_component"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "skyresourcereforge:dark_matter_warper"
+    ]
+  }
+}

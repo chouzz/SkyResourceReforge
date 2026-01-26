@@ -122,12 +122,15 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
                 .orElse(null);
 
         if (recipe != null && progress < 100) {
-            // Check if we can output fluid and item
-            if (!recipe.getFluidOutputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
+            if (!recipe.getFluidOutputs().isEmpty()) {
                 FluidStack fluidOutput = recipe.getFluidOutputs().get(0);
                 if (tank.fill(fluidOutput, IFluidHandler.FluidAction.SIMULATE) >= fluidOutput.getAmount()) {
-                    ItemStack output = recipe.getOutputs().get(0).copy();
-                    if (inventory.insertItem(1, output, true).isEmpty()) {
+                    boolean canInsertItem = true;
+                    if (!recipe.getOutputs().isEmpty()) {
+                        ItemStack output = recipe.getOutputs().get(0).copy();
+                        canInsertItem = inventory.insertItem(1, output, true).isEmpty();
+                    }
+                    if (canInsertItem) {
                         progress += 1; // TODO: Configurable speed
                     } else {
                         progress = 0;
@@ -143,8 +146,12 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
         }
 
         if (progress >= 100 && recipe != null) {
-            ItemStack output = recipe.getOutputs().get(0).copy();
-            if (inventory.insertItem(1, output, false).isEmpty()) {
+            boolean inserted = true;
+            if (!recipe.getOutputs().isEmpty()) {
+                ItemStack output = recipe.getOutputs().get(0).copy();
+                inserted = inventory.insertItem(1, output, false).isEmpty();
+            }
+            if (inserted) {
                 FluidStack fluidOutput = recipe.getFluidOutputs().get(0);
                 tank.fill(fluidOutput, IFluidHandler.FluidAction.EXECUTE);
                 int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();

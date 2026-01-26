@@ -11,6 +11,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -65,6 +66,13 @@ public class CrucibleRecipeCategory implements IRecipeCategory<ProcessRecipe> {
         if (!outputs.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 70, 12)
                 .addItemStack(outputs.get(0));
+        }
+
+        if (!recipe.getFluidOutputs().isEmpty()) {
+            var fluid = recipe.getFluidOutputs().get(0);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 54, 2)
+                .addIngredient(NeoForgeTypes.FLUID_STACK, fluid)
+                .setFluidRenderer(4000, false, 14, 42);
         }
     }
 }

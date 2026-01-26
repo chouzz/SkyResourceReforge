@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "skyresourcereforge:aqueous_concentrator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_water_extractor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skyresourcereforge:water_extractor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_water_extractor"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "skyresourcereforge:aqueous_concentrator"
+    ]
+  }
+}
