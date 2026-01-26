@@ -172,6 +172,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CASING.get())
+                .pattern("XXX")
+                .pattern("X X")
+                .pattern("XXX")
+                .define('X', Items.IRON_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "casing"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ROCK_CRUSHER.get())
                 .pattern("XXX")
                 .pattern("XYX")
