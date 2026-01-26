@@ -57,5 +57,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.PETRIFIED_PLANKS.get(), cubeAll(ModBlocks.PETRIFIED_PLANKS.get()));
         simpleBlockWithItem(ModBlocks.SILVERFISH_DISRUPTOR.get(), cubeAll(ModBlocks.SILVERFISH_DISRUPTOR.get()));
         simpleBlockWithItem(ModBlocks.LIFE_INFUSER.get(), cubeAll(ModBlocks.LIFE_INFUSER.get()));
+        simpleBlockWithItem(ModBlocks.FUSION_TABLE.get(), models().cubeBottomTop(
+            "fusion_table",
+            modLoc("block/fusion_table_side"),
+            modLoc("block/fusion_table_top"),
+            mcLoc("block/oak_planks")
+        ));
     }
 }

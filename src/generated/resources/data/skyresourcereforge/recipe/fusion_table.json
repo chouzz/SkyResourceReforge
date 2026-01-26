@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "tag": "minecraft:planks"
+    },
+    "Y": {
+      "item": "skyresourcereforge:alchemy_component"
+    },
+    "Z": {
+      "item": "skyresourcereforge:alchemy_component"
+    }
+  },
+  "pattern": [
+    "XZX",
+    "XYX",
+    "X X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skyresourcereforge:fusion_table"
+  }
+}

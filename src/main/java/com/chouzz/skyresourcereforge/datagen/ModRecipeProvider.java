@@ -179,6 +179,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_infusion_stone_alchemical", has(ModItems.INFUSION_STONE_ALCHEMICAL.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "life_infuser"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FUSION_TABLE.get())
+                .pattern("XZX")
+                .pattern("XYX")
+                .pattern("X X")
+                .define('X', ItemTags.PLANKS)
+                .define('Y', ModItems.ALCHEMY_COMPONENT.get())
+                .define('Z', ModItems.ALCHEMY_COMPONENT.get())
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion_table"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DARK_MATTER_BLOCK.get())
                 .pattern("XXX")
                 .pattern("XXX")

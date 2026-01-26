@@ -58,6 +58,7 @@ public class ModCreativeTabs {
                 output.accept(ModItems.HEAVY_SNOWBALL.get());
                 output.accept(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
                 output.accept(ModBlocks.LIFE_INFUSER.get());
+                output.accept(ModBlocks.FUSION_TABLE.get());
                 // Add ore alchemical dusts
                 if (com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames() != null) {
                     for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames().size(); i++) {
