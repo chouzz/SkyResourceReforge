@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "skyresourcereforge:item/base_component_dark_matter"
-  }
-}

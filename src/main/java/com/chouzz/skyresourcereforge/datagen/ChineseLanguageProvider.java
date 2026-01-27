@@ -50,7 +50,6 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
             "植物物质",
             "钢能组件",
             "冰冻铁冷却组件",
-            "暗物质组件",
             "强化骨粉",
             "木屑",
             "石英增幅器",

@@ -13,7 +13,6 @@ public class BaseComponentItem extends Item {
             "plant_matter",
             "steel_power_component",
             "frozen_iron_cooling_component",
-            "dark_matter",
             "enriched_bonemeal",
             "sawdust",
             "quartz_amp",

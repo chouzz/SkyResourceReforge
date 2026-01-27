@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_base_component": {
+    "has_dark_matter": {
       "conditions": {
         "items": [
           {
-            "items": "skyresourcereforge:base_component"
+            "items": "skyresourcereforge:dark_matter"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_base_component"
+      "has_dark_matter"
     ]
   ],
   "rewards": {

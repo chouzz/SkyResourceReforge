@@ -226,9 +226,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" Y ")
                 .pattern(" Z ")
                 .pattern("XXX")
-                .define('X', baseComponentIngredient(3))
+                .define('X', ModItems.DARK_MATTER.get())
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', baseComponentIngredient(7))
+                .define('Z', baseComponentIngredient(6))
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
@@ -282,7 +282,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XZX")
                 .pattern("XXX")
-                .define('X', baseComponentIngredient(7))
+                .define('X', baseComponentIngredient(6))
                 .define('Z', ModBlocks.IRON_FREEZER.get())
                 .unlockedBy("has_iron_freezer", has(ModBlocks.IRON_FREEZER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_freezer"));
@@ -334,7 +334,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .define('X', ModBlocks.DARK_MATTER_BLOCK.get())
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', baseComponentIngredient(6))
+                .define('Z', baseComponentIngredient(5))
                 .define('A', Ingredient.of(alchemyComponent(7)))
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
@@ -414,8 +414,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XYX")
                 .pattern("XXX")
                 .define('X', Blocks.OBSIDIAN)
-                .define('Y', baseComponentIngredient(3))
-                .unlockedBy("has_base_component", has(ModItems.BASE_COMPONENT.get()))
+                .define('Y', ModItems.DARK_MATTER.get())
+                .unlockedBy("has_dark_matter", has(ModItems.DARK_MATTER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_warper"));
 
         ItemStack stoneHeatComponent = HeatComponentItem.createStack(0, ModItems.HEAT_COMPONENT.get());
@@ -979,7 +979,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.OAK_LOG), 1)),
-                List.of(baseComponent(5)),
+                List.of(baseComponent(4)),
                 List.of(),
                 List.of(),
                 1.5f

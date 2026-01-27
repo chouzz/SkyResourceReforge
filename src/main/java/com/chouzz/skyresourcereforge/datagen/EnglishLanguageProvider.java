@@ -50,7 +50,6 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
             "Plant Matter",
             "Steel Power Component",
             "Frozen Iron Cooling Component",
-            "Dark Matter Component",
             "Enriched Bonemeal",
             "Sawdust",
             "Quartz Amplifier",

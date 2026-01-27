@@ -20,33 +20,27 @@
       }
     },
     {
-      "model": "skyresourcereforge:item/base_component_dark_matter",
+      "model": "skyresourcereforge:item/base_component_enriched_bonemeal",
       "predicate": {
         "skyresourcereforge:base_component_variant": 4.0
       }
     },
     {
-      "model": "skyresourcereforge:item/base_component_enriched_bonemeal",
+      "model": "skyresourcereforge:item/base_component_sawdust",
       "predicate": {
         "skyresourcereforge:base_component_variant": 5.0
       }
     },
     {
-      "model": "skyresourcereforge:item/base_component_sawdust",
+      "model": "skyresourcereforge:item/base_component_quartz_amp",
       "predicate": {
         "skyresourcereforge:base_component_variant": 6.0
       }
     },
     {
-      "model": "skyresourcereforge:item/base_component_quartz_amp",
-      "predicate": {
-        "skyresourcereforge:base_component_variant": 7.0
-      }
-    },
-    {
       "model": "skyresourcereforge:item/base_component_light_matter",
       "predicate": {
-        "skyresourcereforge:base_component_variant": 8.0
+        "skyresourcereforge:base_component_variant": 7.0
       }
     }
   ],
