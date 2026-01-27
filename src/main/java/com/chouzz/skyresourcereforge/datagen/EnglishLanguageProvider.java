@@ -175,6 +175,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
     protected void addTooltips() {
         add("tooltip.skyresourcereforge.ore_alch_dust.rarity", "Rarity: %s");
         add("tooltip.skyresourcereforge.dirty_gem.rarity", "Rarity: %s");
+        add("tooltip.skyresourcereforge.base_component.plant_matter", "Used like bonemeal on crops.");
     }
 
     @Override

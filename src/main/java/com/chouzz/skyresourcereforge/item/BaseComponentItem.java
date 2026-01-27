@@ -4,8 +4,8 @@ import com.chouzz.skyresourcereforge.registration.ModDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BaseComponentItem extends Item {
@@ -64,5 +64,13 @@ public class BaseComponentItem extends Item {
     public String getDescriptionId(ItemStack stack) {
         String variant = NAMES.get(getVariantIndex(stack));
         return "item.skyresourcereforge.base_component." + variant;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        if (getVariantIndex(stack) == 0) {
+            tooltip.add(Component.translatable("tooltip.skyresourcereforge.base_component.plant_matter"));
+        }
+        super.appendHoverText(stack, context, tooltip, flag);
     }
 }

@@ -187,6 +187,7 @@
   "jei.skyresourcereforge.recipe.rock_grinder": "碎石机",
   "jei.skyresourcereforge.recipe.water_extractor_extract": "抽水器（抽取）",
   "jei.skyresourcereforge.recipe.water_extractor_insert": "抽水器（注入）",
+  "tooltip.skyresourcereforge.base_component.plant_matter": "可像骨粉一样用于作物。",
   "tooltip.skyresourcereforge.dirty_gem.rarity": "稀有度: %s",
   "tooltip.skyresourcereforge.ore_alch_dust.rarity": "稀有度: %s"
 }

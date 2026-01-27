@@ -180,6 +180,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
     protected void addTooltips() {
         add("tooltip.skyresourcereforge.ore_alch_dust.rarity", "稀有度: %s");
         add("tooltip.skyresourcereforge.dirty_gem.rarity", "稀有度: %s");
+        add("tooltip.skyresourcereforge.base_component.plant_matter", "可像骨粉一样用于作物。");
     }
 
     @Override

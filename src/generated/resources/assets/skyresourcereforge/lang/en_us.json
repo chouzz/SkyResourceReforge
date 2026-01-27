@@ -187,6 +187,7 @@
   "jei.skyresourcereforge.recipe.rock_grinder": "Rock Grinder",
   "jei.skyresourcereforge.recipe.water_extractor_extract": "Water Extractor (Extract)",
   "jei.skyresourcereforge.recipe.water_extractor_insert": "Water Extractor (Insert)",
+  "tooltip.skyresourcereforge.base_component.plant_matter": "Used like bonemeal on crops.",
   "tooltip.skyresourcereforge.dirty_gem.rarity": "Rarity: %s",
   "tooltip.skyresourcereforge.ore_alch_dust.rarity": "Rarity: %s"
 }

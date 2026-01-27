@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "tag": "minecraft:leaves"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XXX",
+    " X "
+  ],
+  "result": {
+    "components": {
+      "skyresourcereforge:base_component_index": 0
+    },
+    "count": 3,
+    "id": "skyresourcereforge:base_component"
+  }
+}

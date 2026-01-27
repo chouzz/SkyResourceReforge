@@ -16,6 +16,7 @@ import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -198,6 +199,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('Y', Ingredient.of(alchemyComponent(10)))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_alchemical"));
+
+        addPlantMatterRecipes(output);
 
         // Shaped: petrified_planks (1 petrified_wood -> 4)
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PETRIFIED_PLANKS.get(), 4)
@@ -1168,5 +1171,24 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private ItemStack alchemyComponent(int index) {
         return AlchemyComponentItem.createStack(index, ModItems.ALCHEMY_COMPONENT.get());
+    }
+
+    private void addPlantMatterRecipes(RecipeOutput output) {
+        addPlantMatterRecipe(output, "saplings", Ingredient.of(ItemTags.SAPLINGS), has(ItemTags.SAPLINGS));
+        addPlantMatterRecipe(output, "wheat", Ingredient.of(Items.WHEAT), has(Items.WHEAT));
+        addPlantMatterRecipe(output, "leaves", Ingredient.of(ItemTags.LEAVES), has(ItemTags.LEAVES));
+        addPlantMatterRecipe(output, "cactus_fruit", Ingredient.of(ModItems.CACTUS_FRUIT.get()), has(ModItems.CACTUS_FRUIT.get()));
+    }
+
+    private void addPlantMatterRecipe(RecipeOutput output, String name, Ingredient ingredient, Criterion<?> unlock) {
+        ItemStack outputStack = baseComponent(0);
+        outputStack.setCount(3);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
+            .pattern(" X ")
+            .pattern("XXX")
+            .pattern(" X ")
+            .define('X', ingredient)
+            .unlockedBy("has_" + name, unlock)
+            .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/plant_matter_from_" + name));
     }
 }
