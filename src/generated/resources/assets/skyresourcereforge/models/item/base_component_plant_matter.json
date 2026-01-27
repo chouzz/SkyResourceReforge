@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "skyresourcereforge:item/base_component_plant_matter"
+  }
+}

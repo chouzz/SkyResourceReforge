@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "skyresourcereforge:item/alchemy_component_alch_gold_needle"
+  }
+}

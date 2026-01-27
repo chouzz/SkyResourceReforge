@@ -25,10 +25,17 @@ public class ModCreativeTabs {
                 output.accept(ModItems.DIAMOND_GRINDER.get());
                 output.accept(ModItems.WATER_EXTRACTOR.get());
                 output.accept(ModItems.CACTUS_FRUIT.get());
-                output.accept(ModItems.BASE_COMPONENT.get());
+                for (int i = 0; i < com.chouzz.skyresourcereforge.item.BaseComponentItem.getNames().size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.item.BaseComponentItem.createStack(i, ModItems.BASE_COMPONENT.get()));
+                }
                 output.accept(ModItems.DARK_MATTER.get());
                 output.accept(ModItems.LIGHT_MATTER.get());
-                output.accept(ModItems.TECH_COMPONENT.get());
+                for (int i = 0; i < com.chouzz.skyresourcereforge.item.TechComponentItem.getNames().size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.item.TechComponentItem.createStack(i, ModItems.TECH_COMPONENT.get()));
+                }
+                for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem.getNames().size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem.createStack(i, ModItems.ALCHEMY_COMPONENT.get()));
+                }
                 for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
                     output.accept(com.chouzz.skyresourcereforge.item.HeatComponentItem.createStack(i, ModItems.HEAT_COMPONENT.get()));
                 }

@@ -22,7 +22,10 @@
   ],
   "outputs": [
     {
-      "count": 5,
+      "components": {
+        "skyresourcereforge:alchemy_component_index": 2
+      },
+      "count": 1,
       "id": "skyresourcereforge:alchemy_component"
     }
   ],

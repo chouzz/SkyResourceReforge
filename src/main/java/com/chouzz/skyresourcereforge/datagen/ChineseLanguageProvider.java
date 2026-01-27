@@ -41,12 +41,36 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.HEAVY_SNOWBALL, "重型雪球");
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "爆炸性重型雪球");
         addItem(ModItems.FLESHY_SNOW_NUGGET, "沾满血肉的雪球");
-        addItem(ModItems.BASE_COMPONENT, "基础组件");
         addItem(ModItems.DARK_MATTER, "暗物质");
         addItem(ModItems.LIGHT_MATTER, "亮物质");
-        addItem(ModItems.TECH_COMPONENT, "科技组件");
         addItem(ModItems.HEAT_COMPONENT, "加热组件");
         addItem(ModItems.HEAT_PROVIDER, "热量供应器");
+
+        String[] baseNames = {
+            "植物物质",
+            "钢能组件",
+            "冰冻铁冷却组件",
+            "暗物质组件",
+            "强化骨粉",
+            "木屑",
+            "石英增幅器",
+            "亮物质组件"
+        };
+
+        for (int i = 0; i < BASE_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.base_component." + BASE_COMPONENT_NAMES[i], baseNames[i]);
+        }
+
+        String[] techNames = {
+            "碎石",
+            "放射性混合物",
+            "冰冻铁锭",
+            "碎地狱岩"
+        };
+
+        for (int i = 0; i < TECH_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.tech_component." + TECH_COMPONENT_NAMES[i], techNames[i]);
+        }
     }
 
     @Override
@@ -95,7 +119,23 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
 
     @Override
     protected void addAlchemyItems() {
-        addItem(ModItems.ALCHEMY_COMPONENT, "炼金组件");
+        String[] alchemyNames = {
+            "仙人掌针",
+            "水晶碎片",
+            "炼金粉尘 I",
+            "炼金粉尘 II",
+            "炼金粉尘 III",
+            "炼金粉尘 IV",
+            "炼金煤炭",
+            "炼金金锭",
+            "炼金铁锭",
+            "炼金金针",
+            "炼金钻石"
+        };
+
+        for (int i = 0; i < ALCHEMY_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.alchemy_component." + ALCHEMY_COMPONENT_NAMES[i], alchemyNames[i]);
+        }
         addItem(ModItems.HEALTH_GEM, "生命宝石");
         addItem(ModItems.ORE_ALCH_DUST, "炼金矿尘");
         addItem(ModItems.DIRTY_GEM, "污浊的宝石");

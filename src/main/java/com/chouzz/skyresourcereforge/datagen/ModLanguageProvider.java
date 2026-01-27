@@ -36,6 +36,38 @@ public abstract class ModLanguageProvider extends LanguageProvider {
         "osmium", "refinedobsidian"
     };
 
+    protected static final String[] BASE_COMPONENT_NAMES = {
+        "plant_matter",
+        "steel_power_component",
+        "frozen_iron_cooling_component",
+        "dark_matter",
+        "enriched_bonemeal",
+        "sawdust",
+        "quartz_amp",
+        "light_matter"
+    };
+
+    protected static final String[] TECH_COMPONENT_NAMES = {
+        "stone_crushed",
+        "radioactive_mix",
+        "frozen_iron_ingot",
+        "netherrack_crushed"
+    };
+
+    protected static final String[] ALCHEMY_COMPONENT_NAMES = {
+        "cactus_needle",
+        "crystal_shard",
+        "alch_dust_1",
+        "alch_dust_2",
+        "alch_dust_3",
+        "alch_dust_4",
+        "alch_coal",
+        "alch_gold_ingot",
+        "alch_iron_ingot",
+        "alch_gold_needle",
+        "alch_diamond"
+    };
+
     public ModLanguageProvider(PackOutput output, String locale) {
         super(output, SkyResourceReforge.MODID, locale);
     }

@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "skyresourcereforge:item/alchemy_component_cactus_needle",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 1.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_crystal_shard",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 2.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_dust_1",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 3.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_dust_2",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 4.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_dust_3",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 5.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_dust_4",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 6.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_coal",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 7.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_gold_ingot",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 8.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_iron_ingot",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 9.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_gold_needle",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 10.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_component_alch_diamond",
+      "predicate": {
+        "skyresourcereforge:alchemy_component_variant": 11.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "skyresourcereforge:item/alchemy_component_cactus_needle"
+  }
+}

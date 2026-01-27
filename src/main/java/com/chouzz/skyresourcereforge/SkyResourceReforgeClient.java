@@ -45,6 +45,18 @@ public class SkyResourceReforgeClient {
         ItemProperties.register(ModItems.HEAT_PROVIDER.get(),
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "heat_variant"),
                 (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.item.HeatProviderItem.getVariantIndex(stack) + 1);
+
+        ItemProperties.register(ModItems.BASE_COMPONENT.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component_variant"),
+                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.item.BaseComponentItem.getVariantIndex(stack) + 1);
+
+        ItemProperties.register(ModItems.TECH_COMPONENT.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "tech_component_variant"),
+                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.item.TechComponentItem.getVariantIndex(stack) + 1);
+
+        ItemProperties.register(ModItems.ALCHEMY_COMPONENT.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy_component_variant"),
+                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem.getVariantIndex(stack) + 1);
     }
 
     @SubscribeEvent

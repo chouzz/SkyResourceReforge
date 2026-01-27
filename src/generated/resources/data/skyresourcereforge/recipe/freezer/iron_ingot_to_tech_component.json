@@ -10,6 +10,9 @@
   ],
   "outputs": [
     {
+      "components": {
+        "skyresourcereforge:tech_component_index": 2
+      },
       "count": 1,
       "id": "skyresourcereforge:tech_component"
     }

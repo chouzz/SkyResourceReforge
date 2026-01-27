@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem;
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
 import com.chouzz.skyresourcereforge.heat.HeatSources;
@@ -22,8 +23,10 @@ import com.chouzz.skyresourcereforge.integration.jei.categories.KnifeRecipeCateg
 import com.chouzz.skyresourcereforge.integration.jei.categories.RockGrinderRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorExtractRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorInsertRecipeCategory;
+import com.chouzz.skyresourcereforge.item.BaseComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatProviderItem;
+import com.chouzz.skyresourcereforge.item.TechComponentItem;
 import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
@@ -308,6 +311,39 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             ModItems.HEAT_PROVIDER.get(),
             (stack, context) -> HeatVariants.getName(HeatProviderItem.getVariantIndex(stack))
         );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.BASE_COMPONENT.get(),
+            (stack, context) -> {
+                int index = BaseComponentItem.getVariantIndex(stack);
+                if (index >= 0 && index < BaseComponentItem.getNames().size()) {
+                    return BaseComponentItem.getNames().get(index);
+                }
+                return "unknown";
+            }
+        );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.TECH_COMPONENT.get(),
+            (stack, context) -> {
+                int index = TechComponentItem.getVariantIndex(stack);
+                if (index >= 0 && index < TechComponentItem.getNames().size()) {
+                    return TechComponentItem.getNames().get(index);
+                }
+                return "unknown";
+            }
+        );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.ALCHEMY_COMPONENT.get(),
+            (stack, context) -> {
+                int index = AlchemyComponentItem.getVariantIndex(stack);
+                if (index >= 0 && index < AlchemyComponentItem.getNames().size()) {
+                    return AlchemyComponentItem.getNames().get(index);
+                }
+                return "unknown";
+            }
+        );
     }
 
     @Override
@@ -342,11 +378,29 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             heatProviders.add(HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get()));
         }
 
+        java.util.List<ItemStack> baseComponents = new ArrayList<>();
+        for (int i = 0; i < BaseComponentItem.getNames().size(); i++) {
+            baseComponents.add(BaseComponentItem.createStack(i, ModItems.BASE_COMPONENT.get()));
+        }
+
+        java.util.List<ItemStack> techComponents = new ArrayList<>();
+        for (int i = 0; i < TechComponentItem.getNames().size(); i++) {
+            techComponents.add(TechComponentItem.createStack(i, ModItems.TECH_COMPONENT.get()));
+        }
+
+        java.util.List<ItemStack> alchemyComponents = new ArrayList<>();
+        for (int i = 0; i < AlchemyComponentItem.getNames().size(); i++) {
+            alchemyComponents.add(AlchemyComponentItem.createStack(i, ModItems.ALCHEMY_COMPONENT.get()));
+        }
+
         // Register with JEI
         registration.addExtraItemStacks(oreDusts);
         registration.addExtraItemStacks(dirtyGems);
         registration.addExtraItemStacks(heatComponents);
         registration.addExtraItemStacks(heatProviders);
+        registration.addExtraItemStacks(baseComponents);
+        registration.addExtraItemStacks(techComponents);
+        registration.addExtraItemStacks(alchemyComponents);
 
         SkyResourceReforge.LOGGER.info("Registered {} ore dust and {} dirty gem variants as extra ingredients",
             oreDusts.size(), dirtyGems.size());

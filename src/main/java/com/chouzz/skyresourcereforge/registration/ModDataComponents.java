@@ -33,6 +33,18 @@ public class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("heat_provider_index",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> BASE_COMPONENT_INDEX =
+            DATA_COMPONENTS.registerComponentType("base_component_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TECH_COMPONENT_INDEX =
+            DATA_COMPONENTS.registerComponentType("tech_component_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ALCHEMY_COMPONENT_INDEX =
+            DATA_COMPONENTS.registerComponentType("alchemy_component_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static void register(IEventBus eventBus) {
         DATA_COMPONENTS.register(eventBus);
     }

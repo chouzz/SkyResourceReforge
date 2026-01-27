@@ -10,6 +10,9 @@
   ],
   "outputs": [
     {
+      "components": {
+        "skyresourcereforge:base_component_index": 5
+      },
       "count": 1,
       "id": "skyresourcereforge:base_component"
     }

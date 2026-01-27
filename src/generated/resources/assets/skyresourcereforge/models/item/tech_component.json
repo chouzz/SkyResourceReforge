@@ -1,6 +1,32 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "skyresourcereforge:item/tech_component_stone_crushed",
+      "predicate": {
+        "skyresourcereforge:tech_component_variant": 1.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/tech_component_radioactive_mix",
+      "predicate": {
+        "skyresourcereforge:tech_component_variant": 2.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/tech_component_frozen_iron_ingot",
+      "predicate": {
+        "skyresourcereforge:tech_component_variant": 3.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/tech_component_netherrack_crushed",
+      "predicate": {
+        "skyresourcereforge:tech_component_variant": 4.0
+      }
+    }
+  ],
   "textures": {
-    "layer0": "skyresourcereforge:item/tech_component"
+    "layer0": "skyresourcereforge:item/tech_component_stone_crushed"
   }
 }

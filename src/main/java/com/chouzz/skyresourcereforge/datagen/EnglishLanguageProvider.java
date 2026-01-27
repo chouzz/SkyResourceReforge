@@ -41,12 +41,36 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.HEAVY_SNOWBALL, "Heavy Snowball");
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "Explosive Heavy Snowball");
         addItem(ModItems.FLESHY_SNOW_NUGGET, "Fleshy Snow Nugget");
-        addItem(ModItems.BASE_COMPONENT, "Base Component");
         addItem(ModItems.DARK_MATTER, "Dark Matter");
         addItem(ModItems.LIGHT_MATTER, "Light Matter");
-        addItem(ModItems.TECH_COMPONENT, "Tech Component");
         addItem(ModItems.HEAT_COMPONENT, "Heat Component");
         addItem(ModItems.HEAT_PROVIDER, "Heat Provider");
+
+        String[] baseNames = {
+            "Plant Matter",
+            "Steel Power Component",
+            "Frozen Iron Cooling Component",
+            "Dark Matter Component",
+            "Enriched Bonemeal",
+            "Sawdust",
+            "Quartz Amplifier",
+            "Light Matter Component"
+        };
+
+        for (int i = 0; i < BASE_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.base_component." + BASE_COMPONENT_NAMES[i], baseNames[i]);
+        }
+
+        String[] techNames = {
+            "Stone Crushed",
+            "Radioactive Mix",
+            "Frozen Iron Ingot",
+            "Netherrack Crushed"
+        };
+
+        for (int i = 0; i < TECH_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.tech_component." + TECH_COMPONENT_NAMES[i], techNames[i]);
+        }
     }
 
     @Override
@@ -90,7 +114,23 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
 
     @Override
     protected void addAlchemyItems() {
-        addItem(ModItems.ALCHEMY_COMPONENT, "Alchemy Component");
+        String[] alchemyNames = {
+            "Cactus Needle",
+            "Crystal Shard",
+            "Alchemical Dust I",
+            "Alchemical Dust II",
+            "Alchemical Dust III",
+            "Alchemical Dust IV",
+            "Alchemical Coal",
+            "Alchemical Gold Ingot",
+            "Alchemical Iron Ingot",
+            "Alchemical Gold Needle",
+            "Alchemical Diamond"
+        };
+
+        for (int i = 0; i < ALCHEMY_COMPONENT_NAMES.length; i++) {
+            add("item.skyresourcereforge.alchemy_component." + ALCHEMY_COMPONENT_NAMES[i], alchemyNames[i]);
+        }
         addItem(ModItems.HEALTH_GEM, "Health Gem");
         addItem(ModItems.ORE_ALCH_DUST, "Alchemical Ore Dust");
         addItem(ModItems.DIRTY_GEM, "Dirty Gem");

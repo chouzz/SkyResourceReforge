@@ -2,6 +2,9 @@ package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.item.BaseComponentItem;
+import com.chouzz.skyresourcereforge.item.TechComponentItem;
+import com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -25,14 +28,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DIAMOND_GRINDER.get());
         basicItem(ModItems.WATER_EXTRACTOR.get());
         basicItem(ModItems.CACTUS_FRUIT.get());
-        basicItem(ModItems.BASE_COMPONENT.get());
         getBuilder("dark_matter")
                 .parent(getExistingFile(mcLoc("item/generated")))
                 .texture("layer0", modLoc("item/dark_matter"));
         getBuilder("light_matter")
                 .parent(getExistingFile(mcLoc("item/generated")))
                 .texture("layer0", modLoc("item/light_matter"));
-        basicItem(ModItems.TECH_COMPONENT.get());
         basicItem(ModItems.HEAVY_SNOWBALL.get());
         basicItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
         basicItem(ModItems.FLESHY_SNOW_NUGGET.get());
@@ -41,8 +42,68 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.ORE_ALCH_DUST.get());
         basicItem(ModItems.DIRTY_GEM.get());
 
+        registerBaseComponentModels();
+        registerTechComponentModels();
+        registerAlchemyComponentModels();
         registerHeatComponentModels();
         registerHeatProviderModels();
+    }
+
+    private void registerBaseComponentModels() {
+        String baseVariant = BaseComponentItem.getNames().get(0);
+        ItemModelBuilder base = getBuilder("base_component")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", modLoc("item/base_component_" + baseVariant));
+
+        for (int i = 0; i < BaseComponentItem.getNames().size(); i++) {
+            String variant = BaseComponentItem.getNames().get(i);
+            ItemModelBuilder variantModel = getBuilder("base_component_" + variant)
+                    .parent(getExistingFile(mcLoc("item/generated")))
+                    .texture("layer0", modLoc("item/base_component_" + variant));
+
+            base.override()
+                    .predicate(modLoc("base_component_variant"), i + 1)
+                    .model(variantModel)
+                    .end();
+        }
+    }
+
+    private void registerTechComponentModels() {
+        String baseVariant = TechComponentItem.getNames().get(0);
+        ItemModelBuilder base = getBuilder("tech_component")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", modLoc("item/tech_component_" + baseVariant));
+
+        for (int i = 0; i < TechComponentItem.getNames().size(); i++) {
+            String variant = TechComponentItem.getNames().get(i);
+            ItemModelBuilder variantModel = getBuilder("tech_component_" + variant)
+                    .parent(getExistingFile(mcLoc("item/generated")))
+                    .texture("layer0", modLoc("item/tech_component_" + variant));
+
+            base.override()
+                    .predicate(modLoc("tech_component_variant"), i + 1)
+                    .model(variantModel)
+                    .end();
+        }
+    }
+
+    private void registerAlchemyComponentModels() {
+        String baseVariant = AlchemyComponentItem.getNames().get(0);
+        ItemModelBuilder base = getBuilder("alchemy_component")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", modLoc("item/alchemy_component_" + baseVariant));
+
+        for (int i = 0; i < AlchemyComponentItem.getNames().size(); i++) {
+            String variant = AlchemyComponentItem.getNames().get(i);
+            ItemModelBuilder variantModel = getBuilder("alchemy_component_" + variant)
+                    .parent(getExistingFile(mcLoc("item/generated")))
+                    .texture("layer0", modLoc("item/alchemy_component_" + variant));
+
+            base.override()
+                    .predicate(modLoc("alchemy_component_variant"), i + 1)
+                    .model(variantModel)
+                    .end();
+        }
     }
 
     private void registerHeatComponentModels() {
