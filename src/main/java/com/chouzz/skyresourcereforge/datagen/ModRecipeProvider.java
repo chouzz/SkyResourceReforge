@@ -86,7 +86,7 @@ public class ModRecipeProvider extends RecipeProvider {
                         ModRecipeTypes.COMBUSTION.getId(),
                         List.of(
                                 CountedIngredient.of(Ingredient.of(ModBlocks.HEAVY_SNOW.get()), 5),
-                                CountedIngredient.of(Ingredient.of(techComponent(2)), 4),
+                                CountedIngredient.of(techComponentIngredient(2), 4),
                                 CountedIngredient.of(Ingredient.of(alchemyComponent(7)), 4),
                                 CountedIngredient.of(Ingredient.of(Blocks.END_STONE), 3)
                         ),
@@ -214,6 +214,36 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_steel_power_material", has(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/steel_power_component"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(2))
+                .pattern("XZX")
+                .pattern("XYX")
+                .pattern("XYX")
+                .define('X', techComponentIngredient(2))
+                .define('Y', Items.GLOWSTONE_DUST)
+                .define('Z', Items.LAPIS_LAZULI)
+                .unlockedBy("has_frozen_iron_ingot", has(ModItems.TECH_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/frozen_iron_cooling_component"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.NETHER_BRICK_CONDENSER.get())
+                .pattern("XYX")
+                .pattern("XZX")
+                .pattern("X X")
+                .define('X', Items.NETHER_BRICK)
+                .define('Y', alchemyComponentIngredient(6))
+                .define('Z', baseComponentIngredient(2))
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "nether_brick_condenser"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.NETHER_BRICK_COMBUSTION_HEATER.get())
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XZX")
+                .define('X', Items.NETHER_BRICK)
+                .define('Y', heatComponentIngredient(6))
+                .define('Z', baseComponentIngredient(2))
+                .unlockedBy("has_heat_component", has(ModItems.HEAT_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "nether_brick_combustion_heater"));
+
         // Shaped: petrified_planks (1 petrified_wood -> 4)
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PETRIFIED_PLANKS.get(), 4)
                 .pattern("X")
@@ -273,7 +303,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XZX")
                 .pattern("XXX")
-                .define('X', Ingredient.of(techComponent(2)))
+                .define('X', techComponentIngredient(2))
                 .define('Z', ModBlocks.MINI_FREEZER.get())
                 .unlockedBy("has_mini_freezer", has(ModBlocks.MINI_FREEZER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "iron_freezer"));
@@ -1097,7 +1127,7 @@ public class ModRecipeProvider extends RecipeProvider {
             Ingredient.of(Items.CHARCOAL),
             Ingredient.of(Blocks.OBSIDIAN),
             Ingredient.of(Items.SUGAR),
-            Ingredient.of(techComponent(0)),
+            techComponentIngredient(0),
             Ingredient.of(Blocks.SOUL_SAND),
             Ingredient.of(Items.PRISMARINE_SHARD),
             baseComponentIngredient(0),
@@ -1187,6 +1217,18 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private Ingredient baseComponentIngredient(int index) {
         return DataComponentIngredient.of(false, baseComponent(index));
+    }
+
+    private Ingredient techComponentIngredient(int index) {
+        return DataComponentIngredient.of(false, techComponent(index));
+    }
+
+    private Ingredient alchemyComponentIngredient(int index) {
+        return DataComponentIngredient.of(false, alchemyComponent(index));
+    }
+
+    private Ingredient heatComponentIngredient(int index) {
+        return DataComponentIngredient.of(false, HeatComponentItem.createStack(index, ModItems.HEAT_COMPONENT.get()));
     }
 
     private void addPlantMatterRecipes(RecipeOutput output) {

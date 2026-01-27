@@ -24,6 +24,8 @@ public class ModCreativeTabs {
                 output.accept(ModItems.IRON_GRINDER.get());
                 output.accept(ModItems.DIAMOND_GRINDER.get());
                 output.accept(ModItems.WATER_EXTRACTOR.get());
+                output.accept(ModItems.NETHER_BRICK_CONDENSER.get());
+                output.accept(ModItems.NETHER_BRICK_COMBUSTION_HEATER.get());
                 output.accept(ModItems.CACTUS_FRUIT.get());
                 for (int i = 0; i < com.chouzz.skyresourcereforge.item.BaseComponentItem.getNames().size(); i++) {
                     output.accept(com.chouzz.skyresourcereforge.item.BaseComponentItem.createStack(i, ModItems.BASE_COMPONENT.get()));

@@ -27,6 +27,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.IRON_GRINDER.get());
         basicItem(ModItems.DIAMOND_GRINDER.get());
         basicItem(ModItems.WATER_EXTRACTOR.get());
+        basicItem(ModItems.NETHER_BRICK_CONDENSER.get());
+        basicItem(ModItems.NETHER_BRICK_COMBUSTION_HEATER.get());
         basicItem(ModItems.CACTUS_FRUIT.get());
         getBuilder("dark_matter")
                 .parent(getExistingFile(mcLoc("item/generated")))

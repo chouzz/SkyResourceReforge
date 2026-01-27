@@ -19,17 +19,23 @@
       },
       "items": "skyresourcereforge:tech_component"
     },
+    "Y": {
+      "item": "minecraft:glowstone_dust"
+    },
     "Z": {
-      "item": "skyresourcereforge:mini_freezer"
+      "item": "minecraft:lapis_lazuli"
     }
   },
   "pattern": [
-    "XXX",
     "XZX",
-    "XXX"
+    "XYX",
+    "XYX"
   ],
   "result": {
+    "components": {
+      "skyresourcereforge:base_component_index": 2
+    },
     "count": 1,
-    "id": "skyresourcereforge:iron_freezer"
+    "id": "skyresourcereforge:base_component"
   }
 }

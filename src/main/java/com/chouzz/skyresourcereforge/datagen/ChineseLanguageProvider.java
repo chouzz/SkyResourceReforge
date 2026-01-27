@@ -37,6 +37,8 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
     @Override
     protected void addMiscItems() {
         addItem(ModItems.WATER_EXTRACTOR, "抽水器");
+        addItem(ModItems.NETHER_BRICK_CONDENSER, "地狱砖冷凝器");
+        addItem(ModItems.NETHER_BRICK_COMBUSTION_HEATER, "地狱砖燃烧加热器");
         addItem(ModItems.CACTUS_FRUIT, "仙人掌果");
         addItem(ModItems.HEAVY_SNOWBALL, "重型雪球");
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "爆炸性重型雪球");

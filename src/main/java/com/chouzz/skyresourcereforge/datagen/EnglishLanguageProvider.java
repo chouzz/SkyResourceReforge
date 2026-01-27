@@ -37,6 +37,8 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
     @Override
     protected void addMiscItems() {
         addItem(ModItems.WATER_EXTRACTOR, "Water Extractor");
+        addItem(ModItems.NETHER_BRICK_CONDENSER, "Nether Brick Condenser");
+        addItem(ModItems.NETHER_BRICK_COMBUSTION_HEATER, "Nether Brick Combustion Heater");
         addItem(ModItems.CACTUS_FRUIT, "Cactus Fruit");
         addItem(ModItems.HEAVY_SNOWBALL, "Heavy Snowball");
         addItem(ModItems.HEAVY_EXPLOSIVE_SNOWBALL, "Explosive Heavy Snowball");
