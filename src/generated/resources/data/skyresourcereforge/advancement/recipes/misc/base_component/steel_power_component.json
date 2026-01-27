@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_basic_circuit": {
+    "has_steel_power_material": {
       "conditions": {
         "items": [
           {
-            "items": "#skyresourcereforge:basic_circuit"
+            "items": "#skyresourcereforge:steel_power_component_materials"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skyresourcereforge:combustion_controller"
+        "recipe": "skyresourcereforge:base_component/steel_power_component"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_basic_circuit"
+      "has_steel_power_material"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skyresourcereforge:combustion_controller"
+      "skyresourcereforge:base_component/steel_power_component"
     ]
   }
 }

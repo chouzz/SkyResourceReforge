@@ -20,7 +20,10 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new EnglishLanguageProvider(packOutput));
         generator.addProvider(event.includeClient(), new ChineseLanguageProvider(packOutput));
-        
+
+        ModBlockTagsProvider blockTags = new ModBlockTagsProvider(packOutput, event.getLookupProvider(), existingFileHelper);
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, event.getLookupProvider(), blockTags.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, event.getLookupProvider()));
         generator.addProvider(event.includeServer(), new ModFurnaceFuelProvider(packOutput, event.getLookupProvider()));
     }

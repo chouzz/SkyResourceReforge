@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:iron_ingot",
+    {
+      "id": "#c:ingots/steel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/electrical_steel",
+      "required": false
+    }
+  ]
+}

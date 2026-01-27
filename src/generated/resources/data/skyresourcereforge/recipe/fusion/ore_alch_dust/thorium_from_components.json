@@ -4,7 +4,21 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "skyresourcereforge:base_component"
+        "type": "neoforge:components",
+        "components": {
+          "minecraft:attribute_modifiers": {
+            "modifiers": []
+          },
+          "minecraft:enchantments": {
+            "levels": {}
+          },
+          "minecraft:lore": [],
+          "minecraft:max_stack_size": 64,
+          "minecraft:rarity": "common",
+          "minecraft:repair_cost": 0,
+          "skyresourcereforge:base_component_index": 0
+        },
+        "items": "skyresourcereforge:base_component"
       }
     },
     {

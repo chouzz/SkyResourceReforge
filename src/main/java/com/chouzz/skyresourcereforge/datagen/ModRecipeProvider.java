@@ -16,6 +16,7 @@ import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
+import com.chouzz.skyresourcereforge.registration.ModTags;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
@@ -202,6 +204,16 @@ public class ModRecipeProvider extends RecipeProvider {
 
         addPlantMatterRecipes(output);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(1))
+                .pattern("XZX")
+                .pattern("XYX")
+                .pattern("XZX")
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
+                .define('Y', Ingredient.of(ModTags.BASIC_CIRCUIT))
+                .define('Z', Ingredient.of(ModTags.COAL_DUST))
+                .unlockedBy("has_steel_power_material", has(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/steel_power_component"));
+
         // Shaped: petrified_planks (1 petrified_wood -> 4)
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PETRIFIED_PLANKS.get(), 4)
                 .pattern("X")
@@ -214,9 +226,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" Y ")
                 .pattern(" Z ")
                 .pattern("XXX")
-                .define('X', Ingredient.of(baseComponent(3)))
+                .define('X', baseComponentIngredient(3))
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', Ingredient.of(baseComponent(7)))
+                .define('Z', baseComponentIngredient(7))
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
@@ -270,7 +282,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XZX")
                 .pattern("XXX")
-                .define('X', Ingredient.of(baseComponent(7)))
+                .define('X', baseComponentIngredient(7))
                 .define('Z', ModBlocks.IRON_FREEZER.get())
                 .unlockedBy("has_iron_freezer", has(ModBlocks.IRON_FREEZER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_freezer"));
@@ -279,8 +291,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XAX")
                 .pattern("XZX")
                 .pattern("XYX")
-                .define('X', Items.IRON_INGOT)
-                .define('Y', Ingredient.of(baseComponent(1)))
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
+                .define('Y', baseComponentIngredient(1))
                 .define('Z', ModItems.WATER_EXTRACTOR.get())
                 .define('A', Blocks.SNOW)
                 .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
@@ -290,8 +302,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XAX")
                 .pattern("XZX")
                 .pattern("XYX")
-                .define('X', Items.IRON_INGOT)
-                .define('Y', Ingredient.of(baseComponent(1)))
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
+                .define('Y', baseComponentIngredient(1))
                 .define('Z', ModItems.WATER_EXTRACTOR.get())
                 .define('A', Blocks.SAND)
                 .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
@@ -301,9 +313,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XYX")
-                .define('X', Items.IRON_INGOT)
-                .define('Y', Items.REDSTONE)
-                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
+                .define('Y', Ingredient.of(ModTags.BASIC_CIRCUIT))
+                .unlockedBy("has_basic_circuit", has(ModTags.BASIC_CIRCUIT))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion_controller"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.WILDLIFE_ATTRACTOR.get())
@@ -322,7 +334,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .define('X', ModBlocks.DARK_MATTER_BLOCK.get())
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', Ingredient.of(baseComponent(6)))
+                .define('Z', baseComponentIngredient(6))
                 .define('A', Ingredient.of(alchemyComponent(7)))
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
@@ -402,7 +414,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XYX")
                 .pattern("XXX")
                 .define('X', Blocks.OBSIDIAN)
-                .define('Y', Ingredient.of(baseComponent(3)))
+                .define('Y', baseComponentIngredient(3))
                 .unlockedBy("has_base_component", has(ModItems.BASE_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_warper"));
 
@@ -435,9 +447,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XZX")
-                .define('X', Items.IRON_INGOT)
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .define('Y', ModItems.DIAMOND_GRINDER.get())
-                .define('Z', Ingredient.of(baseComponent(1)))
+                .define('Z', baseComponentIngredient(1))
                 .unlockedBy("has_diamond_grinder", has(ModItems.DIAMOND_GRINDER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_crusher"));
 
@@ -445,9 +457,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XYX")
                 .pattern("XZX")
-                .define('X', Items.IRON_INGOT)
+                .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .define('Y', Items.CAULDRON)
-                .define('Z', Ingredient.of(baseComponent(1)))
+                .define('Z', baseComponentIngredient(1))
                 .unlockedBy("has_cauldron", has(Items.CAULDRON))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_cleaner"));
 
@@ -668,7 +680,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 List.of(
                     CountedIngredient.of(Ingredient.of(Blocks.BONE_BLOCK), 1),
                     CountedIngredient.of(Ingredient.of(Items.BLACK_DYE), 8),
-                    CountedIngredient.of(Ingredient.of(baseComponent(0)), 8)
+                    CountedIngredient.of(baseComponentIngredient(0), 8)
                 ),
                 List.of(new ItemStack(ModBlocks.DRY_CACTUS.get())),
                 List.of(),
@@ -1076,7 +1088,7 @@ public class ModRecipeProvider extends RecipeProvider {
             Ingredient.of(Items.WHEAT),
             Ingredient.of(Items.IRON_INGOT),
             Ingredient.of(Items.GOLD_INGOT),
-            Ingredient.of(baseComponent(0)),
+            baseComponentIngredient(0),
             Ingredient.of(Blocks.CLAY),
             Ingredient.of(Items.LAPIS_LAZULI),
             Ingredient.of(Items.MAGMA_CREAM),
@@ -1088,11 +1100,11 @@ public class ModRecipeProvider extends RecipeProvider {
             Ingredient.of(techComponent(0)),
             Ingredient.of(Blocks.SOUL_SAND),
             Ingredient.of(Items.PRISMARINE_SHARD),
-            Ingredient.of(baseComponent(0)),
+            baseComponentIngredient(0),
             Ingredient.of(Items.DIAMOND),
             Ingredient.of(Items.GLOWSTONE_DUST),
             Ingredient.of(Items.ROTTEN_FLESH),
-            Ingredient.of(baseComponent(0))
+            baseComponentIngredient(0)
         );
 
         int variantCount = Math.min(ItemOreAlchDust.oreInfos.size(), components.size());
@@ -1171,6 +1183,10 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private ItemStack alchemyComponent(int index) {
         return AlchemyComponentItem.createStack(index, ModItems.ALCHEMY_COMPONENT.get());
+    }
+
+    private Ingredient baseComponentIngredient(int index) {
+        return DataComponentIngredient.of(false, baseComponent(index));
     }
 
     private void addPlantMatterRecipes(RecipeOutput output) {

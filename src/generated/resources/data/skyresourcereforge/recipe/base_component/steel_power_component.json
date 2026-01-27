@@ -7,15 +7,21 @@
     },
     "Y": {
       "tag": "skyresourcereforge:basic_circuit"
+    },
+    "Z": {
+      "tag": "skyresourcereforge:coal_dust"
     }
   },
   "pattern": [
-    "XXX",
+    "XZX",
     "XYX",
-    "XYX"
+    "XZX"
   ],
   "result": {
+    "components": {
+      "skyresourcereforge:base_component_index": 1
+    },
     "count": 1,
-    "id": "skyresourcereforge:combustion_controller"
+    "id": "skyresourcereforge:base_component"
   }
 }
