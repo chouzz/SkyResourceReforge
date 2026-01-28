@@ -54,8 +54,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
             "Frozen Iron Cooling Component",
             "Enriched Bonemeal",
             "Sawdust",
-            "Quartz Amplifier",
-            "Light Matter Component"
+            "Quartz Amplifier"
         };
 
         for (int i = 0; i < BASE_COMPONENT_NAMES.length; i++) {
@@ -185,6 +184,10 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
             "Obtained by Shift + Right Clicking a Cactus.\n\n Note: You will take damage during this process.");
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "Heat above a heat source to turn into lava.");
+        add("jei.skyresourcereforge.description.nether_brick_condenser",
+            "Insert into a Casing to run Condenser recipes.");
+        add("jei.skyresourcereforge.description.nether_brick_combustion_heater",
+            "Insert into a Casing to run Combustion recipes.");
         add("jei.skyresourcereforge.heat_source.value", "%s Heat");
     }
 

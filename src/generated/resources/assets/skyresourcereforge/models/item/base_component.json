@@ -36,12 +36,6 @@
       "predicate": {
         "skyresourcereforge:base_component_variant": 6.0
       }
-    },
-    {
-      "model": "skyresourcereforge:item/base_component_light_matter",
-      "predicate": {
-        "skyresourcereforge:base_component_variant": 7.0
-      }
     }
   ],
   "textures": {

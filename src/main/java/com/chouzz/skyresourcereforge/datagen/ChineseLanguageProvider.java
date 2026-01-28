@@ -54,8 +54,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
             "冰冻铁冷却组件",
             "强化骨粉",
             "木屑",
-            "石英增幅器",
-            "亮物质组件"
+            "石英增幅器"
         };
 
         for (int i = 0; i < BASE_COMPONENT_NAMES.length; i++) {
@@ -190,6 +189,10 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
             "通过按住 Shift 键右击仙人掌获得。\n\n 提示：这个过程中你会受到伤害。");
         add("jei.skyresourcereforge.description.blaze_powder_block",
             "在一个热源上方加热将其变为岩浆。");
+        add("jei.skyresourcereforge.description.nether_brick_condenser",
+            "放入机壳中以进行冷凝配方。");
+        add("jei.skyresourcereforge.description.nether_brick_combustion_heater",
+            "放入机壳中以进行燃烧配方。");
         add("jei.skyresourcereforge.heat_source.value", "%s 热值");
     }
 

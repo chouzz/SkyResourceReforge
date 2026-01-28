@@ -204,6 +204,16 @@ public class ModRecipeProvider extends RecipeProvider {
 
         addPlantMatterRecipes(output);
 
+        ItemStack enrichedBonemeal = baseComponent(3);
+        enrichedBonemeal.setCount(4);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, enrichedBonemeal)
+                .requires(Items.ROTTEN_FLESH)
+                .requires(Items.BONE_MEAL)
+                .requires(Items.BONE_MEAL)
+                .requires(Items.BONE_MEAL)
+                .unlockedBy("has_rotten_flesh", has(Items.ROTTEN_FLESH))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/enriched_bonemeal"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(1))
                 .pattern("XZX")
                 .pattern("XYX")
@@ -258,7 +268,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .define('X', ModItems.DARK_MATTER.get())
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', baseComponentIngredient(6))
+                .define('Z', ModItems.LIGHT_MATTER.get())
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "silverfish_disruptor"));
 
@@ -312,7 +322,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XZX")
                 .pattern("XXX")
-                .define('X', baseComponentIngredient(6))
+                .define('X', ModItems.LIGHT_MATTER.get())
                 .define('Z', ModBlocks.IRON_FREEZER.get())
                 .unlockedBy("has_iron_freezer", has(ModBlocks.IRON_FREEZER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "light_freezer"));

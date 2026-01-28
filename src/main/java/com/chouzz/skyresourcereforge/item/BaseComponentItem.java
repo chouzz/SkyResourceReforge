@@ -15,8 +15,7 @@ public class BaseComponentItem extends Item {
             "frozen_iron_cooling_component",
             "enriched_bonemeal",
             "sawdust",
-            "quartz_amp",
-            "light_matter"
+            "quartz_amp"
     );
 
     public BaseComponentItem(Properties properties) {

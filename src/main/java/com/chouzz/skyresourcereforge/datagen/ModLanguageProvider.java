@@ -42,8 +42,7 @@ public abstract class ModLanguageProvider extends LanguageProvider {
         "frozen_iron_cooling_component",
         "enriched_bonemeal",
         "sawdust",
-        "quartz_amp",
-        "light_matter"
+        "quartz_amp"
     };
 
     protected static final String[] TECH_COMPONENT_NAMES = {
