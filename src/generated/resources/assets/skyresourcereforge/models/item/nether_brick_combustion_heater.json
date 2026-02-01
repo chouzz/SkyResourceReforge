@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "skyresourcereforge:item/nether_brick_combustion_heater"
-  }
+  "parent": "skyresourcereforge:block/nether_brick_combustion_heater"
 }

@@ -234,6 +234,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_frozen_iron_ingot", has(ModItems.TECH_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/frozen_iron_cooling_component"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(5))
+                .pattern(" X ")
+                .pattern("XYX")
+                .pattern(" X ")
+                .define('X', Items.QUARTZ)
+                .define('Y', Items.REDSTONE)
+                .unlockedBy("has_quartz", has(Items.QUARTZ))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/quartz_amp"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.NETHER_BRICK_CONDENSER.get())
                 .pattern("XYX")
                 .pattern("XZX")
@@ -702,6 +711,7 @@ public class ModRecipeProvider extends RecipeProvider {
         addHeatComponentRecipes(output);
         addHeatProviderRecipes(output);
         addOreAlchDustRecipes(output);
+        addCondenserRecipes(output);
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.DRY_CACTUS.get()), RecipeCategory.MISC, Items.BLACK_DYE, 0.2f, 200)
                 .unlockedBy("has_dry_cactus", has(ModBlocks.DRY_CACTUS.get()))
@@ -713,6 +723,25 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addCombustionExtras(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/radioactive_mix"),
+            new ProcessRecipe(
+                ModRecipeTypes.COMBUSTION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Items.REDSTONE), 1),
+                    CountedIngredient.of(Ingredient.of(Items.GLOWSTONE_DUST), 1),
+                    CountedIngredient.of(Ingredient.of(Items.GUNPOWDER), 1),
+                    CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 1),
+                    CountedIngredient.of(Ingredient.of(Items.COAL), 1)
+                ),
+                List.of(techComponent(1)),
+                List.of(),
+                List.of(),
+                1200.0f
+            ),
+            null
+        );
+
         output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/dry_cactus"),
             new ProcessRecipe(
@@ -885,6 +914,22 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addFusionExtras(RecipeOutput output) {
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_coal"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Items.COAL), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(1), 1)
+                ),
+                List.of(alchemyComponent(6)),
+                List.of(),
+                List.of(),
+                0.01f
+            ),
+            null
+        );
+
         output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/magmafied_stone"),
             new ProcessRecipe(
@@ -1126,25 +1171,25 @@ public class ModRecipeProvider extends RecipeProvider {
             Ingredient.of(Items.BONE),
             Ingredient.of(Items.SUGAR),
             Ingredient.of(Items.WHEAT),
-            Ingredient.of(Items.IRON_INGOT),
-            Ingredient.of(Items.GOLD_INGOT),
+            alchemyComponentIngredient(1),
+            alchemyComponentIngredient(1),
             baseComponentIngredient(0),
             Ingredient.of(Blocks.CLAY),
-            Ingredient.of(Items.LAPIS_LAZULI),
-            Ingredient.of(Items.MAGMA_CREAM),
-            Ingredient.of(Items.CLAY_BALL),
+            alchemyComponentIngredient(1),
+            alchemyComponentIngredient(1),
+            alchemyComponentIngredient(1),
             Ingredient.of(Items.DRAGON_BREATH),
             Ingredient.of(Items.CHARCOAL),
             Ingredient.of(Blocks.OBSIDIAN),
             Ingredient.of(Items.SUGAR),
-            techComponentIngredient(0),
+            techComponentIngredient(1),
             Ingredient.of(Blocks.SOUL_SAND),
             Ingredient.of(Items.PRISMARINE_SHARD),
             baseComponentIngredient(0),
             Ingredient.of(Items.DIAMOND),
-            Ingredient.of(Items.GLOWSTONE_DUST),
-            Ingredient.of(Items.ROTTEN_FLESH),
-            baseComponentIngredient(0)
+            techComponentIngredient(1),
+            techComponentIngredient(1),
+            techComponentIngredient(1)
         );
 
         int variantCount = Math.min(ItemOreAlchDust.oreInfos.size(), components.size());
@@ -1239,6 +1284,38 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private Ingredient heatComponentIngredient(int index) {
         return DataComponentIngredient.of(false, HeatComponentItem.createStack(index, ModItems.HEAT_COMPONENT.get()));
+    }
+
+    private void addCondenserRecipes(RecipeOutput output) {
+        // Quartz -> Crystal Shard
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "condenser/crystal_shard_from_quartz"),
+            new ProcessRecipe(
+                ModRecipeTypes.CONDENSER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Items.QUARTZ), 1)),
+                List.of(alchemyComponent(1)),
+                List.of(),
+                List.of(),
+                400.0f
+            ),
+            null
+        );
+
+        // Quartz Block -> 4x Crystal Shard
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "condenser/crystal_shard_from_quartz_block"),
+            new ProcessRecipe(
+                ModRecipeTypes.CONDENSER.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Items.QUARTZ_BLOCK), 1)),
+                List.of(new ItemStack(ModItems.ALCHEMY_COMPONENT.get(), 4) {{
+                    AlchemyComponentItem.setVariantIndex(this, 1);
+                }}),
+                List.of(),
+                List.of(),
+                1600.0f
+            ),
+            null
+        );
     }
 
     private void addPlantMatterRecipes(RecipeOutput output) {

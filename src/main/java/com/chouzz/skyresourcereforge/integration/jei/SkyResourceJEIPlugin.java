@@ -161,6 +161,14 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addIngredientInfo(blazePowderBlocks, VanillaTypes.ITEM_STACK,
             Component.translatable("jei.skyresourcereforge.description.blaze_powder_block"));
 
+        List<ItemStack> condenserItems = List.of(new ItemStack(ModItems.NETHER_BRICK_CONDENSER.get()));
+        registration.addIngredientInfo(condenserItems, VanillaTypes.ITEM_STACK,
+            Component.translatable("jei.skyresourcereforge.description.nether_brick_condenser"));
+
+        List<ItemStack> combustionHeaters = List.of(new ItemStack(ModItems.NETHER_BRICK_COMBUSTION_HEATER.get()));
+        registration.addIngredientInfo(combustionHeaters, VanillaTypes.ITEM_STACK,
+            Component.translatable("jei.skyresourcereforge.description.nether_brick_combustion_heater"));
+
         SkyResourceReforge.LOGGER.info("Registered JEI recipes for SkyResource Reforge");
     }
 
@@ -229,6 +237,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             new ItemStack(ModBlocks.COMBUSTION_CONTROLLER.get()),
             COMBUSTION_TYPE
         );
+        registration.addRecipeCatalyst(new ItemStack(ModItems.NETHER_BRICK_COMBUSTION_HEATER.get()), COMBUSTION_TYPE);
 
         // Water Extractor blocks
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.AQUEOUS_CONCENTRATOR.get()), WATER_EXTRACTOR_EXTRACT_TYPE);
@@ -261,6 +270,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         // Crucible
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CRUCIBLE.get()), CRUCIBLE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModItems.HEAT_PROVIDER.get()), HEAT_SOURCES_TYPE);
+
+        // Condenser
+        registration.addRecipeCatalyst(new ItemStack(ModItems.NETHER_BRICK_CONDENSER.get()), CONDENSER_TYPE);
 
         // Knife tools
         registration.addRecipeCatalyst(new ItemStack(ModItems.CACTUS_KNIFE.get()), KNIFE_TYPE);

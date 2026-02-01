@@ -3,7 +3,9 @@ package com.chouzz.skyresourcereforge.datagen;
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.block.CombustionControllerBlock;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -14,6 +16,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        machinePartTopModel("nether_brick_condenser", mcLoc("block/nether_bricks"), modLoc("block/condenser"));
+        machinePartTopModel("nether_brick_combustion_heater", mcLoc("block/nether_bricks"), modLoc("block/combustion"));
+
         simpleBlockWithItem(ModBlocks.COMPRESSED_COAL_BLOCK.get(), cubeAll(ModBlocks.COMPRESSED_COAL_BLOCK.get()));
         simpleBlockWithItem(ModBlocks.CASING.get(), cubeAll(ModBlocks.CASING.get()));
         simpleBlockWithItem(ModBlocks.SANDY_NETHERRACK.get(), cubeAll(ModBlocks.SANDY_NETHERRACK.get()));
@@ -63,5 +68,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
             mcLoc("block/oak_planks"),
             modLoc("block/fusion_table_top")
         ));
+    }
+
+    private void machinePartTopModel(String name, ResourceLocation baseTexture, ResourceLocation partTexture) {
+        models().getBuilder(name)
+                .ao(false)
+                .texture("particle", partTexture)
+                .texture("all", baseTexture)
+                .texture("part", partTexture)
+                .element()
+                    .from(2, 2, 2)
+                    .to(14, 14, 14)
+                    .allFaces((direction, faceBuilder) -> faceBuilder.texture("#all"))
+                    .end()
+                .element()
+                    .from(2, 13, 2)
+                    .to(14, 14, 14)
+                    .face(Direction.UP)
+                        .texture("#part")
+                    .end()
+                .end();
     }
 }
