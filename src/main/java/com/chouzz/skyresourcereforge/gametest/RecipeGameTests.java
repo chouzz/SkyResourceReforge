@@ -50,6 +50,10 @@ public final class RecipeGameTests {
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_gold_ingot");
     private static final ResourceLocation ALCH_IRON_INGOT_RECIPE_ID =
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_iron_ingot");
+    private static final ResourceLocation ALCH_GOLD_NEEDLE_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_gold_needle");
+    private static final ResourceLocation ALCH_DIAMOND_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_diamond");
 
     private RecipeGameTests() {
     }
@@ -106,7 +110,7 @@ public final class RecipeGameTests {
 
     @PrefixGameTestTemplate(false)
     @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
-    public static void validateAlchemicalIngotFusionRecipes(GameTestHelper helper) {
+    public static void validateAdvancedAlchemyFusionRecipes(GameTestHelper helper) {
         Level level = helper.getLevel();
         RecipeManager recipeManager = level.getRecipeManager();
         HolderLookup.Provider registries = level.registryAccess();
@@ -120,6 +124,18 @@ public final class RecipeGameTests {
         String ironError = validateProcessRecipeOutputVariant(recipeManager, registries, ALCH_IRON_INGOT_RECIPE_ID, 8);
         if (ironError != null) {
             helper.fail(ironError);
+            return;
+        }
+
+        String goldNeedleError = validateProcessRecipeOutputVariant(recipeManager, registries, ALCH_GOLD_NEEDLE_RECIPE_ID, 9);
+        if (goldNeedleError != null) {
+            helper.fail(goldNeedleError);
+            return;
+        }
+
+        String diamondError = validateProcessRecipeOutputVariant(recipeManager, registries, ALCH_DIAMOND_RECIPE_ID, 10);
+        if (diamondError != null) {
+            helper.fail(diamondError);
             return;
         }
 

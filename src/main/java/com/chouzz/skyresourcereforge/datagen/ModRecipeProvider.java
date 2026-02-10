@@ -997,6 +997,38 @@ public class ModRecipeProvider extends RecipeProvider {
         );
 
         output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_gold_needle"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(alchemyComponentIngredient(0), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(7), 1)
+                ),
+                List.of(alchemyComponent(9)),
+                List.of(),
+                List.of(),
+                0.018f
+            ),
+            null
+        );
+
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_diamond"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Items.DIAMOND), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(9), 1)
+                ),
+                List.of(alchemyComponent(10)),
+                List.of(),
+                List.of(),
+                0.02f
+            ),
+            null
+        );
+
+        output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/magmafied_stone"),
             new ProcessRecipe(
                 ModRecipeTypes.FUSION.getId(),
