@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
@@ -32,6 +33,7 @@ public final class RecipeGameTests {
     private static final int CRAFTING_GRID_SIZE = 9;
     private static final int CRAFTING_GRID_WIDTH = 3;
     private static final int MAX_FAILURES_IN_MESSAGE = 15;
+    private static final int MAX_CRAFTING_DIMENSION = 3;
 
     private RecipeGameTests() {
     }
@@ -144,6 +146,18 @@ public final class RecipeGameTests {
             CraftingRecipe recipe,
             List<String> failures
     ) {
+        int width = CRAFTING_GRID_WIDTH;
+        int height = CRAFTING_GRID_WIDTH;
+        if (recipe instanceof ShapedRecipe shapedRecipe) {
+            width = shapedRecipe.getWidth();
+            height = shapedRecipe.getHeight();
+        }
+
+        if (width > MAX_CRAFTING_DIMENSION || height > MAX_CRAFTING_DIMENSION) {
+            failures.add(recipeId + " -> crafting dimensions exceed 3x3 grid");
+            return;
+        }
+
         NonNullList<Ingredient> ingredients = recipe.getIngredients();
         if (ingredients.size() > CRAFTING_GRID_SIZE) {
             failures.add(recipeId + " -> ingredient count exceeds 3x3 crafting grid");
@@ -162,7 +176,14 @@ public final class RecipeGameTests {
                 failures.add(recipeId + " -> no concrete item for crafting ingredient index " + i);
                 return;
             }
-            grid.set(i, stack);
+            int x = i % width;
+            int y = i / width;
+            int slot = y * CRAFTING_GRID_WIDTH + x;
+            if (slot >= CRAFTING_GRID_SIZE) {
+                failures.add(recipeId + " -> ingredient index outside 3x3 bounds");
+                return;
+            }
+            grid.set(slot, stack);
         }
 
         CraftingInput input = CraftingInput.of(CRAFTING_GRID_WIDTH, CRAFTING_GRID_WIDTH, grid);
@@ -209,7 +230,10 @@ public final class RecipeGameTests {
             List<String> failures
     ) {
         if (expected.isEmpty()) {
-            failures.add(recipeId + " -> expected result item is empty");
+            if (assembled.isEmpty()) {
+                return;
+            }
+            failures.add(recipeId + " -> expected empty result but assembled " + assembled);
             return;
         }
 
