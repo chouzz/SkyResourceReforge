@@ -1,0 +1,22 @@
+{
+  "type": "skyresourcereforge:process",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:cactus"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "components": {
+        "skyresourcereforge:alchemy_component_index": 0
+      },
+      "count": 4,
+      "id": "skyresourcereforge:alchemy_component"
+    }
+  ],
+  "parameter": 0.0,
+  "recipeType": "skyresourcereforge:knife"
+}

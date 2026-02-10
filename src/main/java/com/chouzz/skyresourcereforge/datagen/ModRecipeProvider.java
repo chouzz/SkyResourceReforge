@@ -560,6 +560,22 @@ public class ModRecipeProvider extends RecipeProvider {
         // === KNIFE RECIPES ===
         // Knife recipes have parameter 0 (not used), fortune affects output count
 
+        // Cactus -> Cactus Needle (4 output)
+        ItemStack needles = alchemyComponent(0);
+        needles.setCount(4);
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/cactus_to_needle"),
+            new ProcessRecipe(
+                ModRecipeTypes.KNIFE.getId(),
+                List.of(CountedIngredient.of(Ingredient.of(Blocks.CACTUS), 1)),
+                List.of(needles),
+                List.of(),
+                List.of(),
+                0.0f
+            ),
+            null
+        );
+
         // Cactus -> Cactus Fruit (2 output)
         output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/cactus_to_fruit"),
@@ -723,6 +739,24 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addCombustionExtras(RecipeOutput output) {
+        // Crystal Shard: Nether Quartz + Cactus Needle + Blaze Powder
+        output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/crystal_shard"),
+            new ProcessRecipe(
+                ModRecipeTypes.COMBUSTION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Items.QUARTZ), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(0), 1),
+                    CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 1)
+                ),
+                List.of(alchemyComponent(1)),
+                List.of(),
+                List.of(),
+                600.0f
+            ),
+            null
+        );
+
         output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "combustion/radioactive_mix"),
             new ProcessRecipe(
@@ -1287,35 +1321,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addCondenserRecipes(RecipeOutput output) {
-        // Quartz -> Crystal Shard
-        output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "condenser/crystal_shard_from_quartz"),
-            new ProcessRecipe(
-                ModRecipeTypes.CONDENSER.getId(),
-                List.of(CountedIngredient.of(Ingredient.of(Items.QUARTZ), 1)),
-                List.of(alchemyComponent(1)),
-                List.of(),
-                List.of(),
-                400.0f
-            ),
-            null
-        );
-
-        // Quartz Block -> 4x Crystal Shard
-        output.accept(
-            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "condenser/crystal_shard_from_quartz_block"),
-            new ProcessRecipe(
-                ModRecipeTypes.CONDENSER.getId(),
-                List.of(CountedIngredient.of(Ingredient.of(Items.QUARTZ_BLOCK), 1)),
-                List.of(new ItemStack(ModItems.ALCHEMY_COMPONENT.get(), 4) {{
-                    AlchemyComponentItem.setVariantIndex(this, 1);
-                }}),
-                List.of(),
-                List.of(),
-                1600.0f
-            ),
-            null
-        );
+        // Shard multiplication would go here, currently placeholder
     }
 
     private void addPlantMatterRecipes(RecipeOutput output) {

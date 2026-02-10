@@ -4,6 +4,12 @@
     {
       "count": 1,
       "ingredient": {
+        "item": "minecraft:coal"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
         "type": "neoforge:components",
         "components": {
           "minecraft:attribute_modifiers": {
@@ -20,23 +26,17 @@
         },
         "items": "skyresourcereforge:alchemy_component"
       }
-    },
-    {
-      "count": 2,
-      "ingredient": {
-        "item": "minecraft:glowstone_dust"
-      }
     }
   ],
   "outputs": [
     {
       "components": {
-        "skyresourcereforge:ore_alch_dust_index": 11
+        "skyresourcereforge:alchemy_component_index": 6
       },
       "count": 1,
-      "id": "skyresourcereforge:ore_alch_dust"
+      "id": "skyresourcereforge:alchemy_component"
     }
   ],
-  "parameter": 0.0047999998,
+  "parameter": 0.01,
   "recipeType": "skyresourcereforge:fusion"
 }

@@ -1,6 +1,7 @@
 package com.chouzz.skyresourcereforge;
 
 import com.chouzz.skyresourcereforge.registration.*;
+import com.chouzz.skyresourcereforge.gametest.RecipeGameTests;
 import com.chouzz.skyresourcereforge.util.ItemHelper;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -8,7 +9,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import org.slf4j.Logger;
 
 @Mod(SkyResourceReforge.MODID)
@@ -25,6 +26,7 @@ public class SkyResourceReforge {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(this::registerItemHelpers);
+        modEventBus.addListener(this::registerGameTests);
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
@@ -58,5 +60,10 @@ public class SkyResourceReforge {
         event.enqueueWork(() -> {
             // Already initialized in constructor
         });
+    }
+
+    private void registerGameTests(RegisterGameTestsEvent event) {
+        LOGGER.info("Registering SkyResourceReforge GameTests");
+        event.register(RecipeGameTests.class);
     }
 }
