@@ -57,6 +57,10 @@ public final class RecipeGameTests {
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_diamond");
     private static final ResourceLocation ALCHEMICAL_GLASS_RECIPE_ID =
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alchemical_glass");
+    private static final ResourceLocation ALCHEMY_WOOD_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy/wood");
+    private static final ResourceLocation ALCHEMY_REFINED_OBSIDIAN_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy/refinedobsidian");
 
     private RecipeGameTests() {
     }
@@ -167,6 +171,44 @@ public final class RecipeGameTests {
         helper.succeed();
     }
 
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void validateAlchemyMachineComponentRecipes(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        RecipeManager recipeManager = level.getRecipeManager();
+        HolderLookup.Provider registries = level.registryAccess();
+
+        String woodError = validateRecipeOutputDataComponent(
+                recipeManager,
+                registries,
+                ALCHEMY_WOOD_RECIPE_ID,
+                ModItems.ALCHEMY.get(),
+                ModDataComponents.ALCHEMY_MACHINE_INDEX.get(),
+                0,
+                ResourceLocation.withDefaultNamespace("crafting")
+        );
+        if (woodError != null) {
+            helper.fail(woodError);
+            return;
+        }
+
+        String refinedObsidianError = validateRecipeOutputDataComponent(
+                recipeManager,
+                registries,
+                ALCHEMY_REFINED_OBSIDIAN_RECIPE_ID,
+                ModItems.ALCHEMY.get(),
+                ModDataComponents.ALCHEMY_MACHINE_INDEX.get(),
+                15,
+                ResourceLocation.withDefaultNamespace("crafting")
+        );
+        if (refinedObsidianError != null) {
+            helper.fail(refinedObsidianError);
+            return;
+        }
+
+        helper.succeed();
+    }
+
     private static Set<ResourceLocation> collectExpectedRecipeIds(ResourceManager resourceManager) {
         // Some generators/mod setups use `recipe/`, vanilla uses `recipes/`; support both.
         Set<ResourceLocation> ids = new HashSet<>();
@@ -264,6 +306,44 @@ public final class RecipeGameTests {
 
         if (!ItemStack.isSameItemSameComponents(result, expectedOutput) || result.getCount() != expectedOutput.getCount()) {
             return recipeId + " output mismatch, expected " + expectedOutput + " but got " + result;
+        }
+
+        return null;
+    }
+
+    private static String validateRecipeOutputDataComponent(
+            RecipeManager recipeManager,
+            HolderLookup.Provider registries,
+            ResourceLocation recipeId,
+            net.minecraft.world.item.Item expectedItem,
+            net.minecraft.core.component.DataComponentType<Integer> indexComponent,
+            int expectedIndex,
+            ResourceLocation expectedRecipeType
+    ) {
+        Optional<RecipeHolder<?>> holder = recipeManager.byKey(recipeId);
+        if (holder.isEmpty()) {
+            return "Expected recipe missing: " + recipeId;
+        }
+
+        Recipe<?> recipe = holder.get().value();
+        ResourceLocation recipeType = recipe.getType() == null
+                ? ResourceLocation.withDefaultNamespace("unknown")
+                : BuiltInRegistries.RECIPE_TYPE.getKey(recipe.getType());
+        if (!expectedRecipeType.equals(recipeType)) {
+            return recipeId + " has wrong recipe type: " + recipeType + ", expected " + expectedRecipeType;
+        }
+
+        ItemStack result = recipe.getResultItem(registries);
+        if (result.isEmpty()) {
+            return recipeId + " result is empty";
+        }
+        if (!result.is(expectedItem)) {
+            return recipeId + " output item mismatch: " + result;
+        }
+
+        Integer index = result.get(indexComponent);
+        if (index == null || index != expectedIndex) {
+            return recipeId + " output index mismatch, expected " + expectedIndex + " but got " + index;
         }
 
         return null;

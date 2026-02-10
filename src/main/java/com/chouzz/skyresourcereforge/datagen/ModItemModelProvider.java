@@ -49,6 +49,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerAlchemyComponentModels();
         registerHeatComponentModels();
         registerHeatProviderModels();
+        registerAlchemyMachineModels();
     }
 
     private void registerBaseComponentModels() {
@@ -143,6 +144,26 @@ public class ModItemModelProvider extends ItemModelProvider {
 
             base.override()
                     .predicate(modLoc("heat_variant"), i + 1)
+                    .model(variantModel)
+                    .end();
+        }
+    }
+
+    private void registerAlchemyMachineModels() {
+        ItemModelBuilder base = getBuilder("alchemy")
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", heatBaseTexture(HeatVariants.getName(0), false))
+                .texture("layer1", modLoc("item/alchemy_component_crystal_shard"));
+
+        for (int i = 0; i < HeatVariants.size(); i++) {
+            String variant = HeatVariants.getName(i);
+            ItemModelBuilder variantModel = getBuilder("alchemy_" + variant)
+                    .parent(getExistingFile(mcLoc("item/generated")))
+                    .texture("layer0", heatBaseTexture(variant, false))
+                    .texture("layer1", modLoc("item/alchemy_component_crystal_shard"));
+
+            base.override()
+                    .predicate(modLoc("alchemy_variant"), i + 1)
                     .model(variantModel)
                     .end();
         }

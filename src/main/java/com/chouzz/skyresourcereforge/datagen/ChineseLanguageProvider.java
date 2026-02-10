@@ -47,6 +47,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.LIGHT_MATTER, "亮物质");
         addItem(ModItems.HEAT_COMPONENT, "加热组件");
         addItem(ModItems.HEAT_PROVIDER, "热量供应器");
+        addItem(ModItems.ALCHEMY, "炼金组件");
 
         String[] baseNames = {
             "植物物质",
@@ -174,6 +175,8 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
                 variantCnNames[i] + "加热组件");
             add("item.skyresourcereforge.heat_provider." + HEAT_VARIANT_NAMES[i],
                 variantCnNames[i] + "热量供应器");
+            add("item.skyresourcereforge.alchemy." + HEAT_VARIANT_NAMES[i],
+                variantCnNames[i] + "炼金组件");
         }
     }
 

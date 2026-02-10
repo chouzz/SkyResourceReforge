@@ -2,6 +2,7 @@ package com.chouzz.skyresourcereforge;
 
 import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.client.screen.*;
+import com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem;
 import com.chouzz.skyresourcereforge.registration.ModEntities;
 import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import com.chouzz.skyresourcereforge.registration.ModItems;
@@ -57,6 +58,10 @@ public class SkyResourceReforgeClient {
         ItemProperties.register(ModItems.ALCHEMY_COMPONENT.get(),
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy_component_variant"),
                 (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem.getVariantIndex(stack) + 1);
+
+        ItemProperties.register(ModItems.ALCHEMY.get(),
+                ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy_variant"),
+                (stack, level, entity, seed) -> AlchemyMachineComponentItem.getVariantIndex(stack) + 1);
     }
 
     @SubscribeEvent

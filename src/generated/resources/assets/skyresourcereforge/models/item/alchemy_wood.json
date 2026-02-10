@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:block/oak_planks",
+    "layer1": "skyresourcereforge:item/alchemy_component_crystal_shard"
+  }
+}

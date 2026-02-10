@@ -8,6 +8,7 @@ import com.chouzz.skyresourcereforge.alchemy.item.GemRegisterInfo;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
 import com.chouzz.skyresourcereforge.alchemy.item.OreRegisterInfo;
 import com.chouzz.skyresourcereforge.item.BaseComponentItem;
+import com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatProviderItem;
 import com.chouzz.skyresourcereforge.item.TechComponentItem;
@@ -725,6 +726,7 @@ public class ModRecipeProvider extends RecipeProvider {
         addFusionExtras(output);
         addInfusionExtras(output);
         addHeatComponentRecipes(output);
+        addAlchemyMachineComponentRecipes(output);
         addHeatProviderRecipes(output);
         addOreAlchDustRecipes(output);
         addCondenserRecipes(output);
@@ -1278,6 +1280,40 @@ public class ModRecipeProvider extends RecipeProvider {
         }
     }
 
+    private void addAlchemyMachineComponentRecipes(RecipeOutput output) {
+        List<Ingredient> materials = List.of(
+            Ingredient.of(ItemTags.PLANKS),
+            Ingredient.of(Blocks.STONE),
+            Ingredient.of(cTag("ingots/bronze")),
+            Ingredient.of(Items.IRON_INGOT),
+            Ingredient.of(cTag("ingots/steel")),
+            Ingredient.of(cTag("ingots/electrum")),
+            Ingredient.of(Items.NETHER_BRICK),
+            Ingredient.of(cTag("ingots/lead")),
+            Ingredient.of(cTag("ingots/manyullyn")),
+            Ingredient.of(cTag("ingots/signalum")),
+            Ingredient.of(Blocks.END_STONE),
+            Ingredient.of(cTag("ingots/enderium")),
+            Ingredient.of(ModItems.DARK_MATTER.get()),
+            Ingredient.of(ModItems.LIGHT_MATTER.get()),
+            Ingredient.of(cTag("ingots/osmium")),
+            Ingredient.of(cTag("ingots/refined_obsidian"))
+        );
+
+        int variantCount = Math.min(HeatVariants.size(), materials.size());
+        for (int i = 0; i < variantCount; i++) {
+            ItemStack outputStack = AlchemyMachineComponentItem.createStack(i, ModItems.ALCHEMY.get());
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
+                .pattern("XXX")
+                .pattern("XYX")
+                .pattern("XXX")
+                .define('X', materials.get(i))
+                .define('Y', alchemyMaterialDustIngredient(i))
+                .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy/" + HeatVariants.getName(i)));
+        }
+    }
+
     private void addOreAlchDustRecipes(RecipeOutput output) {
         List<Ingredient> components = List.of(
             Ingredient.of(Items.ROTTEN_FLESH),
@@ -1399,6 +1435,15 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private Ingredient heatComponentIngredient(int index) {
         return DataComponentIngredient.of(false, HeatComponentItem.createStack(index, ModItems.HEAT_COMPONENT.get()));
+    }
+
+    private Ingredient alchemyMaterialDustIngredient(int variantIndex) {
+        return switch (variantIndex) {
+            case 0, 1, 2, 3 -> alchemyComponentIngredient(2);
+            case 4, 5, 6, 7, 14 -> alchemyComponentIngredient(3);
+            case 8, 9, 10, 11, 15 -> alchemyComponentIngredient(4);
+            default -> alchemyComponentIngredient(5);
+        };
     }
 
     private void addCondenserRecipes(RecipeOutput output) {

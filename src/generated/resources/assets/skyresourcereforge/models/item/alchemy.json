@@ -1,0 +1,105 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "skyresourcereforge:item/alchemy_wood",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 1.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_stone",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 2.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_bronze",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 3.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_iron",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 4.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_steel",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 5.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_electrum",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 6.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_netherbrick",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 7.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_lead",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 8.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_manyullyn",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 9.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_signalum",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 10.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_endstone",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 11.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_enderium",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 12.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_darkmatter",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 13.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_lightmatter",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 14.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_osmium",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 15.0
+      }
+    },
+    {
+      "model": "skyresourcereforge:item/alchemy_refinedobsidian",
+      "predicate": {
+        "skyresourcereforge:alchemy_variant": 16.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "minecraft:block/oak_planks",
+    "layer1": "skyresourcereforge:item/alchemy_component_crystal_shard"
+  }
+}

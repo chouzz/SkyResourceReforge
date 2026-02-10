@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_alchemy_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skyresourcereforge:alchemy_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "skyresourcereforge:alchemy/lead"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_alchemy_component"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "skyresourcereforge:alchemy/lead"
+    ]
+  }
+}

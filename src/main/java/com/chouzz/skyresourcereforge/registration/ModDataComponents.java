@@ -45,6 +45,10 @@ public class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("alchemy_component_index",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ALCHEMY_MACHINE_INDEX =
+            DATA_COMPONENTS.registerComponentType("alchemy_machine_index",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static void register(IEventBus eventBus) {
         DATA_COMPONENTS.register(eventBus);
     }

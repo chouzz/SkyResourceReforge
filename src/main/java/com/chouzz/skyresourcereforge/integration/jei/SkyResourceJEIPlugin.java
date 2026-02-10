@@ -9,7 +9,6 @@ import com.chouzz.skyresourcereforge.alchemy.item.DirtyGemItem;
 import com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust;
 import com.chouzz.skyresourcereforge.heat.HeatSources;
 import com.chouzz.skyresourcereforge.heat.HeatVariants;
-import com.chouzz.skyresourcereforge.integration.jei.HeatSourceRecipe;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CauldronCleanRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CombustionRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.CondenserRecipeCategory;
@@ -24,6 +23,7 @@ import com.chouzz.skyresourcereforge.integration.jei.categories.RockGrinderRecip
 import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorExtractRecipeCategory;
 import com.chouzz.skyresourcereforge.integration.jei.categories.WaterExtractorInsertRecipeCategory;
 import com.chouzz.skyresourcereforge.item.BaseComponentItem;
+import com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatComponentItem;
 import com.chouzz.skyresourcereforge.item.HeatProviderItem;
 import com.chouzz.skyresourcereforge.item.TechComponentItem;
@@ -356,6 +356,11 @@ public class SkyResourceJEIPlugin implements IModPlugin {
                 return "unknown";
             }
         );
+
+        registration.registerSubtypeInterpreter(
+            ModItems.ALCHEMY.get(),
+            (stack, context) -> HeatVariants.getName(AlchemyMachineComponentItem.getVariantIndex(stack))
+        );
     }
 
     @Override
@@ -405,6 +410,11 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             alchemyComponents.add(AlchemyComponentItem.createStack(i, ModItems.ALCHEMY_COMPONENT.get()));
         }
 
+        java.util.List<ItemStack> alchemyMachineComponents = new ArrayList<>();
+        for (int i = 0; i < HeatVariants.size(); i++) {
+            alchemyMachineComponents.add(AlchemyMachineComponentItem.createStack(i, ModItems.ALCHEMY.get()));
+        }
+
         // Register with JEI
         registration.addExtraItemStacks(oreDusts);
         registration.addExtraItemStacks(dirtyGems);
@@ -413,6 +423,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.addExtraItemStacks(baseComponents);
         registration.addExtraItemStacks(techComponents);
         registration.addExtraItemStacks(alchemyComponents);
+        registration.addExtraItemStacks(alchemyMachineComponents);
 
         SkyResourceReforge.LOGGER.info("Registered {} ore dust and {} dirty gem variants as extra ingredients",
             oreDusts.size(), dirtyGems.size());

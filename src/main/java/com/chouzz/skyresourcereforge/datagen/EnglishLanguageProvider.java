@@ -47,6 +47,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addItem(ModItems.LIGHT_MATTER, "Light Matter");
         addItem(ModItems.HEAT_COMPONENT, "Heat Component");
         addItem(ModItems.HEAT_PROVIDER, "Heat Provider");
+        addItem(ModItems.ALCHEMY, "Alchemy Component");
 
         String[] baseNames = {
             "Plant Matter",
@@ -169,6 +170,8 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
                 variantDisplayNames[i] + " Heat Component");
             add("item.skyresourcereforge.heat_provider." + HEAT_VARIANT_NAMES[i],
                 variantDisplayNames[i] + " Heat Provider");
+            add("item.skyresourcereforge.alchemy." + HEAT_VARIANT_NAMES[i],
+                variantDisplayNames[i] + " Alchemy Component");
         }
     }
 

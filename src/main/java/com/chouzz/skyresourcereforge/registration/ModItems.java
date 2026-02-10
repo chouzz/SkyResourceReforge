@@ -96,6 +96,9 @@ public class ModItems {
     public static final DeferredItem<Item> HEAT_PROVIDER = ITEMS.register("heat_provider",
             () -> new com.chouzz.skyresourcereforge.item.HeatProviderItem(new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<Item> ALCHEMY = ITEMS.register("alchemy",
+            () -> new com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem(new Item.Properties()));
+
     // Additional Items
     public static final DeferredItem<Item> SURVIVALIST_FISHING_ROD = ITEMS.register("survivalist_fishing_rod",
             () -> new com.chouzz.skyresourcereforge.item.SurvivalistFishingRodItem());

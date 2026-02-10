@@ -61,6 +61,9 @@ public class ModCreativeTabs {
                 for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
                     output.accept(com.chouzz.skyresourcereforge.item.HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get()));
                 }
+                for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
+                    output.accept(com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem.createStack(i, ModItems.ALCHEMY.get()));
+                }
                 output.accept(ModBlocks.AQUEOUS_CONCENTRATOR.get());
                 output.accept(ModBlocks.AQUEOUS_DECONCENTRATOR.get());
                 output.accept(ModBlocks.HEAVY_SNOW.get());
