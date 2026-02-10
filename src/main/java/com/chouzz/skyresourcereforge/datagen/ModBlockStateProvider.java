@@ -1,7 +1,6 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
-import com.chouzz.skyresourcereforge.block.CombustionControllerBlock;
 import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -60,6 +59,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.HEAVY_SNOW.get(), cubeAll(ModBlocks.HEAVY_SNOW.get()));
         simpleBlockWithItem(ModBlocks.PETRIFIED_WOOD.get(), cubeAll(ModBlocks.PETRIFIED_WOOD.get()));
         simpleBlockWithItem(ModBlocks.PETRIFIED_PLANKS.get(), cubeAll(ModBlocks.PETRIFIED_PLANKS.get()));
+        simpleBlockWithItem(ModBlocks.ALCHEMICAL_GLASS.get(),
+                models().withExistingParent("alchemical_glass", mcLoc("block/glass")));
         simpleBlockWithItem(ModBlocks.SILVERFISH_DISRUPTOR.get(), cubeAll(ModBlocks.SILVERFISH_DISRUPTOR.get()));
         simpleBlockWithItem(ModBlocks.LIFE_INFUSER.get(), cubeAll(ModBlocks.LIFE_INFUSER.get()));
         simpleBlockWithItem(ModBlocks.FUSION_TABLE.get(), models().cubeBottomTop(

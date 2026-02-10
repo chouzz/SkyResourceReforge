@@ -132,6 +132,12 @@ public class ModBlocks {
                     .strength(1.5f, 0.5f)
                     .sound(SoundType.WOOD)));
 
+    public static final DeferredBlock<Block> ALCHEMICAL_GLASS = registerBlock("alchemical_glass",
+            () -> new ClearBlock(BlockBehaviour.Properties.of()
+                    .strength(1.0f, 0.5f)
+                    .sound(SoundType.GLASS)
+                    .noOcclusion()));
+
     public static final DeferredBlock<Block> SILVERFISH_DISRUPTOR = registerBlock("silverfish_disruptor",
             () -> new com.chouzz.skyresourcereforge.block.SilverfishDisruptorBlock(BlockBehaviour.Properties.of()
                     .strength(0.5f, 0.5f)

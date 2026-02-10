@@ -1046,6 +1046,23 @@ public class ModRecipeProvider extends RecipeProvider {
         );
 
         output.accept(
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alchemical_glass"),
+            new ProcessRecipe(
+                ModRecipeTypes.FUSION.getId(),
+                List.of(
+                    CountedIngredient.of(Ingredient.of(Blocks.SAND), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(1), 1),
+                    CountedIngredient.of(Ingredient.of(Items.PRISMARINE_CRYSTALS), 1)
+                ),
+                List.of(new ItemStack(ModBlocks.ALCHEMICAL_GLASS.get())),
+                List.of(),
+                List.of(),
+                0.004f
+            ),
+            null
+        );
+
+        output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/petrified_wood"),
             new ProcessRecipe(
                 ModRecipeTypes.FUSION.getId(),

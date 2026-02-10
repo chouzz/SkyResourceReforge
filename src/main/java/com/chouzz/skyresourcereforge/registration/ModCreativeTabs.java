@@ -66,6 +66,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.HEAVY_SNOW.get());
                 output.accept(ModItems.HEAVY_SNOWBALL.get());
                 output.accept(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
+                output.accept(ModBlocks.ALCHEMICAL_GLASS.get());
                 output.accept(ModBlocks.LIFE_INFUSER.get());
                 output.accept(ModBlocks.FUSION_TABLE.get());
                 // Add ore alchemical dusts
