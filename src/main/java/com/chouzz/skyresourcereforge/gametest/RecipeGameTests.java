@@ -9,8 +9,11 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -26,14 +29,20 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public final class RecipeGameTests {
     private static final int CRAFTING_GRID_SIZE = 9;
     private static final int CRAFTING_GRID_WIDTH = 3;
-    private static final int MAX_FAILURES_IN_MESSAGE = 15;
+    private static final int MAX_FAILURES_IN_MESSAGE = 8;
     private static final int MAX_CRAFTING_DIMENSION = 3;
+    private static final int MAX_FAILURE_LINE_LENGTH = 140;
 
     private RecipeGameTests() {
     }
@@ -55,11 +64,69 @@ public final class RecipeGameTests {
 
         if (!failures.isEmpty()) {
             helper.fail("Recipe validation failed (" + failures.size() + "/" + validatedCount + "):\n"
-                    + String.join("\n", failures.subList(0, Math.min(MAX_FAILURES_IN_MESSAGE, failures.size()))));
+                    + formatFailures(failures));
             return;
         }
 
         helper.succeed();
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void validateRecipeRegistryLoad(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        ResourceManager resourceManager = level.getServer().getResourceManager();
+        RecipeManager recipeManager = level.getRecipeManager();
+
+        Set<ResourceLocation> expectedRecipeIds = collectExpectedRecipeIds(resourceManager);
+        List<String> missing = new ArrayList<>();
+
+        for (ResourceLocation recipeId : expectedRecipeIds) {
+            if (recipeManager.byKey(recipeId).isEmpty()) {
+                missing.add(recipeId.toString());
+            }
+        }
+
+        if (!missing.isEmpty()) {
+            Collections.sort(missing);
+            helper.fail("Recipes not loaded into registry (" + missing.size() + "):\n"
+                    + formatFailures(missing));
+            return;
+        }
+
+        helper.succeed();
+    }
+
+    private static Set<ResourceLocation> collectExpectedRecipeIds(ResourceManager resourceManager) {
+        // Some generators/mod setups use `recipe/`, vanilla uses `recipes/`; support both.
+        Set<ResourceLocation> ids = new HashSet<>();
+        ids.addAll(collectRecipeIdsFromPrefix(resourceManager, "recipe"));
+        ids.addAll(collectRecipeIdsFromPrefix(resourceManager, "recipes"));
+        return ids;
+    }
+
+    private static Collection<ResourceLocation> collectRecipeIdsFromPrefix(ResourceManager resourceManager, String prefix) {
+        return resourceManager.listResources(prefix, path -> path.getPath().endsWith(".json"))
+                .keySet()
+                .stream()
+                .filter(id -> id.getNamespace().equals(SkyResourceReforge.MODID))
+                .map(id -> toRecipeId(id, prefix))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+    }
+
+    private static Optional<ResourceLocation> toRecipeId(ResourceLocation resourceId, String prefix) {
+        String path = resourceId.getPath();
+        String normalizedPrefix = prefix + "/";
+        if (!path.startsWith(normalizedPrefix) || !path.endsWith(".json")) {
+            return Optional.empty();
+        }
+        String idPath = path.substring(normalizedPrefix.length(), path.length() - ".json".length());
+        if (idPath.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(ResourceLocation.fromNamespaceAndPath(resourceId.getNamespace(), idPath));
     }
 
     private static <I extends RecipeInput, T extends Recipe<I>> int validateRecipeType(
@@ -165,6 +232,10 @@ public final class RecipeGameTests {
         }
 
         List<ItemStack> grid = new ArrayList<>(Collections.nCopies(CRAFTING_GRID_SIZE, ItemStack.EMPTY));
+        int[] slotToIngredientIndex = new int[CRAFTING_GRID_SIZE];
+        for (int i = 0; i < CRAFTING_GRID_SIZE; i++) {
+            slotToIngredientIndex[i] = -1;
+        }
         for (int i = 0; i < ingredients.size(); i++) {
             Ingredient ingredient = ingredients.get(i);
             if (ingredient.isEmpty()) {
@@ -184,6 +255,7 @@ public final class RecipeGameTests {
                 return;
             }
             grid.set(slot, stack);
+            slotToIngredientIndex[slot] = i;
         }
 
         CraftingInput input = CraftingInput.of(CRAFTING_GRID_WIDTH, CRAFTING_GRID_WIDTH, grid);
@@ -193,6 +265,42 @@ public final class RecipeGameTests {
         }
 
         assertAssembleMatchesResult(recipeId, recipe.assemble(input, registries), recipe.getResultItem(registries), failures);
+
+        // Negative case 1: remove one required material.
+        List<ItemStack> missingOne = copyGrid(grid);
+        int firstIngredientSlot = firstNonEmptySlot(missingOne);
+        if (firstIngredientSlot >= 0) {
+            missingOne.set(firstIngredientSlot, ItemStack.EMPTY);
+            assertCraftingDoesNotMatch(level, recipeId, recipe, missingOne, "missing one required ingredient", failures);
+        }
+
+        // Negative case 2: put a definitely unrelated item in one required slot.
+        List<ItemStack> wrongItem = copyGrid(grid);
+        firstIngredientSlot = firstNonEmptySlot(wrongItem);
+        if (firstIngredientSlot >= 0) {
+            int ingredientIndex = slotToIngredientIndex[firstIngredientSlot];
+            if (ingredientIndex >= 0 && ingredientIndex < ingredients.size()) {
+                ItemStack nonMatching = firstNonMatchingStack(ingredients.get(ingredientIndex));
+                if (!nonMatching.isEmpty()) {
+                    wrongItem.set(firstIngredientSlot, nonMatching);
+                    assertCraftingDoesNotMatch(level, recipeId, recipe, wrongItem, "wrong item inserted", failures);
+                }
+            }
+        }
+
+        // Edge case: inject extra unrelated item into an empty slot.
+        List<ItemStack> withExtra = copyGrid(grid);
+        int emptySlot = firstEmptySlot(withExtra);
+        if (emptySlot >= 0) {
+            withExtra.set(emptySlot, new ItemStack(Items.BARRIER));
+            assertCraftingDoesNotMatch(level, recipeId, recipe, withExtra, "extra unrelated item in empty slot", failures);
+        }
+
+        // Edge case: if ingredient item is damageable and damage changes matching, assert no match.
+        List<ItemStack> damagedCase = tryBuildDamagedMismatchGrid(grid, ingredients, slotToIngredientIndex);
+        if (!damagedCase.isEmpty()) {
+            assertCraftingDoesNotMatch(level, recipeId, recipe, damagedCase, "damaged ingredient variant", failures);
+        }
     }
 
     private static void validateSingleItemRecipe(
@@ -253,6 +361,109 @@ public final class RecipeGameTests {
             return ItemStack.EMPTY;
         }
         return stacks[0].copy();
+    }
+
+    private static ItemStack firstNonMatchingStack(Ingredient ingredient) {
+        for (var item : BuiltInRegistries.ITEM) {
+            ItemStack stack = new ItemStack(item);
+            if (!ingredient.test(stack)) {
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    private static void assertCraftingDoesNotMatch(
+            Level level,
+            String recipeId,
+            CraftingRecipe recipe,
+            List<ItemStack> grid,
+            String caseName,
+            List<String> failures
+    ) {
+        CraftingInput input = CraftingInput.of(CRAFTING_GRID_WIDTH, CRAFTING_GRID_WIDTH, grid);
+        if (recipe.matches(input, level)) {
+            failures.add(recipeId + " -> should not match for case: " + caseName);
+        }
+    }
+
+    private static List<ItemStack> copyGrid(List<ItemStack> grid) {
+        List<ItemStack> copied = new ArrayList<>(grid.size());
+        for (ItemStack stack : grid) {
+            copied.add(stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
+        }
+        return copied;
+    }
+
+    private static int firstNonEmptySlot(List<ItemStack> grid) {
+        for (int i = 0; i < grid.size(); i++) {
+            if (!grid.get(i).isEmpty()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static int firstEmptySlot(List<ItemStack> grid) {
+        for (int i = 0; i < grid.size(); i++) {
+            if (grid.get(i).isEmpty()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static List<ItemStack> tryBuildDamagedMismatchGrid(
+            List<ItemStack> grid,
+            NonNullList<Ingredient> ingredients,
+            int[] slotToIngredientIndex
+    ) {
+        List<Integer> candidates = new ArrayList<>();
+        for (int i = 0; i < grid.size(); i++) {
+            ItemStack stack = grid.get(i);
+            if (!stack.isEmpty() && stack.isDamageableItem()) {
+                candidates.add(i);
+            }
+        }
+        if (candidates.isEmpty()) {
+            return List.of();
+        }
+
+        candidates.sort(Comparator.naturalOrder());
+        for (int slot : candidates) {
+            ItemStack original = grid.get(slot);
+            ItemStack damaged = original.copy();
+            damaged.setDamageValue(Math.min(1, damaged.getMaxDamage() - 1));
+
+            int ingredientIndex = slotToIngredientIndex[slot];
+            if (ingredientIndex < 0 || ingredientIndex >= ingredients.size()) {
+                continue;
+            }
+            Ingredient ingredient = ingredients.get(ingredientIndex);
+            if (ingredient.isEmpty() || ingredient.test(damaged)) {
+                continue;
+            }
+
+            List<ItemStack> damagedGrid = copyGrid(grid);
+            damagedGrid.set(slot, damaged);
+            return damagedGrid;
+        }
+
+        return List.of();
+    }
+
+    private static String formatFailures(List<String> failures) {
+        int max = Math.min(MAX_FAILURES_IN_MESSAGE, failures.size());
+        List<String> lines = new ArrayList<>(max);
+        for (int i = 0; i < max; i++) {
+            String line = failures.get(i);
+            if (line.length() > MAX_FAILURE_LINE_LENGTH) {
+                lines.add(line.substring(0, MAX_FAILURE_LINE_LENGTH - 3) + "...");
+            } else {
+                lines.add(line);
+            }
+        }
+        return String.join("\n", lines);
     }
 
     @SuppressWarnings("unchecked")
