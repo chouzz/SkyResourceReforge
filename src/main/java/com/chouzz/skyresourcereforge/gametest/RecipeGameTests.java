@@ -4,6 +4,9 @@ import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.recipe.CountedIngredient;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipeInput;
+import com.chouzz.skyresourcereforge.registration.ModDataComponents;
+import com.chouzz.skyresourcereforge.registration.ModItems;
+import com.chouzz.skyresourcereforge.registration.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -43,6 +46,10 @@ public final class RecipeGameTests {
     private static final int MAX_FAILURES_IN_MESSAGE = 8;
     private static final int MAX_CRAFTING_DIMENSION = 3;
     private static final int MAX_FAILURE_LINE_LENGTH = 140;
+    private static final ResourceLocation ALCH_GOLD_INGOT_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_gold_ingot");
+    private static final ResourceLocation ALCH_IRON_INGOT_RECIPE_ID =
+            ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion/alch_iron_ingot");
 
     private RecipeGameTests() {
     }
@@ -97,6 +104,28 @@ public final class RecipeGameTests {
         helper.succeed();
     }
 
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void validateAlchemicalIngotFusionRecipes(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        RecipeManager recipeManager = level.getRecipeManager();
+        HolderLookup.Provider registries = level.registryAccess();
+
+        String goldError = validateProcessRecipeOutputVariant(recipeManager, registries, ALCH_GOLD_INGOT_RECIPE_ID, 7);
+        if (goldError != null) {
+            helper.fail(goldError);
+            return;
+        }
+
+        String ironError = validateProcessRecipeOutputVariant(recipeManager, registries, ALCH_IRON_INGOT_RECIPE_ID, 8);
+        if (ironError != null) {
+            helper.fail(ironError);
+            return;
+        }
+
+        helper.succeed();
+    }
+
     private static Set<ResourceLocation> collectExpectedRecipeIds(ResourceManager resourceManager) {
         // Some generators/mod setups use `recipe/`, vanilla uses `recipes/`; support both.
         Set<ResourceLocation> ids = new HashSet<>();
@@ -127,6 +156,43 @@ public final class RecipeGameTests {
             return Optional.empty();
         }
         return Optional.of(ResourceLocation.fromNamespaceAndPath(resourceId.getNamespace(), idPath));
+    }
+
+    private static String validateProcessRecipeOutputVariant(
+            RecipeManager recipeManager,
+            HolderLookup.Provider registries,
+            ResourceLocation recipeId,
+            int expectedAlchemyIndex
+    ) {
+        Optional<RecipeHolder<?>> holder = recipeManager.byKey(recipeId);
+        if (holder.isEmpty()) {
+            return "Expected recipe missing: " + recipeId;
+        }
+
+        Recipe<?> recipe = holder.get().value();
+        if (!(recipe instanceof ProcessRecipe processRecipe)) {
+            return recipeId + " is not a ProcessRecipe, found: " + recipe.getClass().getSimpleName();
+        }
+
+        if (!processRecipe.getRecipeTypeId().equals(ModRecipeTypes.FUSION.getId())) {
+            return recipeId + " has wrong process type: " + processRecipe.getRecipeTypeId();
+        }
+
+        ItemStack result = processRecipe.getResultItem(registries);
+        if (result.isEmpty()) {
+            return recipeId + " result is empty";
+        }
+
+        if (!result.is(ModItems.ALCHEMY_COMPONENT.get())) {
+            return recipeId + " output item is not alchemy_component: " + result;
+        }
+
+        Integer outputIndex = result.get(ModDataComponents.ALCHEMY_COMPONENT_INDEX.get());
+        if (outputIndex == null || outputIndex != expectedAlchemyIndex) {
+            return recipeId + " output index mismatch, expected " + expectedAlchemyIndex + " but got " + outputIndex;
+        }
+
+        return null;
     }
 
     private static <I extends RecipeInput, T extends Recipe<I>> int validateRecipeType(
