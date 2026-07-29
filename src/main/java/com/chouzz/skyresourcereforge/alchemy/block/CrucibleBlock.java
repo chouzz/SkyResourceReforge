@@ -52,8 +52,6 @@ public class CrucibleBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            // TODO: Implement fluid handling and item interaction
-            // For now, just open a basic interaction
             return InteractionResult.CONSUME;
         }
         return InteractionResult.SUCCESS;

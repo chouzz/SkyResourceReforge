@@ -3,13 +3,21 @@ package com.chouzz.skyresourcereforge;
 import com.chouzz.skyresourcereforge.registration.*;
 import com.chouzz.skyresourcereforge.gametest.RecipeGameTests;
 import com.chouzz.skyresourcereforge.util.ItemHelper;
+import com.chouzz.skyresourcereforge.item.WaterExtractorItem;
+import com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity;
+import com.chouzz.skyresourcereforge.block.entity.RockCleanerBlockEntity;
+import com.chouzz.skyresourcereforge.block.entity.FluidDropperBlockEntity;
+import com.chouzz.skyresourcereforge.alchemy.block.entity.CrucibleBlockEntity;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import org.slf4j.Logger;
 
 @Mod(SkyResourceReforge.MODID)
@@ -37,7 +45,6 @@ public class SkyResourceReforge {
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
         ModMenuTypes.register(modEventBus);
-        // ModFluids.register(modEventBus); // TODO: Implement in future phase
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -50,10 +57,27 @@ public class SkyResourceReforge {
         });
     }
 
-    private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
-        event.registerItem(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM,
-                (stack, context) -> new net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack(ModDataComponents.FLUID_CONTENT, stack, com.chouzz.skyresourcereforge.item.WaterExtractorItem.CAPACITY),
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+                (stack, context) -> new FluidHandlerItemStack(ModDataComponents.FLUID_CONTENT, stack, WaterExtractorItem.CAPACITY),
                 ModItems.WATER_EXTRACTOR.get());
+
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof AqueousConcentratorBlockEntity ace ? ace : null,
+                ModBlocks.AQUEOUS_CONCENTRATOR.get(),
+                ModBlocks.AQUEOUS_DECONCENTRATOR.get());
+
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof RockCleanerBlockEntity rce ? rce.getTank() : null,
+                ModBlocks.ROCK_CLEANER.get());
+
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof FluidDropperBlockEntity fde ? fde.getTank() : null,
+                ModBlocks.FLUID_DROPPER.get());
+
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof CrucibleBlockEntity cbe ? cbe.getTank() : null,
+                ModBlocks.CRUCIBLE.get());
     }
 
     private void registerItemHelpers(FMLCommonSetupEvent event) {

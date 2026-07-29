@@ -180,9 +180,6 @@ public class CrucibleBlockEntity extends BlockEntity {
         for (int i = 0; i < inventory.getSlots(); i++) {
             Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(i));
         }
-        if (!fluidTank.isEmpty()) {
-            // TODO: Handle fluid dropping - for now just log
-            com.chouzz.skyresourcereforge.SkyResourceReforge.LOGGER.info("Dropping fluid from crucible: " + fluidTank.getFluid().getAmount() + " mb");
-        }
+        fluidTank.drain(fluidTank.getFluidAmount(), net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
     }
 }

@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Fluid Dropper block - drops fluid blocks below.
  * Ported from SkyResources FluidDropperBlock.
- * TODO: Implement fluid handling functionality
  */
 public class FluidDropperBlock extends BaseEntityBlock {
 
