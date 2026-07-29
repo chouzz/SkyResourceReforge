@@ -74,6 +74,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.FUSION_TABLE.get());
                 output.accept(ModBlocks.CRUCIBLE.get());
                 output.accept(ModBlocks.CRUCIBLE_INSERTER.get());
+                output.accept(ModBlocks.WILDLIFE_ATTRACTOR.get());
                 // Add ore alchemical dusts
                 if (com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames() != null) {
                     for (int i = 0; i < com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getNames().size(); i++) {

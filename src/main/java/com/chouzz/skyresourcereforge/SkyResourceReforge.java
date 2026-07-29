@@ -82,6 +82,14 @@ public class SkyResourceReforge {
         event.registerBlock(Capabilities.ItemHandler.BLOCK,
                 (level, pos, state, be, side) -> be instanceof com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity cie ? cie.getInventory() : null,
                 ModBlocks.CRUCIBLE_INSERTER.get());
+
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof com.chouzz.skyresourcereforge.block.entity.WildlifeAttractorBlockEntity wae ? wae.getTank() : null,
+                ModBlocks.WILDLIFE_ATTRACTOR.get());
+
+        event.registerBlock(Capabilities.ItemHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof com.chouzz.skyresourcereforge.block.entity.WildlifeAttractorBlockEntity wae ? wae.getInventory() : null,
+                ModBlocks.WILDLIFE_ATTRACTOR.get());
     }
 
     private void registerItemHelpers(FMLCommonSetupEvent event) {

@@ -65,6 +65,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.LIFE_INFUSER.get(), cubeAll(ModBlocks.LIFE_INFUSER.get()));
         simpleBlockWithItem(ModBlocks.CRUCIBLE.get(), models().cubeAll("crucible", modLoc("block/ironmachine")));
         simpleBlockWithItem(ModBlocks.CRUCIBLE_INSERTER.get(), models().cubeAll("crucible_inserter", modLoc("block/ironmachine")));
+        simpleBlockWithItem(ModBlocks.WILDLIFE_ATTRACTOR.get(), models().cubeAll("wildlife_attractor", modLoc("block/ironmachine")));
         simpleBlockWithItem(ModBlocks.FUSION_TABLE.get(), models().cubeBottomTop(
             "fusion_table",
             modLoc("block/fusion_table_side"),

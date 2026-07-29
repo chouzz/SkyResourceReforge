@@ -52,6 +52,11 @@ public class ModMenuTypes {
             () -> IMenuTypeExtension.create(CrucibleInserterMenu::new)
     );
 
+    public static final DeferredHolder<MenuType<?>, MenuType<WildlifeAttractorMenu>> WILDLIFE_ATTRACTOR = MENU_TYPES.register(
+            "wildlife_attractor",
+            () -> IMenuTypeExtension.create(WildlifeAttractorMenu::new)
+    );
+
     public static void register(IEventBus eventBus) {
         MENU_TYPES.register(eventBus);
     }
