@@ -47,6 +47,11 @@ public class ModMenuTypes {
             () -> IMenuTypeExtension.create(CasingMenu::new)
     );
 
+    public static final DeferredHolder<MenuType<?>, MenuType<CrucibleInserterMenu>> CRUCIBLE_INSERTER = MENU_TYPES.register(
+            "crucible_inserter",
+            () -> IMenuTypeExtension.create(CrucibleInserterMenu::new)
+    );
+
     public static void register(IEventBus eventBus) {
         MENU_TYPES.register(eventBus);
     }

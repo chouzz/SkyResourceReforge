@@ -102,6 +102,7 @@ public class EnglishLanguageProvider extends ModLanguageProvider {
         addBlock(ModBlocks.ALCHEMICAL_GLASS, "Alchemical Glass");
         addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "Lepisma Saccharina Teleportation Disruptor");
         addBlock(ModBlocks.CRUCIBLE, "Crucible");
+        addBlock(ModBlocks.CRUCIBLE_INSERTER, "Crucible Inserter");
         addBlock(ModBlocks.LIFE_INFUSER, "Life Infuser");
         addBlock(ModBlocks.FUSION_TABLE, "Alchemical Fusion Table");
     }

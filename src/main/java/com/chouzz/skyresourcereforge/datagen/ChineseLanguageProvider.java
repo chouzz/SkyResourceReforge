@@ -102,6 +102,7 @@ public class ChineseLanguageProvider extends ModLanguageProvider {
         addBlock(ModBlocks.ALCHEMICAL_GLASS, "赫耳墨斯玻璃");
         addBlock(ModBlocks.SILVERFISH_DISRUPTOR, "蠹虫传送干扰器");
         addBlock(ModBlocks.CRUCIBLE, "坩埚");
+        addBlock(ModBlocks.CRUCIBLE_INSERTER, "坩埚插入器");
         addBlock(ModBlocks.LIFE_INFUSER, "生命灌注台");
         addBlock(ModBlocks.FUSION_TABLE, "炼金灌注台");
     }

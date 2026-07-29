@@ -73,6 +73,7 @@ public class SkyResourceReforgeClient {
         event.register(ModMenuTypes.ROCK_CLEANER.get(), RockCleanerScreen::new);
         event.register(ModMenuTypes.COMBUSTION_COLLECTOR.get(), CombustionCollectorScreen::new);
         event.register(ModMenuTypes.CASING.get(), CasingScreen::new);
+        event.register(ModMenuTypes.CRUCIBLE_INSERTER.get(), CrucibleInserterScreen::new);
     }
 
     @SubscribeEvent

@@ -78,6 +78,10 @@ public class SkyResourceReforge {
         event.registerBlock(Capabilities.FluidHandler.BLOCK,
                 (level, pos, state, be, side) -> be instanceof CrucibleBlockEntity cbe ? cbe.getTank() : null,
                 ModBlocks.CRUCIBLE.get());
+
+        event.registerBlock(Capabilities.ItemHandler.BLOCK,
+                (level, pos, state, be, side) -> be instanceof com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity cie ? cie.getInventory() : null,
+                ModBlocks.CRUCIBLE_INSERTER.get());
     }
 
     private void registerItemHelpers(FMLCommonSetupEvent event) {
