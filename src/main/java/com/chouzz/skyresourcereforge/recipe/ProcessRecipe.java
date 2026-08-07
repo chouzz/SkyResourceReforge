@@ -146,43 +146,94 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         if (inputs.isEmpty()) {
             return !strict || items.isEmpty();
         }
-        List<Integer> used = new ArrayList<>();
-        if (strict) {
-            for (ItemStack stack : items) {
-                boolean valid = false;
-                int index = 0;
-                for (CountedIngredient ingredient : inputs) {
-                    if (!used.contains(index) && ingredient.test(stack) && stack.getCount() >= ingredient.count()) {
-                        used.add(index);
-                        valid = true;
-                        break;
-                    }
-                    index++;
+        // Build bipartite adjacency: matchR[i] = list of item indices that satisfy ingredient i
+        int ni = inputs.size();
+        int nj = items.size();
+        List<List<Integer>> adj = new ArrayList<>(ni);
+        for (int i = 0; i < ni; i++) {
+            CountedIngredient ingredient = inputs.get(i);
+            List<Integer> matches = new ArrayList<>();
+            for (int j = 0; j < nj; j++) {
+                if (ingredient.test(items.get(j)) && items.get(j).getCount() >= ingredient.count()) {
+                    matches.add(j);
                 }
-                if (!valid) {
+            }
+            adj.add(matches);
+        }
+        int[] matchJ = new int[nj]; // matchJ[j] = ingredient index matched to item j, -1 if unmatched
+        java.util.Arrays.fill(matchJ, -1);
+
+        if (strict) {
+            // In strict mode, every item must be matched to a distinct ingredient
+            // Use augmenting-path matching from the item (right) side
+            boolean[] visited = new boolean[ni];
+            for (int j = 0; j < nj; j++) {
+                java.util.Arrays.fill(visited, false);
+                if (!tryAugmentItem(adj, matchJ, visited, j, ni)) {
                     return false;
                 }
             }
-            return used.size() == inputs.size();
-        }
-        for (CountedIngredient ingredient : inputs) {
-            boolean valid = false;
-            for (int i = 0; i < items.size(); i++) {
-                if (used.contains(i)) {
-                    continue;
-                }
-                ItemStack stack = items.get(i);
-                if (ingredient.test(stack) && stack.getCount() >= ingredient.count()) {
-                    used.add(i);
-                    valid = true;
-                    break;
-                }
+            // Also verify all ingredients are matched (required in strict mode)
+            boolean[] ingMatched = new boolean[ni];
+            for (int j = 0; j < nj; j++) {
+                if (matchJ[j] >= 0) ingMatched[matchJ[j]] = true;
             }
-            if (!valid) {
-                return false;
+            for (int i = 0; i < ni; i++) {
+                if (!ingMatched[i]) return false;
+            }
+            return true;
+        }
+
+        // Non-strict: find maximum bipartite matching from ingredient (left) side
+        int matchCount = 0;
+        boolean[] visited = new boolean[nj];
+        for (int i = 0; i < ni; i++) {
+            java.util.Arrays.fill(visited, false);
+            if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
+                matchCount++;
             }
         }
-        return true;
+        return matchCount == ni;
+    }
+
+    /**
+     * Try to find an augmenting path for ingredient i (left side) using Kuhn's algorithm.
+     */
+    private static boolean tryAugmentIngredient(List<List<Integer>> adj, int[] matchJ,
+                                                boolean[] visited, int u, int nj) {
+        for (int v : adj.get(u)) {
+            if (visited[v]) continue;
+            visited[v] = true;
+            if (matchJ[v] == -1 || tryAugmentIngredient(adj, matchJ, visited, matchJ[v], nj)) {
+                matchJ[v] = u;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Try to find an augmenting path for item j (right side) — used in strict mode.
+     * Scans all ingredients to find one that can match item j.
+     */
+    private static boolean tryAugmentItem(List<List<Integer>> adj, int[] matchJ,
+                                          boolean[] visited, int j, int ni) {
+        for (int i = 0; i < ni; i++) {
+            if (visited[i]) continue;
+            if (!adj.get(i).contains(j)) continue;
+            visited[i] = true;
+            // Find which item is currently matched to ingredient i
+            int currentJ = -1;
+            for (int k = 0; k < matchJ.length; k++) {
+                if (matchJ[k] == i) { currentJ = k; break; }
+            }
+            if (currentJ == -1 || tryAugmentItem(adj, matchJ, visited, currentJ, ni)) {
+                matchJ[j] = i;
+                if (currentJ >= 0) matchJ[currentJ] = -1;
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean matchFluids(List<FluidStack> fluids, boolean strict) {
@@ -192,25 +243,31 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         if (strict && fluids.size() != fluidInputs.size()) {
             return false;
         }
-        List<Integer> used = new ArrayList<>();
-        for (FluidStack recipeFluid : fluidInputs) {
-            boolean valid = false;
-            for (int i = 0; i < fluids.size(); i++) {
-                if (used.contains(i)) {
-                    continue;
-                }
-                FluidStack stack = fluids.get(i);
+        int ni = fluidInputs.size();
+        int nj = fluids.size();
+        List<List<Integer>> adj = new ArrayList<>(ni);
+        for (int i = 0; i < ni; i++) {
+            FluidStack recipeFluid = fluidInputs.get(i);
+            List<Integer> matches = new ArrayList<>();
+            for (int j = 0; j < nj; j++) {
+                FluidStack stack = fluids.get(j);
                 if (FluidStack.isSameFluidSameComponents(stack, recipeFluid) && stack.getAmount() >= recipeFluid.getAmount()) {
-                    used.add(i);
-                    valid = true;
-                    break;
+                    matches.add(j);
                 }
             }
-            if (!valid) {
-                return false;
+            adj.add(matches);
+        }
+        int[] matchJ = new int[nj];
+        java.util.Arrays.fill(matchJ, -1);
+        int matchCount = 0;
+        boolean[] visited = new boolean[nj];
+        for (int i = 0; i < ni; i++) {
+            java.util.Arrays.fill(visited, false);
+            if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
+                matchCount++;
             }
         }
-        return true;
+        return matchCount == ni;
     }
 
     public static class Serializer implements RecipeSerializer<ProcessRecipe> {
