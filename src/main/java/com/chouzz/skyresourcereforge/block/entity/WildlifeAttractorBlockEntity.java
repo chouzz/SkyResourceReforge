@@ -1,6 +1,5 @@
 package com.chouzz.skyresourcereforge.block.entity;
 
-import com.chouzz.skyresourcereforge.Config;
 import com.chouzz.skyresourcereforge.item.BaseComponentItem;
 import com.chouzz.skyresourcereforge.registration.ModBlockEntities;
 import net.minecraft.core.BlockPos;
