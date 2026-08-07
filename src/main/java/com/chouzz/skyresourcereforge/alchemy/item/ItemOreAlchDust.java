@@ -120,7 +120,17 @@ public class ItemOreAlchDust extends Item {
     }
 
     private void itemList() {
-        if (names.size() == 0) {
+        if (names.size() != oreInfos.size()) {
+            names.clear();
+            for (int i = 0; i < oreInfos.size(); i++) {
+                names.add(oreInfos.get(i).name);
+            }
+        }
+    }
+
+    private static void ensureNamesInitialized() {
+        if (names.size() != oreInfos.size()) {
+            names.clear();
             for (int i = 0; i < oreInfos.size(); i++) {
                 names.add(oreInfos.get(i).name);
             }
@@ -148,6 +158,7 @@ public class ItemOreAlchDust extends Item {
 
 
     public static ItemStack getStack(String name) {
+        ensureNamesInitialized();
         int index = names.indexOf(name);
         if (index >= 0) {
             ItemStack stack = new ItemStack(Instance, 1);
@@ -158,6 +169,7 @@ public class ItemOreAlchDust extends Item {
     }
 
     public static ArrayList<String> getNames() {
+        ensureNamesInitialized();
         return names;
     }
 
