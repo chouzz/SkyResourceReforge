@@ -13,7 +13,7 @@ public class HeatProviderItem extends Item {
 
     public static int getVariantIndex(ItemStack stack) {
         Integer index = stack.get(ModDataComponents.HEAT_PROVIDER_INDEX.get());
-        if (index != null) {
+        if (index != null && index >= 0 && index < HeatVariants.size()) {
             return index;
         }
         return 0;

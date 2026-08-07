@@ -32,7 +32,7 @@ public class AlchemyComponentItem extends Item {
 
     public static int getVariantIndex(ItemStack stack) {
         Integer index = stack.get(ModDataComponents.ALCHEMY_COMPONENT_INDEX.get());
-        if (index != null) {
+        if (index != null && index >= 0 && index < NAMES.size()) {
             return index;
         }
         return 0;
