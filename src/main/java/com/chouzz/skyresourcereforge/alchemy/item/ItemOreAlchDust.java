@@ -120,7 +120,12 @@ public class ItemOreAlchDust extends Item {
     }
 
     private void itemList() {
-        if (names.size() == 0) {
+        ensureNamesInitialized();
+    }
+
+    private static void ensureNamesInitialized() {
+        if (names.size() != oreInfos.size()) {
+            names.clear();
             for (int i = 0; i < oreInfos.size(); i++) {
                 names.add(oreInfos.get(i).name);
             }
@@ -129,6 +134,7 @@ public class ItemOreAlchDust extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
+        ensureNamesInitialized();
         int index = getDustIndex(stack);
         if (index >= 0 && index < names.size()) {
             return Component.translatable("item.skyresourcereforge.ore_alch_dust." + names.get(index));
@@ -148,6 +154,7 @@ public class ItemOreAlchDust extends Item {
 
 
     public static ItemStack getStack(String name) {
+        ensureNamesInitialized();
         int index = names.indexOf(name);
         if (index >= 0) {
             ItemStack stack = new ItemStack(Instance, 1);
@@ -158,11 +165,13 @@ public class ItemOreAlchDust extends Item {
     }
 
     public static ArrayList<String> getNames() {
+        ensureNamesInitialized();
         return names;
     }
 
     @Override
     public String getDescriptionId(ItemStack stack) {
+        ensureNamesInitialized();
         int index = getDustIndex(stack);
         if (index >= 0 && index < names.size()) {
             return "item.skyresourcereforge.ore_alch_dust." + names.get(index);
