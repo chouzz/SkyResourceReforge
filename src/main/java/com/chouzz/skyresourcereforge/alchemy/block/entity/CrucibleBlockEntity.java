@@ -125,7 +125,7 @@ public class CrucibleBlockEntity extends BlockEntity {
         if (itemAmount + amount > MAX_ITEM_AMOUNT) {
             return;
         }
-        if (fluidTank.getFluid().isEmpty()) {
+        if (fluidTank.getFluid().isEmpty() && itemAmount == 0) {
             itemIn = stack.copyWithCount(1);
         }
         if (itemIn.isEmpty() || ItemStack.isSameItemSameComponents(itemIn, stack)) {
