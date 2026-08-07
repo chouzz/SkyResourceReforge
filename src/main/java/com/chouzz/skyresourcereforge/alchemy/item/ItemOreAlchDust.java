@@ -120,12 +120,7 @@ public class ItemOreAlchDust extends Item {
     }
 
     private void itemList() {
-        if (names.size() != oreInfos.size()) {
-            names.clear();
-            for (int i = 0; i < oreInfos.size(); i++) {
-                names.add(oreInfos.get(i).name);
-            }
-        }
+        ensureNamesInitialized();
     }
 
     private static void ensureNamesInitialized() {
@@ -139,6 +134,7 @@ public class ItemOreAlchDust extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
+        ensureNamesInitialized();
         int index = getDustIndex(stack);
         if (index >= 0 && index < names.size()) {
             return Component.translatable("item.skyresourcereforge.ore_alch_dust." + names.get(index));
@@ -175,6 +171,7 @@ public class ItemOreAlchDust extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
+        ensureNamesInitialized();
         int index = getDustIndex(stack);
         if (index >= 0 && index < names.size()) {
             return "item.skyresourcereforge.ore_alch_dust." + names.get(index);
