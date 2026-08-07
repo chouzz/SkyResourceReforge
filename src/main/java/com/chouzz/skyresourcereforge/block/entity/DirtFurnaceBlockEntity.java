@@ -98,10 +98,10 @@ public class DirtFurnaceBlockEntity extends BlockEntity {
         RecipeManager recipeManager = level.getRecipeManager();
         AbstractCookingRecipe recipe = blockEntity.getRecipe(recipeManager, inputStack);
 
-        if ((blockEntity.burnTime > 0 || !fuelStack.isEmpty()) && !inputStack.isEmpty() && recipe != null) {
+        if ((blockEntity.burnTime > 0 || (!fuelStack.isEmpty() && blockEntity.canSmelt(recipe, outputStack))) && !inputStack.isEmpty() && recipe != null) {
             if (blockEntity.burnTime == 0) {
                 int fuelTime = AbstractFurnaceBlockEntity.getFuel().getOrDefault(fuelStack.getItem(), 0);
-                if (fuelTime > 0) {
+                if (fuelTime > 0 && blockEntity.canSmelt(recipe, outputStack)) {
                     blockEntity.burnTime = fuelTime;
                     blockEntity.totalBurnTime = fuelTime;
                     blockEntity.totalCookTime = recipe.getCookingTime();
