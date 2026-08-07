@@ -28,7 +28,7 @@ public class BaseComponentItem extends Item {
 
     public static int getVariantIndex(ItemStack stack) {
         Integer index = stack.get(ModDataComponents.BASE_COMPONENT_INDEX.get());
-        if (index != null) {
+        if (index != null && index >= 0 && index < NAMES.size()) {
             return index;
         }
         return 0;
