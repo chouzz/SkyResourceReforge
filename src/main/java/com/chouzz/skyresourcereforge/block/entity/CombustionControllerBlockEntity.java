@@ -78,7 +78,7 @@ public class CombustionControllerBlockEntity extends BlockEntity {
         }
 
         ItemStack output = recipe.getOutputs().get(0).copy();
-        output = tryInsertCollector(posBehind.below(), output);
+        output = tryInsertCollector(posBehind.below().below(), output);
         if (!output.isEmpty()) {
             level.addFreshEntity(new ItemEntity(level, posBehind.getX() + 0.5, posBehind.getY() + 0.5,
                     posBehind.getZ() + 0.5, output));
