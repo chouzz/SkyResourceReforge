@@ -78,15 +78,17 @@ public class FreezerMenu extends AbstractContainerMenu {
 
             int inputSlots = inventory.getSlots() / 2;
 
+            int playerSlotEnd = inputSlots * 2 + 36;
+
             if (index >= inputSlots && index < inputSlots * 2) {
                 // Output slot
-                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, 39, true)) {
+                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, playerSlotEnd, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (index < inputSlots) {
                 // Input slot
-                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, 39, false)) {
+                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, playerSlotEnd, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemstack1, 0, inputSlots * 2, false)) {
