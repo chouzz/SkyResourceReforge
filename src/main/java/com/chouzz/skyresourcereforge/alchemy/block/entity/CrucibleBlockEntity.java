@@ -177,8 +177,40 @@ public class CrucibleBlockEntity extends BlockEntity {
 
     public void dropInventory() {
         if (level == null) return;
+
+        // Drop inventory items (usually empty, but handle anyway)
         for (int i = 0; i < inventory.getSlots(); i++) {
             Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(i));
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
+
+        // Refund pending melt input items
+        if (!itemIn.isEmpty() && itemAmount > 0) {
+            ProcessRecipe recipe = getCrucibleRecipe(itemIn);
+            if (recipe != null && !recipe.getFluidOutputs().isEmpty()) {
+                int amountPerItem = recipe.getFluidOutputs().get(0).getAmount();
+                int itemCount = amountPerItem > 0 ? itemAmount / amountPerItem : 0;
+                int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+                if (itemCount > 0) {
+                    ItemStack refund = itemIn.copy();
+                    refund.setCount(itemCount * inputCount);
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), refund);
+                }
+            }
+        }
+
+        // Drop stored fluid as filled buckets instead of draining to nowhere
+        FluidStack fluid = fluidTank.getFluid();
+        if (!fluid.isEmpty()) {
+            net.minecraft.world.item.Item bucketItem = fluid.getFluid().getBucket();
+            if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
+                int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
+                int bucketCount = fluid.getAmount() / bucketVolume;
+                if (bucketCount > 0) {
+                    ItemStack bucketStack = new ItemStack(bucketItem, bucketCount);
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), bucketStack);
+                }
+            }
         }
         fluidTank.drain(fluidTank.getFluidAmount(), net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
     }
