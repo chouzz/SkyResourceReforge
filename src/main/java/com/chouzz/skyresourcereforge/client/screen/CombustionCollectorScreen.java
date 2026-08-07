@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class CombustionCollectorScreen extends AbstractContainerScreen<CombustionCollectorMenu> {
-    private static final ResourceLocation BLANK_INVENTORY = ResourceLocation.fromNamespaceAndPath("skyresourcereforge", "textures/gui/blank_inventory");
+    private static final ResourceLocation BLANK_INVENTORY = ResourceLocation.fromNamespaceAndPath("skyresourcereforge", "textures/gui/blank_inventory.png");
 
     public CombustionCollectorScreen(CombustionCollectorMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
