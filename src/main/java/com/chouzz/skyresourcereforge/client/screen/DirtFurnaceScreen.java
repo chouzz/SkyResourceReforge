@@ -22,12 +22,14 @@ public class DirtFurnaceScreen extends AbstractContainerScreen<DirtFurnaceMenu> 
         int y = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(FURNACE_TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        int burnLeftScaled = this.menu.getBurnTime() * 13 / this.menu.getTotalBurnTime();
+        int totalBurnTime = this.menu.getTotalBurnTime();
+        int burnLeftScaled = totalBurnTime > 0 ? this.menu.getBurnTime() * 13 / totalBurnTime : 0;
         if (burnLeftScaled > 0) {
             guiGraphics.blit(FURNACE_TEXTURE, x + 56, y + 36 + 12 - burnLeftScaled, 176, 12 - burnLeftScaled, 14, burnLeftScaled + 1);
         }
 
-        int cookProgressScaled = this.menu.getCookTime() * 24 / this.menu.getTotalCookTime();
+        int totalCookTime = this.menu.getTotalCookTime();
+        int cookProgressScaled = totalCookTime > 0 ? this.menu.getCookTime() * 24 / totalCookTime : 0;
         if (cookProgressScaled > 0) {
             guiGraphics.blit(FURNACE_TEXTURE, x + 79, y + 34, 176, 14, cookProgressScaled + 1, 16);
         }
