@@ -129,8 +129,9 @@ public class WaterExtractorItem extends Item {
                 if (recipe.getFluidInputs().isEmpty()) return InteractionResult.PASS;
                 BlockState resultState = getRecipeBlockOutput(recipe);
                 if (resultState == null) return InteractionResult.PASS;
-                if (currentFluid.getAmount() >= recipe.getFluidInputs().get(0).getAmount()) {
-                    handler.drain(recipe.getFluidInputs().get(0).getAmount(), IFluidHandler.FluidAction.EXECUTE);
+                FluidStack requiredFluid = recipe.getFluidInputs().get(0);
+                if (FluidStack.isSameFluidSameComponents(currentFluid, requiredFluid) && currentFluid.getAmount() >= requiredFluid.getAmount()) {
+                    handler.drain(requiredFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);
                     level.setBlockAndUpdate(pos, resultState);
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                     return InteractionResult.SUCCESS;
