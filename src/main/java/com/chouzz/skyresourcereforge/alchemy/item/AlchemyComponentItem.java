@@ -58,13 +58,21 @@ public class AlchemyComponentItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        String variant = NAMES.get(getVariantIndex(stack));
-        return Component.translatable("item.skyresourcereforge.alchemy_component." + variant);
+        int index = getVariantIndex(stack);
+        if (index >= 0 && index < NAMES.size()) {
+            String variant = NAMES.get(index);
+            return Component.translatable("item.skyresourcereforge.alchemy_component." + variant);
+        }
+        return super.getName(stack);
     }
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        String variant = NAMES.get(getVariantIndex(stack));
-        return "item.skyresourcereforge.alchemy_component." + variant;
+        int index = getVariantIndex(stack);
+        if (index >= 0 && index < NAMES.size()) {
+            String variant = NAMES.get(index);
+            return "item.skyresourcereforge.alchemy_component." + variant;
+        }
+        return super.getDescriptionId(stack);
     }
 }
