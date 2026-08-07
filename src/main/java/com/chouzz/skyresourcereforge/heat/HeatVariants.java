@@ -27,12 +27,15 @@ public final class HeatVariants {
             2324, 1362, 2164, 3166, 4042, 1566, 3033, 3768
     );
 
-    private HeatVariants() {
+    static {
         if (NAMES.size() != HEAT_VALUES.size()) {
             throw new IllegalStateException(
                 "HeatVariants NAMES and HEAT_VALUES lists must be the same size: "
                 + NAMES.size() + " names vs " + HEAT_VALUES.size() + " values");
         }
+    }
+
+    private HeatVariants() {
     }
 
     public static int size() {
