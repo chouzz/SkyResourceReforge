@@ -177,8 +177,52 @@ public class CrucibleBlockEntity extends BlockEntity {
 
     public void dropInventory() {
         if (level == null) return;
+
+        // Drop inventory items (usually empty, but handle anyway)
         for (int i = 0; i < inventory.getSlots(); i++) {
             Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(i));
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
+
+        // Refund pending melt input items and drop stored fluid
+        // Combine itemAmount (pending mB) + tank fluid into one pool so
+        // fractional remainders from both sides merge instead of being
+        // independently discarded.
+        int totalMb = itemAmount + fluidTank.getFluidAmount();
+        FluidStack fluid = fluidTank.getFluid();
+        int tankRemaining = fluid.getAmount();
+
+        if (!itemIn.isEmpty() && totalMb > 0) {
+            ProcessRecipe recipe = getCrucibleRecipe(itemIn);
+            if (recipe != null && !recipe.getFluidOutputs().isEmpty()) {
+                int mbPerBatch = recipe.getFluidOutputs().get(0).getAmount();
+                int inputCount = recipe.getInputs().isEmpty() ? 1 : recipe.getInputs().get(0).count();
+                int batchesToRefund = mbPerBatch > 0 ? totalMb / mbPerBatch : 0;
+                if (batchesToRefund > 0) {
+                    ItemStack refund = itemIn.copy();
+                    refund.setCount(batchesToRefund * inputCount);
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), refund);
+                }
+                // Refund consumes pending mB first, then real tank fluid.
+                // Calculate how much of the real tank was consumed so we
+                // only bucket the remainder.
+                int consumedByRefund = batchesToRefund * mbPerBatch;
+                int tankConsumedByRefund = Math.max(0, consumedByRefund - itemAmount);
+                tankRemaining = Math.max(0, fluid.getAmount() - tankConsumedByRefund);
+            }
+        }
+
+        // Drop remaining tank fluid as filled buckets (only real tank fluid, not pending mB)
+        if (!fluid.isEmpty() && tankRemaining > 0) {
+            net.minecraft.world.item.Item bucketItem = fluid.getFluid().getBucket();
+            if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
+                int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
+                int bucketCount = tankRemaining / bucketVolume;
+                if (bucketCount > 0) {
+                    ItemStack bucketStack = new ItemStack(bucketItem, bucketCount);
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), bucketStack);
+                }
+            }
         }
         fluidTank.drain(fluidTank.getFluidAmount(), net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
     }
