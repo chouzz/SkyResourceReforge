@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class FreezerScreen extends AbstractContainerScreen<FreezerMenu> {
     private static final ResourceLocation BLANK_INVENTORY = ResourceLocation.fromNamespaceAndPath("skyresourcereforge", "textures/gui/blank_inventory");
-    private static final ResourceLocation GUI_ICONS = ResourceLocation.fromNamespaceAndPath("skyresourcereforge", "textures/gui/gui_icons");
 
     public FreezerScreen(FreezerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -26,7 +25,7 @@ public class FreezerScreen extends AbstractContainerScreen<FreezerMenu> {
         guiGraphics.blit(BLANK_INVENTORY, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
         // Draw slot backgrounds
-        int inputSlots = this.menu.slots.size() / 2 - 18; // Approximate
+        int inputSlots = this.menu.getInputSlotCount();
         for (int row = 0; row < (inputSlots + 4) / 5; row++) {
             for (int col = 0; col < Math.min(5, inputSlots - row * 5); col++) {
                 guiGraphics.blit(BLANK_INVENTORY, x + 52 + col * 18, y + 21 + row * 36, 7, 83, 18, 18);
