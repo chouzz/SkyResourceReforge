@@ -78,7 +78,7 @@ public class WaterExtractorItem extends Item {
                 if (filled == fluid.getAmount()) {
                     handler.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
                     BlockState resultState = getRecipeBlockOutput(recipe);
-                    level.setBlockAndUpdate(pos, resultState);
+                    level.setBlockAndUpdate(pos, resultState != null ? resultState : Blocks.AIR.defaultBlockState());
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             } else if (state.is(Blocks.WATER) && state.getFluidState().isSource()) {
@@ -96,6 +96,8 @@ public class WaterExtractorItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+
         Player player = context.getPlayer();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
@@ -149,13 +151,17 @@ public class WaterExtractorItem extends Item {
 
     /**
      * Resolves the block output from a recipe, null-checking Block.byItem() which
-     * returns null when the output item is not a BlockItem. Returns AIR when
-     * the recipe has no outputs or the output is not a block.
+     * returns null when the output item is not a BlockItem. Returns null when the
+     * recipe has no outputs or the output is not a block, so callers can decide
+     * how to handle the absence (e.g. abort vs. fall back to AIR).
+     *
+     * @return the block state if the recipe has a valid block output, or null
      */
+    @javax.annotation.Nullable
     private static BlockState getRecipeBlockOutput(ProcessRecipe recipe) {
-        if (recipe.getOutputs().isEmpty()) return Blocks.AIR.defaultBlockState();
+        if (recipe.getOutputs().isEmpty()) return null;
         Block block = Block.byItem(recipe.getOutputs().get(0).getItem());
-        return block != null ? block.defaultBlockState() : Blocks.AIR.defaultBlockState();
+        return block != null ? block.defaultBlockState() : null;
     }
 
     private static record SimpleItemInput(ItemStack stack) implements RecipeInput {
