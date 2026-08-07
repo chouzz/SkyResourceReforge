@@ -161,7 +161,10 @@ public class RockCrusherBlockEntity extends BlockEntity {
             ListTag bufferTag = tag.getList("buffer", CompoundTag.TAG_COMPOUND);
             for (int i = 0; i < bufferTag.size(); i++) {
                 CompoundTag itemTag = bufferTag.getCompound(i);
-                bufferStacks.add(ItemStack.parseOptional(registries, itemTag));
+                ItemStack stack = ItemStack.parseOptional(registries, itemTag);
+                if (stack != null && !stack.isEmpty()) {
+                    bufferStacks.add(stack);
+                }
             }
         }
     }
