@@ -127,14 +127,8 @@ public class RockCrusherBlockEntity extends BlockEntity {
         if (stackInSlot.isEmpty()) {
             return true;
         }
-        if (bufferStacks.isEmpty()) {
-            return stackInSlot.getCount() < stackInSlot.getMaxStackSize();
-        }
-        ItemStack bufferTop = bufferStacks.get(bufferStacks.size() - 1);
-        if (ItemStack.isSameItemSameComponents(stackInSlot, bufferTop)) {
-            return stackInSlot.getCount() + bufferTop.getCount() <= stackInSlot.getMaxStackSize();
-        }
-        return false;
+        // insertItem does partial insertion, so any remaining capacity means we can drain
+        return stackInSlot.getCount() < stackInSlot.getMaxStackSize();
     }
 
     @Override
