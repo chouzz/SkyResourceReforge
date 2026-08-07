@@ -29,6 +29,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 import java.util.List;
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 public class WaterExtractorItem extends Item {
     public static final int CAPACITY = 5000;
@@ -157,7 +158,7 @@ public class WaterExtractorItem extends Item {
      *
      * @return the block state if the recipe has a valid block output, or null
      */
-    @javax.annotation.Nullable
+    @Nullable
     private static BlockState getRecipeBlockOutput(ProcessRecipe recipe) {
         if (recipe.getOutputs().isEmpty()) return null;
         Block block = Block.byItem(recipe.getOutputs().get(0).getItem());
