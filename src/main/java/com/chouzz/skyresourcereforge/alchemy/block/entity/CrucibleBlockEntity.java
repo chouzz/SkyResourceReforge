@@ -207,12 +207,12 @@ public class CrucibleBlockEntity extends BlockEntity {
             }
         }
 
-        // Drop remaining tank fluid as filled buckets
-        if (!fluid.isEmpty() && totalMb > 0) {
+        // Drop remaining tank fluid as filled buckets (only real fluid, not pending mB)
+        if (!fluid.isEmpty()) {
             net.minecraft.world.item.Item bucketItem = fluid.getFluid().getBucket();
             if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
                 int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
-                int bucketCount = totalMb / bucketVolume;
+                int bucketCount = fluid.getAmount() / bucketVolume;
                 if (bucketCount > 0) {
                     ItemStack bucketStack = new ItemStack(bucketItem, bucketCount);
                     Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), bucketStack);
