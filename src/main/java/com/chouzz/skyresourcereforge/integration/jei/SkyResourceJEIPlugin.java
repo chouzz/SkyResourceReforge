@@ -60,11 +60,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 public class SkyResourceJEIPlugin implements IModPlugin {
 
     private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "plugin");
-    private static final int[] HEAT_PROVIDER_VALUES = {
-        100, 600, 950, 1538, 1370, 1878, 3072, 328,
-        2324, 1362, 2164, 3166, 4042, 1566, 3033, 3768
-    };
-
     // JEI Recipe Types
     public static final RecipeType<ProcessRecipe> COMBUSTION_TYPE =
         RecipeType.create(SkyResourceReforge.MODID, "combustion", ProcessRecipe.class);
@@ -219,10 +214,9 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             recipes.add(new HeatSourceRecipe(stack, name, heat));
         });
 
-        int variantCount = Math.min(HeatVariants.size(), HEAT_PROVIDER_VALUES.length);
-        for (int i = 0; i < variantCount; i++) {
+        for (int i = 0; i < HeatVariants.size(); i++) {
             ItemStack stack = HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get());
-            recipes.add(new HeatSourceRecipe(stack, stack.getHoverName(), HEAT_PROVIDER_VALUES[i]));
+            recipes.add(new HeatSourceRecipe(stack, stack.getHoverName(), HeatVariants.getHeat(i)));
         }
 
         return recipes;
