@@ -126,8 +126,12 @@ public class RockCrusherBlockEntity extends BlockEntity {
         if (bufferStacks.isEmpty()) {
             return false;
         }
+        ItemStack lastItem = bufferStacks.get(bufferStacks.size() - 1);
+        if (lastItem.isEmpty()) {
+            return false;
+        }
         // Simulate insertion to check both type compatibility and capacity
-        ItemStack probe = bufferStacks.get(bufferStacks.size() - 1).copyWithCount(1);
+        ItemStack probe = lastItem.copyWithCount(1);
         return inventory.insertItem(slot, probe, true).isEmpty();
     }
 
