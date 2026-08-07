@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,7 +147,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         if (inputs.isEmpty()) {
             return !strict || items.isEmpty();
         }
-        // Build bipartite adjacency: matchR[i] = list of item indices that satisfy ingredient i
+        // Build bipartite adjacency: adj[i] = list of item indices that satisfy ingredient i
         int ni = inputs.size();
         int nj = items.size();
         List<List<Integer>> adj = new ArrayList<>(ni);
@@ -161,34 +162,15 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
             adj.add(matches);
         }
         int[] matchJ = new int[nj]; // matchJ[j] = ingredient index matched to item j, -1 if unmatched
-        java.util.Arrays.fill(matchJ, -1);
+        Arrays.fill(matchJ, -1);
 
-        if (strict) {
-            // In strict mode, every item must be matched to a distinct ingredient
-            // Use augmenting-path matching from the item (right) side
-            boolean[] visited = new boolean[ni];
-            for (int j = 0; j < nj; j++) {
-                java.util.Arrays.fill(visited, false);
-                if (!tryAugmentItem(adj, matchJ, visited, j, ni)) {
-                    return false;
-                }
-            }
-            // Also verify all ingredients are matched (required in strict mode)
-            boolean[] ingMatched = new boolean[ni];
-            for (int j = 0; j < nj; j++) {
-                if (matchJ[j] >= 0) ingMatched[matchJ[j]] = true;
-            }
-            for (int i = 0; i < ni; i++) {
-                if (!ingMatched[i]) return false;
-            }
-            return true;
-        }
-
-        // Non-strict: find maximum bipartite matching from ingredient (left) side
+        // Find maximum bipartite matching from ingredient (left) side using Kuhn's algorithm.
+        // For strict mode, matches() already enforces items.size() == inputs.size(), so
+        // matchCount == ni implies a perfect matching on both sides.
         int matchCount = 0;
         boolean[] visited = new boolean[nj];
         for (int i = 0; i < ni; i++) {
-            java.util.Arrays.fill(visited, false);
+            Arrays.fill(visited, false);
             if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
                 matchCount++;
             }
@@ -206,30 +188,6 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
             visited[v] = true;
             if (matchJ[v] == -1 || tryAugmentIngredient(adj, matchJ, visited, matchJ[v], nj)) {
                 matchJ[v] = u;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Try to find an augmenting path for item j (right side) — used in strict mode.
-     * Scans all ingredients to find one that can match item j.
-     */
-    private static boolean tryAugmentItem(List<List<Integer>> adj, int[] matchJ,
-                                          boolean[] visited, int j, int ni) {
-        for (int i = 0; i < ni; i++) {
-            if (visited[i]) continue;
-            if (!adj.get(i).contains(j)) continue;
-            visited[i] = true;
-            // Find which item is currently matched to ingredient i
-            int currentJ = -1;
-            for (int k = 0; k < matchJ.length; k++) {
-                if (matchJ[k] == i) { currentJ = k; break; }
-            }
-            if (currentJ == -1 || tryAugmentItem(adj, matchJ, visited, currentJ, ni)) {
-                matchJ[j] = i;
-                if (currentJ >= 0) matchJ[currentJ] = -1;
                 return true;
             }
         }
@@ -258,11 +216,11 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
             adj.add(matches);
         }
         int[] matchJ = new int[nj];
-        java.util.Arrays.fill(matchJ, -1);
+        Arrays.fill(matchJ, -1);
         int matchCount = 0;
         boolean[] visited = new boolean[nj];
         for (int i = 0; i < ni; i++) {
-            java.util.Arrays.fill(visited, false);
+            Arrays.fill(visited, false);
             if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
                 matchCount++;
             }
