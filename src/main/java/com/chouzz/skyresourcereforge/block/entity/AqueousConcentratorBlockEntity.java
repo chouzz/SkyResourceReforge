@@ -82,18 +82,21 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
                 .map(holder -> holder.value())
                 .orElse(null);
 
-        if (recipe != null && progress < 100) {
+        if (recipe == null || recipe.getOutputs().isEmpty() || recipe.getFluidInputs().isEmpty()) {
+            progress = 0;
+            return;
+        }
+
+        if (progress < 100) {
             ItemStack output = recipe.getOutputs().get(0).copy();
             if (inventory.insertItem(1, output, true).isEmpty()) {
                 progress += 1; // TODO: Configurable speed
             } else {
                 progress = 0;
             }
-        } else if (recipe == null) {
-            progress = 0;
         }
 
-        if (progress >= 100 && recipe != null) {
+        if (progress >= 100) {
             ItemStack output = recipe.getOutputs().get(0).copy();
             if (inventory.insertItem(1, output, false).isEmpty()) {
                 FluidStack fluidInput = recipe.getFluidInputs().get(0);
