@@ -111,7 +111,8 @@ public class DirtyGemItem extends Item {
     }
 
     private static void ensureNamesInitialized() {
-        if (names.isEmpty()) {
+        if (names.isEmpty() || names.size() != gemInfos.size()) {
+            names.clear();
             for (GemRegisterInfo gem : gemInfos) {
                 names.add(gem.name);
             }
