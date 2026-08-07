@@ -29,6 +29,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 import java.util.List;
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 public class WaterExtractorItem extends Item {
     public static final int CAPACITY = 5000;
@@ -71,13 +72,14 @@ public class WaterExtractorItem extends Item {
 
             if (recipeOpt.isPresent()) {
                 ProcessRecipe recipe = recipeOpt.get().value();
+                if (recipe.getFluidOutputs().isEmpty()) return;
                 FluidStack fluid = recipe.getFluidOutputs().get(0).copy();
                 
                 int filled = handler.fill(fluid, IFluidHandler.FluidAction.SIMULATE);
                 if (filled == fluid.getAmount()) {
                     handler.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
-                    level.setBlockAndUpdate(pos, recipe.getOutputs().isEmpty() ? Blocks.AIR.defaultBlockState() : 
-                            Block.byItem(recipe.getOutputs().get(0).getItem()).defaultBlockState());
+                    BlockState resultState = getRecipeBlockOutput(recipe);
+                    level.setBlockAndUpdate(pos, resultState != null ? resultState : Blocks.AIR.defaultBlockState());
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             } else if (state.is(Blocks.WATER) && state.getFluidState().isSource()) {
@@ -124,9 +126,12 @@ public class WaterExtractorItem extends Item {
             
             if (recipeOpt.isPresent()) {
                 ProcessRecipe recipe = recipeOpt.get().value();
+                if (recipe.getFluidInputs().isEmpty()) return InteractionResult.PASS;
+                BlockState resultState = getRecipeBlockOutput(recipe);
+                if (resultState == null) return InteractionResult.PASS;
                 if (currentFluid.getAmount() >= recipe.getFluidInputs().get(0).getAmount()) {
                     handler.drain(recipe.getFluidInputs().get(0).getAmount(), IFluidHandler.FluidAction.EXECUTE);
-                    level.setBlockAndUpdate(pos, Block.byItem(recipe.getOutputs().get(0).getItem()).defaultBlockState());
+                    level.setBlockAndUpdate(pos, resultState);
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                     return InteractionResult.SUCCESS;
                 }
@@ -143,6 +148,21 @@ public class WaterExtractorItem extends Item {
             FluidStack fluid = handler.getFluidInTank(0);
             tooltip.add(Component.literal("Water: " + fluid.getAmount() + " / " + CAPACITY + " mB"));
         }
+    }
+
+    /**
+     * Resolves the block output from a recipe, null-checking Block.byItem() which
+     * returns null when the output item is not a BlockItem. Returns null when the
+     * recipe has no outputs or the output is not a block, so callers can decide
+     * how to handle the absence (e.g. abort vs. fall back to AIR).
+     *
+     * @return the block state if the recipe has a valid block output, or null
+     */
+    @Nullable
+    private static BlockState getRecipeBlockOutput(ProcessRecipe recipe) {
+        if (recipe.getOutputs().isEmpty()) return null;
+        Block block = Block.byItem(recipe.getOutputs().get(0).getItem());
+        return block != null ? block.defaultBlockState() : null;
     }
 
     private static record SimpleItemInput(ItemStack stack) implements RecipeInput {
