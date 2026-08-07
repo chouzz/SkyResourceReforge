@@ -123,12 +123,12 @@ public class RockCrusherBlockEntity extends BlockEntity {
     }
 
     private boolean canInsertIntoSlot(int slot) {
-        ItemStack stackInSlot = inventory.getStackInSlot(slot);
-        if (stackInSlot.isEmpty()) {
-            return true;
+        if (bufferStacks.isEmpty()) {
+            return false;
         }
-        // insertItem does partial insertion, so any remaining capacity means we can drain
-        return stackInSlot.getCount() < stackInSlot.getMaxStackSize();
+        // Simulate insertion to check both type compatibility and capacity
+        ItemStack probe = bufferStacks.get(bufferStacks.size() - 1).copyWithCount(1);
+        return inventory.insertItem(slot, probe, true).isEmpty();
     }
 
     @Override
