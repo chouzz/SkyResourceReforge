@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class CasingBlock extends BaseEntityBlock {
@@ -46,7 +45,7 @@ public class CasingBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof CasingBlockEntity) {
+            if (blockEntity instanceof CasingBlockEntity casing) {
                 player.openMenu(new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
@@ -55,9 +54,8 @@ public class CasingBlock extends BaseEntityBlock {
 
                     @Override
                     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-                        // Create a simple inventory for the casing menu (can be enhanced later)
                         return new com.chouzz.skyresourcereforge.menu.CasingMenu(containerId, playerInventory,
-                                ContainerLevelAccess.create(level, pos), new ItemStackHandler(18));
+                                ContainerLevelAccess.create(level, pos), casing.getInventory());
                     }
                 });
             }
@@ -66,8 +64,12 @@ public class CasingBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Casing doesn't have inventory to drop
-        super.onRemove(state, level, pos, newState, isMoving);
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof CasingBlockEntity casing) {
+                casing.dropInventory();
+            }
+            super.onRemove(state, level, pos, newState, movedByPiston);
+        }
     }
 }
