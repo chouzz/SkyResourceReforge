@@ -1,3 +1,6 @@
+# clawpatch
+.clawpatch/
+
 # eclipse
 bin
 *.launch
