@@ -119,9 +119,22 @@ public class RockCrusherBlockEntity extends BlockEntity {
     }
 
     private boolean fullOutput() {
-        return !inventory.getStackInSlot(1).isEmpty()
-                && !inventory.getStackInSlot(2).isEmpty()
-                && !inventory.getStackInSlot(3).isEmpty();
+        return !canInsertIntoSlot(1) && !canInsertIntoSlot(2) && !canInsertIntoSlot(3);
+    }
+
+    private boolean canInsertIntoSlot(int slot) {
+        ItemStack stackInSlot = inventory.getStackInSlot(slot);
+        if (stackInSlot.isEmpty()) {
+            return true;
+        }
+        if (bufferStacks.isEmpty()) {
+            return stackInSlot.getCount() < stackInSlot.getMaxStackSize();
+        }
+        ItemStack bufferTop = bufferStacks.get(bufferStacks.size() - 1);
+        if (ItemStack.isSameItemSameComponents(stackInSlot, bufferTop)) {
+            return stackInSlot.getCount() + bufferTop.getCount() <= stackInSlot.getMaxStackSize();
+        }
+        return false;
     }
 
     @Override
