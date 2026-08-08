@@ -106,8 +106,4 @@ public class FreezerMenu extends AbstractContainerMenu {
     public float getFreezerSpeed() {
         return this.data.get(0) / 100.0f;
     }
-
-    public int getInputSlotCount() {
-        return INPUT_SLOT_COUNT;
-    }
 }
