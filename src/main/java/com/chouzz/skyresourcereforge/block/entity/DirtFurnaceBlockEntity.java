@@ -105,9 +105,13 @@ public class DirtFurnaceBlockEntity extends BlockEntity {
                     blockEntity.burnTime = fuelTime;
                     blockEntity.totalBurnTime = fuelTime;
                     blockEntity.totalCookTime = recipe.getCookingTime();
-                    fuelStack.shrink(1);
-                    if (fuelStack.isEmpty()) {
-                        blockEntity.inventory.setStackInSlot(1, ItemStack.EMPTY);
+                    if (fuelStack.hasCraftingRemainingItem()) {
+                        blockEntity.inventory.setStackInSlot(1, fuelStack.getCraftingRemainingItem());
+                    } else {
+                        fuelStack.shrink(1);
+                        if (fuelStack.isEmpty()) {
+                            blockEntity.inventory.setStackInSlot(1, ItemStack.EMPTY);
+                        }
                     }
                     changed = true;
                 }
