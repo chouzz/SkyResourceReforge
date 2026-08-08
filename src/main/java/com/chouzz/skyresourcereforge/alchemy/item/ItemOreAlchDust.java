@@ -168,9 +168,9 @@ public class ItemOreAlchDust extends Item {
         return ItemStack.EMPTY;
     }
 
-    public static ArrayList<String> getNames() {
+    public static List<String> getNames() {
         ensureNamesInitialized();
-        return new ArrayList<>(names);
+        return Collections.unmodifiableList(names);
     }
 
     @Override
