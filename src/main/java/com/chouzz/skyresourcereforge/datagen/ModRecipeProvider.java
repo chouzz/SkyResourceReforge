@@ -1191,8 +1191,8 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addDirtyGemRecipes(RecipeOutput output, ResourceLocation recipeTypeId) {
-        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
-            GemRegisterInfo info = DirtyGemItem.gemInfos.get(i);
+        for (int i = 0; i < DirtyGemItem.getGemInfos().size(); i++) {
+            GemRegisterInfo info = DirtyGemItem.getGemInfos().get(i);
             ItemStack outputStack = new ItemStack(ModItems.DIRTY_GEM.get());
             DirtyGemItem.setGemIndex(outputStack, i);
             output.accept(
@@ -1343,9 +1343,9 @@ public class ModRecipeProvider extends RecipeProvider {
             techComponentIngredient(1)
         );
 
-        int variantCount = Math.min(ItemOreAlchDust.oreInfos.size(), components.size());
+        int variantCount = Math.min(ItemOreAlchDust.getOreInfos().size(), components.size());
         for (int i = 0; i < variantCount; i++) {
-            OreRegisterInfo info = ItemOreAlchDust.oreInfos.get(i);
+            OreRegisterInfo info = ItemOreAlchDust.getOreInfos().get(i);
             ItemStack outputStack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
             ItemOreAlchDust.setDustIndex(outputStack, i);
 
