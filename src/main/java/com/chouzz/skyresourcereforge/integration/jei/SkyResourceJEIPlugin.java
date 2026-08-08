@@ -44,6 +44,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -224,7 +225,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         Map<String, HeatSourceRecipe> dedup = new LinkedHashMap<>();
 
         HeatSources.getHeatSources().forEach((state, heat) -> {
-            String key = state.getBlock() + ":" + heat;
+            String key = BuiltInRegistries.BLOCK.getKey(state.getBlock()) + ":" + heat;
             if (!dedup.containsKey(key)) {
                 ItemStack stack = new ItemStack(state.getBlock());
                 Component name = Component.translatable(state.getBlock().getDescriptionId());
