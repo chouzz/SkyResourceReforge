@@ -22,6 +22,10 @@ public class ItemHelper {
      * Call this during mod initialization.
      */
     public static void init() {
+        infusionStones.clear();
+        rockGrinders.clear();
+        knives.clear();
+
         // Register infusion stones
         addInfusionStone(ModItems.INFUSION_STONE_SANDSTONE.get());
         addInfusionStone(ModItems.INFUSION_STONE_RED_SANDSTONE.get());
