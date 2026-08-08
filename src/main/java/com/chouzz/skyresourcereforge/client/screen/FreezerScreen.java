@@ -25,13 +25,8 @@ public class FreezerScreen extends AbstractContainerScreen<FreezerMenu> {
         guiGraphics.blit(BLANK_INVENTORY, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
         // Draw slot backgrounds
-        int inputSlots = this.menu.getInputSlotCount();
-        for (int row = 0; row < (inputSlots + 4) / 5; row++) {
-            for (int col = 0; col < Math.min(5, inputSlots - row * 5); col++) {
-                guiGraphics.blit(BLANK_INVENTORY, x + 52 + col * 18, y + 21 + row * 36, 7, 83, 18, 18);
-                guiGraphics.blit(BLANK_INVENTORY, x + 52 + col * 18, y + 39 + row * 36, 7, 83, 18, 18);
-            }
-        }
+        guiGraphics.blit(BLANK_INVENTORY, x + 52, y + 21, 7, 83, 18, 18); // input
+        guiGraphics.blit(BLANK_INVENTORY, x + 52, y + 39, 7, 83, 18, 18); // output
     }
 
     @Override
