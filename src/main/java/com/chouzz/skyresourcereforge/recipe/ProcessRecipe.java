@@ -13,6 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -274,24 +275,34 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
             buffer.writeFloat(recipe.parameter);
         }
 
+        private static final int MAX_COLLECTION_SIZE = 65536;
+
+        private static int readBoundedSize(RegistryFriendlyByteBuf buffer, String field) {
+            int size = buffer.readInt();
+            if (size < 0 || size > MAX_COLLECTION_SIZE) {
+                throw new DecoderException("ProcessRecipe " + field + " size out of bounds: " + size);
+            }
+            return size;
+        }
+
         private static ProcessRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             ResourceLocation recipeTypeId = ResourceLocation.STREAM_CODEC.decode(buffer);
-            int inputSize = buffer.readInt();
+            int inputSize = readBoundedSize(buffer, "inputs");
             List<CountedIngredient> inputs = new java.util.ArrayList<>(inputSize);
             for (int i = 0; i < inputSize; i++) {
                 inputs.add(CountedIngredient.STREAM_CODEC.decode(buffer));
             }
-            int outputSize = buffer.readInt();
+            int outputSize = readBoundedSize(buffer, "outputs");
             List<ItemStack> outputs = new java.util.ArrayList<>(outputSize);
             for (int i = 0; i < outputSize; i++) {
                 outputs.add(ItemStack.STREAM_CODEC.decode(buffer));
             }
-            int fluidInputSize = buffer.readInt();
+            int fluidInputSize = readBoundedSize(buffer, "fluidInputs");
             List<FluidStack> fluidInputs = new java.util.ArrayList<>(fluidInputSize);
             for (int i = 0; i < fluidInputSize; i++) {
                 fluidInputs.add(FluidStack.STREAM_CODEC.decode(buffer));
             }
-            int fluidOutputSize = buffer.readInt();
+            int fluidOutputSize = readBoundedSize(buffer, "fluidOutputs");
             List<FluidStack> fluidOutputs = new java.util.ArrayList<>(fluidOutputSize);
             for (int i = 0; i < fluidOutputSize; i++) {
                 fluidOutputs.add(FluidStack.STREAM_CODEC.decode(buffer));
