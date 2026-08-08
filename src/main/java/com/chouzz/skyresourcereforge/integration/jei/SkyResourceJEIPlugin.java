@@ -184,6 +184,15 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             .toList();
     }
 
+    /** Safely resolves a HeatVariants name with bounds checking, mirroring the guard pattern
+     * used by sibling subtype interpreters (DirtyGem, OreAlchDust, BaseComponent, etc.). */
+    private static String safeVariantName(int index) {
+        if (index >= 0 && index < HeatVariants.size()) {
+            return HeatVariants.getName(index);
+        }
+        return "unknown";
+    }
+
     private List<ProcessRecipe> getDirtyGemCleanRecipes() {
         List<ProcessRecipe> recipes = new ArrayList<>();
         for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
@@ -310,12 +319,12 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
         registration.registerSubtypeInterpreter(
             ModItems.HEAT_COMPONENT.get(),
-            (stack, context) -> HeatVariants.getName(HeatComponentItem.getVariantIndex(stack))
+            (stack, context) -> safeVariantName(HeatComponentItem.getVariantIndex(stack))
         );
 
         registration.registerSubtypeInterpreter(
             ModItems.HEAT_PROVIDER.get(),
-            (stack, context) -> HeatVariants.getName(HeatProviderItem.getVariantIndex(stack))
+            (stack, context) -> safeVariantName(HeatProviderItem.getVariantIndex(stack))
         );
 
         registration.registerSubtypeInterpreter(
@@ -353,7 +362,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
         registration.registerSubtypeInterpreter(
             ModItems.ALCHEMY.get(),
-            (stack, context) -> HeatVariants.getName(AlchemyMachineComponentItem.getVariantIndex(stack))
+            (stack, context) -> safeVariantName(AlchemyMachineComponentItem.getVariantIndex(stack))
         );
     }
 
