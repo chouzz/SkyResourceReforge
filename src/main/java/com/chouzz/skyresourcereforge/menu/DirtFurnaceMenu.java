@@ -12,6 +12,8 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -66,24 +68,33 @@ public class DirtFurnaceMenu extends AbstractContainerMenu {
             itemstack = itemstack1.copy();
 
             if (index == 2) {
+                // Output slot -> move to player inventory
                 if (!this.moveItemStackTo(itemstack1, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (index != 1 && index != 0) {
-                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
-                    if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
-                        if (index >= 3 && index < 30) {
-                            if (!this.moveItemStackTo(itemstack1, 30, 39, false)) {
-                                return ItemStack.EMPTY;
-                            }
-                        } else if (index >= 30 && index < 39 && !this.moveItemStackTo(itemstack1, 3, 30, false)) {
-                            return ItemStack.EMPTY;
-                        }
+                // Player inventory: try smelting input first, then fuel, then shuffle
+                if (this.isSmeltingInput(itemstack1)) {
+                    if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+                        return ItemStack.EMPTY;
                     }
+                } else if (this.isFuel(itemstack1)) {
+                    if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index >= 3 && index < 30) {
+                    if (!this.moveItemStackTo(itemstack1, 30, 39, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index >= 30 && index < 39 && !this.moveItemStackTo(itemstack1, 3, 30, false)) {
+                    return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 3, 39, false)) {
-                return ItemStack.EMPTY;
+            } else {
+                // Tile inventory slots -> move to player inventory
+                if (!this.moveItemStackTo(itemstack1, 3, 39, false)) {
+                    return ItemStack.EMPTY;
+                }
             }
 
             if (itemstack1.isEmpty()) {
@@ -100,6 +111,20 @@ public class DirtFurnaceMenu extends AbstractContainerMenu {
         }
 
         return itemstack;
+    }
+
+    private boolean isSmeltingInput(ItemStack stack) {
+        return access.evaluate((level, pos) -> {
+            return level.getRecipeManager().getRecipeFor(
+                RecipeType.SMELTING,
+                new SingleRecipeInput(stack),
+                level
+            ).isPresent();
+        }).orElse(false);
+    }
+
+    private boolean isFuel(ItemStack stack) {
+        return AbstractFurnaceBlockEntity.isFuel(stack);
     }
 
     @Override
