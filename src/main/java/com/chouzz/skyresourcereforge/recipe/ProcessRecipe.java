@@ -91,11 +91,14 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
     private boolean matches(ProcessRecipeInput input) {
         List<ItemStack> items = filterNonEmpty(input.items());
         List<FluidStack> fluids = filterNonEmptyFluids(input.fluids());
-        if (input.mergeStacks()) {
-            items = mergeStacks(items);
-        }
+        // Strict size check must be evaluated BEFORE mergeStacks, because
+        // merging reduces the item count and would falsely reject valid
+        // strict-mode recipes that have duplicate ingredients.
         if (input.strict() && items.size() != inputs.size()) {
             return false;
+        }
+        if (input.mergeStacks()) {
+            items = mergeStacks(items);
         }
         if (!matchItems(items, input.strict())) {
             return false;
@@ -148,9 +151,15 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         if (inputs.isEmpty()) {
             return !strict || items.isEmpty();
         }
-        // Build bipartite adjacency: adj[i] = list of item indices that satisfy ingredient i
         int ni = inputs.size();
         int nj = items.size();
+
+        // For the general case (mergeStacks=false), use Kuhn's bipartite matching
+        // where each item satisfies exactly one ingredient (1:1 constraint).
+        // For mergeStacks=true scenarios (items may be merged), fall through to
+        // count-aware matching below that allows one item to cover multiple slots.
+
+        // Build bipartite adjacency: adj[i] = list of item indices that satisfy ingredient i
         List<List<Integer>> adj = new ArrayList<>(ni);
         for (int i = 0; i < ni; i++) {
             CountedIngredient ingredient = inputs.get(i);
@@ -162,12 +171,10 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
             }
             adj.add(matches);
         }
+
+        // Try bipartite matching first (covers the non-merge case correctly).
         int[] matchJ = new int[nj]; // matchJ[j] = ingredient index matched to item j, -1 if unmatched
         Arrays.fill(matchJ, -1);
-
-        // Find maximum bipartite matching from ingredient (left) side using Kuhn's algorithm.
-        // For strict mode, matches() already enforces items.size() == inputs.size(), so
-        // matchCount == ni implies a perfect matching on both sides.
         int matchCount = 0;
         boolean[] visited = new boolean[nj];
         for (int i = 0; i < ni; i++) {
@@ -176,7 +183,37 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
                 matchCount++;
             }
         }
-        return matchCount == ni;
+        if (matchCount == ni) return true;
+
+        // Bipartite matching failed. Check if count-aware matching succeeds:
+        // allow one item stack to satisfy multiple ingredient slots, deducting
+        // the consumed count. This handles the mergeStacks case where e.g.
+        // a merged A×2 stack should satisfy two A×1 ingredient slots.
+        int[] remaining = new int[nj];
+        for (int j = 0; j < nj; j++) {
+            remaining[j] = items.get(j).getCount();
+        }
+        int[] assigned = new int[ni]; // assigned[i] = item index (-1 if unassigned)
+        Arrays.fill(assigned, -1);
+        boolean solved = true;
+        for (int i = 0; i < ni; i++) {
+            int required = inputs.get(i).count();
+            boolean found = false;
+            // Prefer already-assigned item (re-use slot with remaining count)
+            for (int j = 0; j < nj; j++) {
+                if (remaining[j] >= required && inputs.get(i).test(items.get(j))) {
+                    remaining[j] -= required;
+                    assigned[i] = j;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                solved = false;
+                break;
+            }
+        }
+        return solved;
     }
 
     /**
