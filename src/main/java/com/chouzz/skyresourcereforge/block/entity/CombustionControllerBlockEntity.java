@@ -69,6 +69,7 @@ public class CombustionControllerBlockEntity extends BlockEntity {
 
         ProcessRecipe recipe = selectRecipe(available, curHU);
         if (recipe == null) return;
+        if (recipe.getOutputs().isEmpty()) return;
 
         List<ItemStack> remaining = consumeInputs(available, recipe);
         if (remaining == null) return;
@@ -77,7 +78,6 @@ public class CombustionControllerBlockEntity extends BlockEntity {
             entity.discard();
         }
 
-        if (recipe.getOutputs().isEmpty()) return;
         ItemStack output = recipe.getOutputs().get(0).copy();
         output = tryInsertCollector(posBehind.below().below(), output);
         if (!output.isEmpty()) {
