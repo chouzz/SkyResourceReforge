@@ -69,6 +69,7 @@ public class CombustionControllerBlockEntity extends BlockEntity {
 
         ProcessRecipe recipe = selectRecipe(available, curHU);
         if (recipe == null) return;
+        if (recipe.getOutputs().isEmpty()) return;
 
         List<ItemStack> remaining = consumeInputs(available, recipe);
         if (remaining == null) return;
@@ -111,7 +112,7 @@ public class CombustionControllerBlockEntity extends BlockEntity {
         var recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COMBUSTION.get());
         for (var holder : recipes) {
             ProcessRecipe recipe = holder.value();
-            if (!isOutputAllowed(recipe.getOutputs().get(0))) {
+            if (recipe.getOutputs().isEmpty() || !isOutputAllowed(recipe.getOutputs().get(0))) {
                 continue;
             }
             if (recipe.matches(recipeInput, level)) {

@@ -87,6 +87,9 @@ public class RockCrusherBlockEntity extends BlockEntity {
                 if (!recipe.matches(recipeInput, level)) {
                     continue;
                 }
+                if (recipe.getOutputs().isEmpty()) {
+                    continue;
+                }
                 float chance = recipe.getParameter() * 1.2f;
                 while (chance >= 1f) {
                     blockEntity.bufferStacks.add(recipe.getOutputs().get(0).copy());
