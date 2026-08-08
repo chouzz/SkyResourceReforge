@@ -38,7 +38,8 @@ public class WaterExtractorItem extends Item {
         super(properties.stacksTo(1));
     }
 
-    public int getMaxUseDuration(ItemStack stack, LivingEntity entity) {
+    @Override
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 72000;
     }
 
@@ -56,7 +57,7 @@ public class WaterExtractorItem extends Item {
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
         if (!(entity instanceof Player player) || level.isClientSide) return;
 
-        if (getMaxUseDuration(stack, entity) - timeLeft < 20) return;
+        if (getUseDuration(stack, entity) - timeLeft < 20) return;
 
         HitResult hitResult = player.pick(5.0D, 0.0F, false);
         if (hitResult.getType() == HitResult.Type.BLOCK) {
