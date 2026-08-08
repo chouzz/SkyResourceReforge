@@ -14,13 +14,15 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class LifeInfuserBlock extends BaseEntityBlock {
 
+    public static final MapCodec<LifeInfuserBlock> CODEC = simpleCodec(LifeInfuserBlock::new);
+
     public LifeInfuserBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return MapCodec.unit(new LifeInfuserBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()));
+        return CODEC;
     }
 
     @Override

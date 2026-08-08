@@ -17,13 +17,15 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class QuickDropperBlock extends BaseEntityBlock {
 
+    public static final MapCodec<QuickDropperBlock> CODEC = simpleCodec(QuickDropperBlock::new);
+
     public QuickDropperBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return MapCodec.unit(new QuickDropperBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()));
+        return CODEC;
     }
 
     @Override

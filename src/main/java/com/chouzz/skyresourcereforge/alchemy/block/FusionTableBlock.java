@@ -14,13 +14,15 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class FusionTableBlock extends BaseEntityBlock {
 
+    public static final MapCodec<FusionTableBlock> CODEC = simpleCodec(FusionTableBlock::new);
+
     public FusionTableBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return MapCodec.unit(new FusionTableBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()));
+        return CODEC;
     }
 
     @Override
