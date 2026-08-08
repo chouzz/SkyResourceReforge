@@ -94,8 +94,11 @@ public class CrucibleBlockEntity extends BlockEntity {
                 if (recipe != null && !recipe.getFluidOutputs().isEmpty()) {
                     FluidStack output = recipe.getFluidOutputs().get(0).copy();
                     output.setAmount(melt);
-                    blockEntity.fluidTank.fill(output, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
-                    blockEntity.itemAmount -= melt;
+                    // Only fill if tank is empty or already holds the same fluid type
+                    if (blockEntity.fluidTank.getFluid().isEmpty() || blockEntity.fluidTank.getFluid().isFluidEqual(output)) {
+                        int filled = blockEntity.fluidTank.fill(output, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+                        blockEntity.itemAmount -= filled;
+                    }
                 }
             }
 
