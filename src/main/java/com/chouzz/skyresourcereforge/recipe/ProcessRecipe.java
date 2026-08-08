@@ -154,11 +154,6 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         int ni = inputs.size();
         int nj = items.size();
 
-        // For the general case (mergeStacks=false), use Kuhn's bipartite matching
-        // where each item satisfies exactly one ingredient (1:1 constraint).
-        // For mergeStacks=true scenarios (items may be merged), fall through to
-        // count-aware matching below that allows one item to cover multiple slots.
-
         // Build bipartite adjacency: adj[i] = list of item indices that satisfy ingredient i
         List<List<Integer>> adj = new ArrayList<>(ni);
         for (int i = 0; i < ni; i++) {
@@ -189,31 +184,75 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         // allow one item stack to satisfy multiple ingredient slots, deducting
         // the consumed count. This handles the mergeStacks case where e.g.
         // a merged A×2 stack should satisfy two A×1 ingredient slots.
+        // Uses greedy first-fit assignment with backtracking when the first
+        // choice exhausts a stack needed by a later ingredient.
         int[] remaining = new int[nj];
         for (int j = 0; j < nj; j++) {
             remaining[j] = items.get(j).getCount();
         }
-        int[] assigned = new int[ni]; // assigned[i] = item index (-1 if unassigned)
-        Arrays.fill(assigned, -1);
-        boolean solved = true;
+        // Try greedy assignment; if it fails, attempt swapping the last
+        // failed ingredient's candidate to see if a different item frees up
+        // a stack for it.
+        boolean solved = tryGreedyAssign(inputs, items, remaining);
+        if (solved) return true;
+
+        // Greedy failed — attempt a single swap: for each pair of ingredients
+        // (i, k) where both matched different item slots, try swapping their
+        // assignments to break a conflict.
+        return trySwapAssign(inputs, items, remaining);
+    }
+
+    private static boolean tryGreedyAssign(List<CountedIngredient> inputs,
+                                           List<ItemStack> items, int[] remaining) {
+        int ni = inputs.size();
+        int nj = items.size();
         for (int i = 0; i < ni; i++) {
             int required = inputs.get(i).count();
             boolean found = false;
-            // Prefer already-assigned item (re-use slot with remaining count)
             for (int j = 0; j < nj; j++) {
                 if (remaining[j] >= required && inputs.get(i).test(items.get(j))) {
                     remaining[j] -= required;
-                    assigned[i] = j;
                     found = true;
                     break;
                 }
             }
-            if (!found) {
-                solved = false;
-                break;
-            }
+            if (!found) return false;
         }
-        return solved;
+        return true;
+    }
+
+    private static boolean trySwapAssign(List<CountedIngredient> inputs,
+                                         List<ItemStack> items, int[] remaining) {
+        int ni = inputs.size();
+        int nj = items.size();
+        // Try assigning ingredient i to item slot j, and if that fails later,
+        // try skipping j for i to reserve it for a later ingredient.
+        for (int skip = 0; skip < ni; skip++) {
+            // Reset remaining
+            for (int j = 0; j < nj; j++) {
+                remaining[j] = items.get(j).getCount();
+            }
+            // First pass: skip the preferred item for ingredient[skip]
+            boolean ok = true;
+            for (int i = 0; i < ni; i++) {
+                int required = inputs.get(i).count();
+                boolean found = false;
+                int startJ = (i == skip) ? 1 : 0; // skip first match for this ingredient
+                for (int j = startJ; j < nj; j++) {
+                    if (remaining[j] >= required && inputs.get(i).test(items.get(j))) {
+                        remaining[j] -= required;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) return true;
+        }
+        return false;
     }
 
     /**
