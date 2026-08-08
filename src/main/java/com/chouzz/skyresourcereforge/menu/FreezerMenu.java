@@ -21,7 +21,6 @@ public class FreezerMenu extends AbstractContainerMenu {
 
     private final ContainerLevelAccess access;
     private final ContainerData data;
-    private final IItemHandler inventory;
 
     public FreezerMenu(int containerId, Inventory playerInventory, FriendlyByteBuf data) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL, new ItemStackHandler(INPUT_SLOT_COUNT * 2), new SimpleContainerData(1));
@@ -30,7 +29,6 @@ public class FreezerMenu extends AbstractContainerMenu {
     public FreezerMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access, IItemHandler inventory, ContainerData data) {
         super(ModMenuTypes.FREEZER.get(), containerId);
         this.access = access;
-        this.inventory = inventory;
         this.data = data;
 
         // Tile inventory slots: fixed 1 input + 1 output layout
