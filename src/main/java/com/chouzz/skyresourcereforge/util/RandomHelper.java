@@ -101,11 +101,13 @@ public class RandomHelper {
                         stack = stack.copyWithCount(stack.getCount() - insertedCount);
                     }
                 } else if (canStacksMerge(inside, stack)) {
-                    int merged = mergeStacks(stack, inside, !simulate);
+                    // Use insertItem for non-empty slots to respect IItemHandler contract
+                    ItemStack inserted = inv.insertItem(i, stack, simulate);
                     if (!simulate) {
-                        stack.shrink(merged);
+                        stack = inserted;
                     } else {
-                        stack = stack.copyWithCount(stack.getCount() - merged);
+                        int insertedCount = stack.getCount() - inserted.getCount();
+                        stack = stack.copyWithCount(stack.getCount() - insertedCount);
                     }
                 }
             }
