@@ -98,8 +98,6 @@ public class WaterExtractorItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-
         Player player = context.getPlayer();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
@@ -113,8 +111,11 @@ public class WaterExtractorItem extends Item {
         if (blockHandler != null) {
             FluidStack drained = handler.drain(CAPACITY, IFluidHandler.FluidAction.SIMULATE);
             if (!drained.isEmpty()) {
-                int filled = blockHandler.fill(drained, IFluidHandler.FluidAction.EXECUTE);
-                handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+                if (!level.isClientSide) {
+                    int filled = blockHandler.fill(drained, IFluidHandler.FluidAction.EXECUTE);
+                    handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
                 return InteractionResult.SUCCESS;
             }
         }
@@ -132,9 +133,11 @@ public class WaterExtractorItem extends Item {
                 if (resultState == null) return InteractionResult.PASS;
                 FluidStack requiredFluid = recipe.getFluidInputs().get(0);
                 if (FluidStack.isSameFluidSameComponents(currentFluid, requiredFluid) && currentFluid.getAmount() >= requiredFluid.getAmount()) {
-                    handler.drain(requiredFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);
-                    level.setBlockAndUpdate(pos, resultState);
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    if (!level.isClientSide) {
+                        handler.drain(requiredFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);
+                        level.setBlockAndUpdate(pos, resultState);
+                        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }
