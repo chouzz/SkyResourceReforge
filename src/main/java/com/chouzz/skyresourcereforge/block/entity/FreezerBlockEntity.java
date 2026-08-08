@@ -86,7 +86,7 @@ public class FreezerBlockEntity extends BlockEntity {
                     .map(holder -> holder.value())
                     .orElse(null);
 
-            if (recipe != null && blockEntity.canProcess(recipe.getOutputs().get(0).copy(), i + blockEntity.inventory.getSlots() / 2)) {
+            if (recipe != null && !recipe.getOutputs().isEmpty() && blockEntity.canProcess(recipe.getOutputs().get(0).copy(), i + blockEntity.inventory.getSlots() / 2)) {
                 int timeReq = blockEntity.getTimeReq(recipe, input);
                 if (blockEntity.timeFreeze[i] >= timeReq) {
                     int amtProcessed = 0;

@@ -58,6 +58,9 @@ public class ToolEventHandler {
         for (ProcessRecipe recipe : recipes) {
             ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
             if (recipe.matches(input, level)) {
+                if (recipe.getOutputs().isEmpty()) {
+                    continue;
+                }
                 // Cancel normal block breaking
                 event.setCanceled(true);
 
@@ -99,6 +102,9 @@ public class ToolEventHandler {
         for (ProcessRecipe recipe : recipes) {
             ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
             if (recipe.matches(input, level)) {
+                if (recipe.getOutputs().isEmpty()) {
+                    continue;
+                }
                 // Cancel normal block breaking
                 event.setCanceled(true);
 
