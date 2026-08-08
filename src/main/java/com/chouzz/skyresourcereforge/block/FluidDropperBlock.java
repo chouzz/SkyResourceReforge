@@ -17,13 +17,15 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FluidDropperBlock extends BaseEntityBlock {
 
+    public static final MapCodec<FluidDropperBlock> CODEC = simpleCodec(FluidDropperBlock::new);
+
     public FluidDropperBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return MapCodec.unit(new FluidDropperBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()));
+        return CODEC;
     }
 
     @Override
