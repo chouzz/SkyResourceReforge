@@ -225,9 +225,12 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         Map<String, HeatSourceRecipe> dedup = new LinkedHashMap<>();
 
         HeatSources.getHeatSources().forEach((state, heat) -> {
+            ItemStack stack = new ItemStack(state.getBlock());
+            if (stack.isEmpty()) {
+                return; // Skip blocks with no item form (e.g. default-registered FIRE, LAVA)
+            }
             String key = BuiltInRegistries.BLOCK.getKey(state.getBlock()) + ":" + heat;
             if (!dedup.containsKey(key)) {
-                ItemStack stack = new ItemStack(state.getBlock());
                 Component name = Component.translatable(state.getBlock().getDescriptionId());
                 dedup.put(key, new HeatSourceRecipe(stack, name, heat));
             }
