@@ -58,6 +58,7 @@ public class CombustionControllerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
         return createTickerHelper(type, ModBlockEntities.COMBUSTION_CONTROLLER.get(), (level1, pos, state1, blockEntity) -> blockEntity.tick(level1, pos, state1));
     }
 
