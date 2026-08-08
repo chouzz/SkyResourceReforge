@@ -44,14 +44,16 @@ public class HeavyExplosiveSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        if (tickCount <= 1) return;
-        if (result.getEntity() != null) {
-            int damage = DAMAGE;
-            if (result.getEntity() instanceof Blaze) {
-                damage = (int) (DAMAGE * BLAZE_MULTIPLIER);
+        if (!level().isClientSide) {
+            if (tickCount <= 1) return;
+            if (result.getEntity() != null) {
+                int damage = DAMAGE;
+                if (result.getEntity() instanceof Blaze) {
+                    damage = (int) (DAMAGE * BLAZE_MULTIPLIER);
+                }
+                result.getEntity().hurt(damageSources().thrown(this, getOwner()), damage);
+                level().explode(this, result.getEntity().getX(), result.getEntity().getY(), result.getEntity().getZ(), EXPLOSION_RADIUS, Level.ExplosionInteraction.NONE);
             }
-            result.getEntity().hurt(damageSources().thrown(this, getOwner()), damage);
-            level().explode(this, result.getEntity().getX(), result.getEntity().getY(), result.getEntity().getZ(), EXPLOSION_RADIUS, Level.ExplosionInteraction.NONE);
         }
     }
 }
