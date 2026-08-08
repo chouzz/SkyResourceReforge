@@ -498,13 +498,12 @@ public final class RecipeGameTests {
         List<ItemStack> wrongItem = copyGrid(grid);
         firstIngredientSlot = firstNonEmptySlot(wrongItem);
         if (firstIngredientSlot >= 0) {
-            int ingredientIndex = slotToIngredientIndex[firstIngredientSlot];
-            if (ingredientIndex >= 0 && ingredientIndex < ingredients.size()) {
-                ItemStack nonMatching = firstNonMatchingStack(ingredients.get(ingredientIndex));
-                if (!nonMatching.isEmpty()) {
-                    wrongItem.set(firstIngredientSlot, nonMatching);
-                    assertCraftingDoesNotMatch(level, recipeId, recipe, wrongItem, "wrong item inserted", failures);
-                }
+            // Use an item matching NONE of the recipe's ingredients so that
+            // shapeless (non-positional) recipes are also properly broken.
+            ItemStack nonMatching = firstStackMatchingNoIngredient(ingredients);
+            if (!nonMatching.isEmpty()) {
+                wrongItem.set(firstIngredientSlot, nonMatching);
+                assertCraftingDoesNotMatch(level, recipeId, recipe, wrongItem, "wrong item inserted", failures);
             }
         }
 
@@ -583,10 +582,27 @@ public final class RecipeGameTests {
         return stacks[0].copy();
     }
 
-    private static ItemStack firstNonMatchingStack(Ingredient ingredient) {
+    /**
+     * Returns a non-empty item that matches NONE of the given ingredients.
+     * Used for negative-case crafting tests where replacing one slot's item must
+     * break the recipe on shaped AND shapeless recipes alike. A simple
+     * per-ingredient non-matching item is insufficient for shapeless recipes
+     * because it may still satisfy a sibling ingredient.
+     */
+    private static ItemStack firstStackMatchingNoIngredient(List<Ingredient> ingredients) {
         for (var item : BuiltInRegistries.ITEM) {
+            if (item == Items.AIR) {
+                continue;
+            }
             ItemStack stack = new ItemStack(item);
-            if (!ingredient.test(stack)) {
+            boolean matchesAny = false;
+            for (Ingredient ingredient : ingredients) {
+                if (ingredient.test(stack)) {
+                    matchesAny = true;
+                    break;
+                }
+            }
+            if (!matchesAny) {
                 return stack;
             }
         }
