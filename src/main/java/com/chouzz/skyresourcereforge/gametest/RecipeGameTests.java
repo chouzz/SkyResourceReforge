@@ -582,16 +582,6 @@ public final class RecipeGameTests {
         return stacks[0].copy();
     }
 
-    private static ItemStack firstNonMatchingStack(Ingredient ingredient) {
-        for (var item : BuiltInRegistries.ITEM) {
-            ItemStack stack = new ItemStack(item);
-            if (!ingredient.test(stack)) {
-                return stack;
-            }
-        }
-        return ItemStack.EMPTY;
-    }
-
     /**
      * Returns a non-empty item that matches NONE of the given ingredients.
      * Used for negative-case crafting tests where replacing one slot's item must
