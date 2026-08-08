@@ -221,9 +221,9 @@ public class RockCleanerBlockEntity extends BlockEntity {
             if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
                 int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
                 int bucketCount = tank.getFluidAmount() / bucketVolume;
-                if (bucketCount > 0) {
+                for (int i = 0; i < bucketCount; i++) {
                     Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-                            new ItemStack(bucketItem, bucketCount));
+                            new ItemStack(bucketItem, 1));
                 }
             }
         }

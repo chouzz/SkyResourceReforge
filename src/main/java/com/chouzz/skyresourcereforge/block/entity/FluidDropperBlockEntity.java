@@ -115,9 +115,9 @@ public class FluidDropperBlockEntity extends BlockEntity {
             if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
                 int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
                 int bucketCount = tank.getFluidAmount() / bucketVolume;
-                if (bucketCount > 0) {
+                for (int i = 0; i < bucketCount; i++) {
                     net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-                            new net.minecraft.world.item.ItemStack(bucketItem, bucketCount));
+                            new net.minecraft.world.item.ItemStack(bucketItem, 1));
                 }
             }
         }
