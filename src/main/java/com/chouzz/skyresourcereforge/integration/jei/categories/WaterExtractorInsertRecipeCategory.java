@@ -64,7 +64,7 @@ public class WaterExtractorInsertRecipeCategory implements IRecipeCategory<Proce
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, 53 + i * 18, 29)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();

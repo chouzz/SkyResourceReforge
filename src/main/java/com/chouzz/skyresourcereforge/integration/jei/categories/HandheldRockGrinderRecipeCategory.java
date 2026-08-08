@@ -67,14 +67,8 @@ public class HandheldRockGrinderRecipeCategory implements IRecipeCategory<Proces
 
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
-            List<ItemStack> inputStacks = new java.util.ArrayList<>();
-            for (ItemStack stack : ingredient.ingredient().getItems()) {
-                ItemStack copy = stack.copy();
-                copy.setCount(ingredient.count());
-                inputStacks.add(copy);
-            }
             builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18 + SLOT_PIXEL_OFFSET, 29 + SLOT_PIXEL_OFFSET)
-                .addIngredients(VanillaTypes.ITEM_STACK, inputStacks);
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();

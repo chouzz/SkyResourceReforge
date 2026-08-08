@@ -65,7 +65,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
         if (!recipe.getInputs().isEmpty()) {
             var ingredient = recipe.getInputs().get(0);
             builder.addSlot(RecipeIngredientRole.INPUT, 0, 1)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         // Infusion stone slot (all infusion stones)
@@ -80,7 +80,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
         if (recipe.getInputs().size() > 1) {
             var ingredient = recipe.getInputs().get(1);
             builder.addSlot(RecipeIngredientRole.INPUT, 53, 29)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         // Output slot

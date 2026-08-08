@@ -58,7 +58,7 @@ public class CondenserRecipeCategory implements IRecipeCategory<ProcessRecipe> {
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, 7 + i * 18, 12)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();

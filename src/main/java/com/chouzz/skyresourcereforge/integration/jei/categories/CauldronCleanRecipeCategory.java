@@ -59,7 +59,7 @@ public class CauldronCleanRecipeCategory implements IRecipeCategory<ProcessRecip
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18, 0)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
