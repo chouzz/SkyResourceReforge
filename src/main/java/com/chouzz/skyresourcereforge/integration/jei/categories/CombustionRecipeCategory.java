@@ -65,7 +65,7 @@ public class CombustionRecipeCategory implements IRecipeCategory<ProcessRecipe> 
 
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, x, y)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         // Output slot

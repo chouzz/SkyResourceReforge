@@ -70,7 +70,7 @@ public class RockGrinderRecipeCategory implements IRecipeCategory<ProcessRecipe>
         for (int i = 0; i < recipe.getInputs().size(); i++) {
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, 21 + i * 18 + SLOT_PIXEL_OFFSET, 29 + SLOT_PIXEL_OFFSET)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();

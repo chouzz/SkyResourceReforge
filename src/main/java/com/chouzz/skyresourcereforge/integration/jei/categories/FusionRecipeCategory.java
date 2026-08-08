@@ -62,7 +62,7 @@ public class FusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
             var slot = builder.addSlot(RecipeIngredientRole.INPUT, x, y);
             if (i < inputs.size()) {
                 var ingredient = recipe.getInputs().get(i);
-                slot.addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                slot.addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
             }
         }
 

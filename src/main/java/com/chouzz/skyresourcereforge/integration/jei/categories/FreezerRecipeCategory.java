@@ -58,7 +58,7 @@ public class FreezerRecipeCategory implements IRecipeCategory<ProcessRecipe> {
         if (!recipe.getInputs().isEmpty()) {
             var ingredient = recipe.getInputs().get(0);
             builder.addSlot(RecipeIngredientRole.INPUT, 7, 12)
-                .addIngredients(VanillaTypes.ITEM_STACK, List.of(ingredient.ingredient().getItems()));
+                .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
         }
 
         List<ItemStack> outputs = recipe.getOutputs();
