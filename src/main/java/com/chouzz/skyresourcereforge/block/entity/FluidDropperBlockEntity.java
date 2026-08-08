@@ -106,4 +106,20 @@ public class FluidDropperBlockEntity extends BlockEntity {
             tank.readFromNBT(registries, tag.getCompound("tank"));
         }
     }
+
+    public void dropInventory() {
+        if (level == null) return;
+        // Drop tank fluid as filled buckets
+        if (!tank.getFluid().isEmpty()) {
+            net.minecraft.world.item.Item bucketItem = tank.getFluid().getFluid().getBucket();
+            if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
+                int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
+                int bucketCount = tank.getFluidAmount() / bucketVolume;
+                if (bucketCount > 0) {
+                    net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                            new net.minecraft.world.item.ItemStack(bucketItem, bucketCount));
+                }
+            }
+        }
+    }
 }

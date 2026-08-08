@@ -208,6 +208,24 @@ public class RockCleanerBlockEntity extends BlockEntity {
         if (level == null) return;
         for (int i = 0; i < inventory.getSlots(); i++) {
             Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(i));
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
+        // Drop remaining buffer stacks
+        for (ItemStack stack : bufferStacks) {
+            Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+        }
+        bufferStacks.clear();
+        // Drop tank fluid as filled buckets
+        if (!tank.getFluid().isEmpty()) {
+            net.minecraft.world.item.Item bucketItem = tank.getFluid().getFluid().getBucket();
+            if (bucketItem != null && bucketItem != net.minecraft.world.item.Items.AIR) {
+                int bucketVolume = net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME;
+                int bucketCount = tank.getFluidAmount() / bucketVolume;
+                if (bucketCount > 0) {
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                            new ItemStack(bucketItem, bucketCount));
+                }
+            }
         }
     }
 }
