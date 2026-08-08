@@ -16,12 +16,15 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class FreezerMenu extends AbstractContainerMenu {
+    /** Number of input (and output) slots — always 1 for Freezer. */
+    public static final int INPUT_SLOT_COUNT = 1;
+
     private final ContainerLevelAccess access;
     private final ContainerData data;
     private final IItemHandler inventory;
 
     public FreezerMenu(int containerId, Inventory playerInventory, FriendlyByteBuf data) {
-        this(containerId, playerInventory, ContainerLevelAccess.NULL, new ItemStackHandler(2), new SimpleContainerData(1));
+        this(containerId, playerInventory, ContainerLevelAccess.NULL, new ItemStackHandler(INPUT_SLOT_COUNT * 2), new SimpleContainerData(1));
     }
 
     public FreezerMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access, IItemHandler inventory, ContainerData data) {
@@ -30,27 +33,14 @@ public class FreezerMenu extends AbstractContainerMenu {
         this.inventory = inventory;
         this.data = data;
 
-        int inputSlots = inventory.getSlots() / 2;
-
-        // Tile inventory slots
-        int y = 0;
-        for (int row = 0; row < (inputSlots + 4) / 5; row++) {
-            for (int col = 0; col < Math.min(5, inputSlots - row * 5); col++) {
-                int slotIndex = row * 5 + col;
-                if (slotIndex < inputSlots) {
-                    // Input slot
-                    this.addSlot(new SlotItemHandler(inventory, slotIndex, 53 + col * 18, 22 + row * 36));
-                    // Output slot
-                    this.addSlot(new SlotItemHandler(inventory, slotIndex + inputSlots, 53 + col * 18, 40 + row * 36) {
-                        @Override
-                        public boolean mayPlace(ItemStack stack) {
-                            return false;
-                        }
-                    });
-                }
-                y = row;
+        // Tile inventory slots: fixed 1 input + 1 output layout
+        this.addSlot(new SlotItemHandler(inventory, 0, 53, 22));
+        this.addSlot(new SlotItemHandler(inventory, 1, 53, 40) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
             }
-        }
+        });
 
         // Player inventory slots
         for (int i = 0; i < 3; ++i) {
@@ -76,22 +66,21 @@ public class FreezerMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            int inputSlots = inventory.getSlots() / 2;
+            int tileSlots = INPUT_SLOT_COUNT * 2;
+            int playerSlotEnd = tileSlots + 36;
 
-            int playerSlotEnd = inputSlots * 2 + 36;
-
-            if (index >= inputSlots && index < inputSlots * 2) {
+            if (index >= INPUT_SLOT_COUNT && index < tileSlots) {
                 // Output slot
-                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, playerSlotEnd, true)) {
+                if (!this.moveItemStackTo(itemstack1, tileSlots, playerSlotEnd, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (index < inputSlots) {
+            } else if (index < INPUT_SLOT_COUNT) {
                 // Input slot
-                if (!this.moveItemStackTo(itemstack1, inputSlots * 2, playerSlotEnd, false)) {
+                if (!this.moveItemStackTo(itemstack1, tileSlots, playerSlotEnd, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, inputSlots * 2, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 0, tileSlots, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -121,6 +110,6 @@ public class FreezerMenu extends AbstractContainerMenu {
     }
 
     public int getInputSlotCount() {
-        return inventory.getSlots() / 2;
+        return INPUT_SLOT_COUNT;
     }
 }
