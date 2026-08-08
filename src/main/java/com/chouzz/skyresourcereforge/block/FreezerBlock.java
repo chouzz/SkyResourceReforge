@@ -2,6 +2,7 @@ package com.chouzz.skyresourcereforge.block;
 
 import com.chouzz.skyresourcereforge.block.entity.FreezerBlockEntity;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -26,11 +27,10 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.Nullable;
 
 public class FreezerBlock extends BaseEntityBlock {
-    // Speed is constant per block instance, so we don't serialize it in codec
-    // Each block registration will provide its own speed
-    public static final MapCodec<FreezerBlock> CODEC = net.minecraft.world.level.block.state.BlockBehaviour.Properties.CODEC
-            .fieldOf("properties")
-            .xmap(props -> new FreezerBlock(props, 0.25f), b -> b.properties); // Default speed for codec, actual set in constructor
+    public static final MapCodec<FreezerBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            net.minecraft.world.level.block.state.BlockBehaviour.Properties.CODEC.fieldOf("properties").forGetter(b -> b.properties),
+            com.mojang.serialization.Codec.FLOAT.optionalFieldOf("speed", 0.25f).forGetter(b -> b.speed)
+    ).apply(instance, FreezerBlock::new));
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private final float speed;
     protected final net.minecraft.world.level.block.state.BlockBehaviour.Properties properties;
