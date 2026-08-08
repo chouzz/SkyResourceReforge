@@ -64,6 +64,7 @@ public class RockCleanerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
         return createTickerHelper(type, com.chouzz.skyresourcereforge.registration.ModBlockEntities.ROCK_CLEANER.get(),
                 RockCleanerBlockEntity::tick);
     }
