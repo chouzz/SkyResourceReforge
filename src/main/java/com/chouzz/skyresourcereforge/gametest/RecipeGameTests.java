@@ -591,7 +591,9 @@ public final class RecipeGameTests {
      */
     private static ItemStack firstStackMatchingNoIngredient(List<Ingredient> ingredients) {
         for (var item : BuiltInRegistries.ITEM) {
-            if (item == Items.AIR) continue;
+            if (item == Items.AIR) {
+                continue;
+            }
             ItemStack stack = new ItemStack(item);
             boolean matchesAny = false;
             for (Ingredient ingredient : ingredients) {
