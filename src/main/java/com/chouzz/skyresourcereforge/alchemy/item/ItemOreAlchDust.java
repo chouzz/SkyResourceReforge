@@ -1,11 +1,13 @@
 package com.chouzz.skyresourcereforge.alchemy.item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.chouzz.skyresourcereforge.registration.ModDataComponents;
+import com.chouzz.skyresourcereforge.registration.ModItems;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -15,14 +17,16 @@ import net.minecraft.world.level.block.Blocks;
 
 public class ItemOreAlchDust extends Item {
 
-    public static List<OreRegisterInfo> oreInfos = new ArrayList<>();
-    private static ArrayList<String> names = new ArrayList<>();
-    private static ItemOreAlchDust Instance;
+    private static final List<OreRegisterInfo> oreInfos = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
 
     public ItemOreAlchDust(Properties properties) {
         super(properties);
-        Instance = this;
         itemList();
+    }
+
+    public static List<OreRegisterInfo> getOreInfos() {
+        return Collections.unmodifiableList(oreInfos);
     }
 
     public static Map<String, Integer> defaultOreRarities() {
@@ -157,16 +161,16 @@ public class ItemOreAlchDust extends Item {
         ensureNamesInitialized();
         int index = names.indexOf(name);
         if (index >= 0) {
-            ItemStack stack = new ItemStack(Instance, 1);
+            ItemStack stack = new ItemStack(ModItems.ORE_ALCH_DUST.get(), 1);
             setDustIndex(stack, index);
             return stack;
         }
         return ItemStack.EMPTY;
     }
 
-    public static ArrayList<String> getNames() {
+    public static List<String> getNames() {
         ensureNamesInitialized();
-        return names;
+        return Collections.unmodifiableList(names);
     }
 
     @Override

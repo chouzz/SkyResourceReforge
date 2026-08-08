@@ -88,19 +88,19 @@ public class SkyResourceReforgeClient {
         // Register dirty gem color handler - dynamic color tinting based on damage value
         event.register((stack, tintIndex) -> {
             int index = DirtyGemItem.getGemIndex(stack);
-            if (index < 0 || index >= DirtyGemItem.gemInfos.size()) {
+            if (index < 0 || index >= DirtyGemItem.getGemInfos().size()) {
                 return -1; // No tint for invalid damage values
             }
-            return DirtyGemItem.gemInfos.get(index).color;
+            return DirtyGemItem.getGemInfos().get(index).color;
         }, ModItems.DIRTY_GEM.get());
 
         // Register ore alchemical dust color handler - dynamic color tinting based on damage value
         event.register((stack, tintIndex) -> {
             int index = com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getDustIndex(stack);
-            if (index < 0 || index >= com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.size()) {
+            if (index < 0 || index >= com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getOreInfos().size()) {
                 return -1; // No tint for invalid damage values
             }
-            return com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.oreInfos.get(index).color;
+            return com.chouzz.skyresourcereforge.alchemy.item.ItemOreAlchDust.getOreInfos().get(index).color;
         }, ModItems.ORE_ALCH_DUST.get());
     }
 }

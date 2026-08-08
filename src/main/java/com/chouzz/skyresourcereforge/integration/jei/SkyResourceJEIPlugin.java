@@ -198,7 +198,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
     private List<ProcessRecipe> getDirtyGemCleanRecipes() {
         List<ProcessRecipe> recipes = new ArrayList<>();
-        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
+        for (int i = 0; i < DirtyGemItem.getGemInfos().size(); i++) {
             List<ItemStack> outputs = DirtyGemItem.getCleanGemOutputs(i);
             if (outputs.isEmpty()) {
                 continue;
@@ -310,8 +310,8 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             ModItems.DIRTY_GEM.get(),
             (stack, context) -> {
                 int index = DirtyGemItem.getGemIndex(stack);
-                if (index >= 0 && index < DirtyGemItem.gemInfos.size()) {
-                    return DirtyGemItem.gemInfos.get(index).name;
+                if (index >= 0 && index < DirtyGemItem.getGemInfos().size()) {
+                    return DirtyGemItem.getGemInfos().get(index).name;
                 }
                 return "unknown";
             }
@@ -322,8 +322,8 @@ public class SkyResourceJEIPlugin implements IModPlugin {
             ModItems.ORE_ALCH_DUST.get(),
             (stack, context) -> {
                 int index = ItemOreAlchDust.getDustIndex(stack);
-                if (index >= 0 && index < ItemOreAlchDust.oreInfos.size()) {
-                    return ItemOreAlchDust.oreInfos.get(index).name;
+                if (index >= 0 && index < ItemOreAlchDust.getOreInfos().size()) {
+                    return ItemOreAlchDust.getOreInfos().get(index).name;
                 }
                 return "unknown";
             }
@@ -384,7 +384,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
         // Add all ore alchemical dust variants
         java.util.List<ItemStack> oreDusts = new ArrayList<>();
-        for (int i = 0; i < ItemOreAlchDust.oreInfos.size(); i++) {
+        for (int i = 0; i < ItemOreAlchDust.getOreInfos().size(); i++) {
             ItemStack stack = new ItemStack(ModItems.ORE_ALCH_DUST.get());
             ItemOreAlchDust.setDustIndex(stack, i);
             oreDusts.add(stack);
@@ -392,7 +392,7 @@ public class SkyResourceJEIPlugin implements IModPlugin {
 
         // Add all dirty gem variants
         java.util.List<ItemStack> dirtyGems = new ArrayList<>();
-        for (int i = 0; i < DirtyGemItem.gemInfos.size(); i++) {
+        for (int i = 0; i < DirtyGemItem.getGemInfos().size(); i++) {
             ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get());
             DirtyGemItem.setGemIndex(stack, i);
             dirtyGems.add(stack);

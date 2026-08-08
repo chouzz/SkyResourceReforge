@@ -1,10 +1,12 @@
 package com.chouzz.skyresourcereforge.alchemy.item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.chouzz.skyresourcereforge.registration.ModDataComponents;
+import com.chouzz.skyresourcereforge.registration.ModItems;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -18,13 +20,15 @@ import net.minecraft.world.level.block.Blocks;
 
 public class DirtyGemItem extends Item {
 
-    public static List<GemRegisterInfo> gemInfos = new ArrayList<>();
-    private static ArrayList<String> names = new ArrayList<>();
-    private static DirtyGemItem instance;
+    private static final List<GemRegisterInfo> gemInfos = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
 
     public DirtyGemItem(Properties properties) {
         super(properties);
-        instance = this;
+    }
+
+    public static List<GemRegisterInfo> getGemInfos() {
+        return Collections.unmodifiableList(gemInfos);
     }
 
     public static void initGems() {
@@ -144,16 +148,16 @@ public class DirtyGemItem extends Item {
         ensureNamesInitialized();
         int index = names.indexOf(name);
         if (index >= 0) {
-            ItemStack stack = new ItemStack(instance, 1);
+            ItemStack stack = new ItemStack(ModItems.DIRTY_GEM.get(), 1);
             setGemIndex(stack, index);
             return stack;
         }
         return ItemStack.EMPTY;
     }
 
-    public static ArrayList<String> getNames() {
+    public static List<String> getNames() {
         ensureNamesInitialized();
-        return names;
+        return Collections.unmodifiableList(names);
     }
 
     public static boolean isDirtyGem(ItemStack stack) {
