@@ -1,7 +1,9 @@
 package com.chouzz.skyresourcereforge.integration.jei;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem;
@@ -42,6 +44,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -215,13 +218,22 @@ public class SkyResourceJEIPlugin implements IModPlugin {
     }
 
     private List<HeatSourceRecipe> getHeatSourceRecipes() {
-        List<HeatSourceRecipe> recipes = new ArrayList<>();
+        // Use a LinkedHashMap keyed by (block, heat) to deduplicate entries
+        // where different BlockStates of the same block would produce visually
+        // identical JEI entries (same icon, same name). States with different
+        // heat values are preserved as distinct entries.
+        Map<String, HeatSourceRecipe> dedup = new LinkedHashMap<>();
 
         HeatSources.getHeatSources().forEach((state, heat) -> {
-            ItemStack stack = new ItemStack(state.getBlock());
-            Component name = Component.translatable(state.getBlock().getDescriptionId());
-            recipes.add(new HeatSourceRecipe(stack, name, heat));
+            String key = BuiltInRegistries.BLOCK.getKey(state.getBlock()) + ":" + heat;
+            if (!dedup.containsKey(key)) {
+                ItemStack stack = new ItemStack(state.getBlock());
+                Component name = Component.translatable(state.getBlock().getDescriptionId());
+                dedup.put(key, new HeatSourceRecipe(stack, name, heat));
+            }
         });
+
+        List<HeatSourceRecipe> recipes = new ArrayList<>(dedup.values());
 
         for (int i = 0; i < HeatVariants.size(); i++) {
             ItemStack stack = HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get());
