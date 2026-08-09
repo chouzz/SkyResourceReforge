@@ -102,13 +102,11 @@ public class ItemOreAlchDust extends Item {
         oreInfos.add(new OreRegisterInfo(name, color, rarity, oreInfos.size(), block, autoAdd));
     }
 
-    public static OreRegisterInfo getFluidInfo(int index) {
-        for (OreRegisterInfo f : oreInfos) {
-            if (f.dustIndex == index) {
-                return f;
-            }
+    public static OreRegisterInfo getOreInfo(int index) {
+        if (index < 0 || index >= oreInfos.size()) {
+            return null;
         }
-        return null;
+        return oreInfos.get(index);
     }
 
     public static int getDustIndex(ItemStack stack) {
