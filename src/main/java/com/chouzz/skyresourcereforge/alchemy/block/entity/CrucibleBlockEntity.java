@@ -82,7 +82,12 @@ public class CrucibleBlockEntity extends BlockEntity {
         if (above instanceof com.chouzz.skyresourcereforge.block.entity.CrucibleInserterBlockEntity inserter) {
             ItemStack stack = inserter.getInventory().getStackInSlot(0);
             if (!stack.isEmpty()) {
-                blockEntity.insertStack(stack);
+                ItemStack detached = stack.copy();
+                blockEntity.insertStack(detached);
+                int consumed = stack.getCount() - detached.getCount();
+                if (consumed > 0) {
+                    inserter.getInventory().extractItem(0, consumed, false);
+                }
             }
         }
 
