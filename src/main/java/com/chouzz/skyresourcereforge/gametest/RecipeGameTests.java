@@ -391,10 +391,12 @@ public final class RecipeGameTests {
             return;
         }
 
-        ItemStack result = recipe.getResultItem(registries);
-        if (result.isEmpty()) {
-            failures.add(recipeHolder.id() + " -> unsupported recipe type with empty result: " + recipe.getClass().getSimpleName());
-        }
+        // Unrecognized recipe type — flag as unsupported regardless of result.
+        // ProcessRecipe, CraftingRecipe, and SingleItemRecipe are handled above;
+        // any other type bypasses matches()/assemble() validation and should be
+        // surfaced so it isn't silently accepted.
+        failures.add(recipeHolder.id() + " -> unsupported recipe type, match/assemble not validated: "
+                + recipe.getClass().getSimpleName());
     }
 
     private static void validateProcessRecipe(
