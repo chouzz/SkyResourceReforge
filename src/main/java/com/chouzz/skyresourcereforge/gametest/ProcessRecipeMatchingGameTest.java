@@ -499,4 +499,36 @@ public final class ProcessRecipeMatchingGameTest {
         }
         helper.succeed();
     }
+
+    // ---------- Test 12: Swap fallback success (greedy fails, swap rescues) ----------
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void swapFallbackRescue(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        List<String> failures = new ArrayList<>();
+
+        // recipe: [iron×1, iron×3, iron×1]   input (non-strict): [iron×3, iron×2]
+        // Bipartite fails (2 stacks, 3 slots).
+        // Greedy fails: first iron×1 depletes stack0 (3→2), iron×3 can't fit → fail.
+        // Swap (skip=0): routes first iron×1 to stack1 (rem [3,1]),
+        //   iron×3 to stack0 (rem [0,1]), iron×1 to stack1 (rem [0,0]) → match.
+        ProcessRecipe recipe = itemRecipe(List.of(
+                ci(vanillaIngredient(Items.IRON_INGOT), 1),
+                ci(vanillaIngredient(Items.IRON_INGOT), 3),
+                ci(vanillaIngredient(Items.IRON_INGOT), 1)
+        ));
+
+        boolean ok = recipe.matches(nonStrictInput(List.of(
+                new ItemStack(Items.IRON_INGOT, 3),
+                new ItemStack(Items.IRON_INGOT, 2)
+        )), level);
+        if (!ok) failures.add("[iron×3, iron×2] should match [iron×1, iron×3, iron×1] via swap fallback");
+
+        if (!failures.isEmpty()) {
+            helper.fail("swapFallbackRescue: " + String.join("; ", failures));
+            return;
+        }
+        helper.succeed();
+    }
 }
