@@ -13,9 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record CountedIngredient(Ingredient ingredient, int count) {
+    /** Ensures count is always positive. The codec rejects invalid values at load time, and this guard
+     *  catches programmatic construction and network data paths as defense-in-depth. */
+    public CountedIngredient {
+        if (count < 1) {
+            throw new IllegalArgumentException("CountedIngredient count must be >= 1, got " + count);
+        }
+    }
+
     public static final MapCodec<CountedIngredient> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(CountedIngredient::ingredient),
-            Codec.INT.fieldOf("count").forGetter(CountedIngredient::count)
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("count").forGetter(CountedIngredient::count)
     ).apply(instance, CountedIngredient::new));
 
     public static final Codec<CountedIngredient> CODEC = MAP_CODEC.codec();
