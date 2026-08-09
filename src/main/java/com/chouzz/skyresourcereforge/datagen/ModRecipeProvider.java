@@ -99,7 +99,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 null
         );
 
-        // Shaped: fleshy_snow_nugget (2 snowball + 1 rotten_flesh -> 3)
+        // Shaped: fleshy_snow_nugget (3 snowball + 1 rotten_flesh -> 3)
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FLESHY_SNOW_NUGGET.get(), 3)
                 .pattern("XX")
                 .pattern("XY")
