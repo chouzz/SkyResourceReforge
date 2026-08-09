@@ -6,7 +6,6 @@ import com.chouzz.skyresourcereforge.SkyResourceReforge;
 import com.chouzz.skyresourcereforge.integration.jei.SkyResourceJEIPlugin;
 import com.chouzz.skyresourcereforge.item.WaterExtractorItem;
 import com.chouzz.skyresourcereforge.recipe.ProcessRecipe;
-import com.chouzz.skyresourcereforge.registration.ModBlocks;
 import com.chouzz.skyresourcereforge.registration.ModItems;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -32,7 +31,7 @@ public class WaterExtractorExtractRecipeCategory implements IRecipeCategory<Proc
         );
         this.icon = guiHelper.createDrawableIngredient(
             VanillaTypes.ITEM_STACK,
-            new ItemStack(ModBlocks.AQUEOUS_CONCENTRATOR.get())
+            new ItemStack(ModItems.WATER_EXTRACTOR.get())
         );
     }
 
