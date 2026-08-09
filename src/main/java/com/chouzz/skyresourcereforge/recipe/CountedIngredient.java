@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record CountedIngredient(Ingredient ingredient, int count) {
+    /** Ensures count is always positive. Datapack values of 0 or negative are rejected at load time. */
+    public CountedIngredient {
+        if (count < 1) {
+            throw new IllegalArgumentException("CountedIngredient count must be >= 1, got " + count);
+        }
+    }
+
     public static final MapCodec<CountedIngredient> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(CountedIngredient::ingredient),
             Codec.INT.fieldOf("count").forGetter(CountedIngredient::count)
