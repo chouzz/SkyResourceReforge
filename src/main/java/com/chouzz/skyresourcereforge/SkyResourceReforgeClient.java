@@ -57,7 +57,7 @@ public class SkyResourceReforgeClient {
 
         ItemProperties.register(ModItems.ALCHEMY_COMPONENT.get(),
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy_component_variant"),
-                (stack, level, entity, seed) -> com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem.getVariantIndex(stack) + 1);
+                (stack, level, entity, seed) -> stack.getItem() instanceof com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem aci ? aci.getVariantIndex(stack) + 1 : 0);
 
         ItemProperties.register(ModItems.ALCHEMY.get(),
                 ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "alchemy_variant"),
