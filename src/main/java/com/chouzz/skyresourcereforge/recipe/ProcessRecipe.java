@@ -41,10 +41,10 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
     public ProcessRecipe(ResourceLocation recipeTypeId, List<CountedIngredient> inputs, List<ItemStack> outputs,
                          List<FluidStack> fluidInputs, List<FluidStack> fluidOutputs, float parameter) {
         this.recipeTypeId = recipeTypeId;
-        this.inputs = inputs;
-        this.outputs = outputs;
-        this.fluidInputs = fluidInputs;
-        this.fluidOutputs = fluidOutputs;
+        this.inputs = List.copyOf(inputs);
+        this.outputs = List.copyOf(outputs);
+        this.fluidInputs = List.copyOf(fluidInputs);
+        this.fluidOutputs = List.copyOf(fluidOutputs);
         this.parameter = parameter;
     }
 
