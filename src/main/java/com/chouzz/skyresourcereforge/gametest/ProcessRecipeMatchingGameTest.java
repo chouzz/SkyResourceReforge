@@ -15,14 +15,14 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-import net.neoforged.neoforge.fluids.FluidType;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * GameTests that directly exercise the ProcessRecipe matching algorithm
- * (bipartite matching, strict/non-strict mode, mergeStacks, fluid matching,
- * and parameter boundary) using constructed recipes and inputs.
+ * (bipartite matching, greedy/swap fallback, strict/non-strict mode,
+ * mergeStacks, fluid matching, and parameter boundary) using constructed
+ * recipes and inputs.
  * These tests do NOT require the live recipe registry — they build synthetic
  * ProcessRecipe instances and assert matches() behaviour.
  */
@@ -270,7 +270,7 @@ public final class ProcessRecipeMatchingGameTest {
         )), level);
         if (!ok) failures.add("two iron×1 with merge should match iron×2 ingredient");
 
-        // Same without merge should fail (bipartite can't match two stacks to one ingredient slot)
+        // Same without merge and strict → fails (item count 2 != ingredient count 1)
         boolean bad = recipe.matches(strictInput(List.of(
                 new ItemStack(Items.IRON_INGOT, 1),
                 new ItemStack(Items.IRON_INGOT, 1)
@@ -430,6 +430,71 @@ public final class ProcessRecipeMatchingGameTest {
 
         if (!failures.isEmpty()) {
             helper.fail("emptyInputSemantics: " + String.join("; ", failures));
+            return;
+        }
+        helper.succeed();
+    }
+
+    // ---------- Test 10: mergeStacks + strict (size check happens before merge) ----------
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void mergeWithStrictDuplicateIngredients(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        List<String> failures = new ArrayList<>();
+
+        // Recipe requires 2 identical iron×1 ingredient slots
+        // With merge+strict: size check (2==2) passes before merge, then merge creates iron×2,
+        // and greedy fallback consumes iron×2 into both iron×1 slots.
+        ProcessRecipe recipe = itemRecipe(List.of(
+                ci(vanillaIngredient(Items.IRON_INGOT), 1),
+                ci(vanillaIngredient(Items.IRON_INGOT), 1)
+        ));
+
+        // Two iron×1 with merge+strict → match (size check passes, merge creates iron×2, greedy satisfies both)
+        boolean ok = recipe.matches(mergeStrictInput(List.of(
+                new ItemStack(Items.IRON_INGOT, 1),
+                new ItemStack(Items.IRON_INGOT, 1)
+        )), level);
+        if (!ok) failures.add("two iron×1 with merge+strict should match two iron×1 ingredients");
+
+        if (!failures.isEmpty()) {
+            helper.fail("mergeWithStrictDuplicateIngredients: " + String.join("; ", failures));
+            return;
+        }
+        helper.succeed();
+    }
+
+    // ---------- Test 11: Greedy/swap fallback (single stack satisfies multiple ingredient slots) ----------
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(templateNamespace = SkyResourceReforge.MODID, template = "recipe_validation_template", timeoutTicks = 400)
+    public static void greedyFallbackSingleStackMultipleSlots(GameTestHelper helper) {
+        Level level = helper.getLevel();
+        List<String> failures = new ArrayList<>();
+
+        // Recipe requires 2 iron×1 ingredient slots but input has only 1 iron×2 stack.
+        // Bipartite fails (1 stack can't match 2 ingredients). Greedy fallback kicks in:
+        // first iron×1 consumes 1 from iron×2, second iron×1 consumes the remaining 1.
+        ProcessRecipe recipe = itemRecipe(List.of(
+                ci(vanillaIngredient(Items.IRON_INGOT), 1),
+                ci(vanillaIngredient(Items.IRON_INGOT), 1)
+        ));
+
+        // Non-strict: single iron×2 should satisfy two iron×1 ingredient slots via greedy
+        boolean ok = recipe.matches(nonStrictInput(List.of(
+                new ItemStack(Items.IRON_INGOT, 2)
+        )), level);
+        if (!ok) failures.add("single iron×2 should match two iron×1 ingredients via greedy fallback");
+
+        // Single iron×1 should NOT satisfy two iron×1 ingredient slots (not enough)
+        boolean bad = recipe.matches(nonStrictInput(List.of(
+                new ItemStack(Items.IRON_INGOT, 1)
+        )), level);
+        if (bad) failures.add("single iron×1 should NOT match two iron×1 ingredients");
+
+        if (!failures.isEmpty()) {
+            helper.fail("greedyFallbackSingleStackMultipleSlots: " + String.join("; ", failures));
             return;
         }
         helper.succeed();
