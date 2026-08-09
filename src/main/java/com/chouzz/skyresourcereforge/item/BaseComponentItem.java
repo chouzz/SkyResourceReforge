@@ -43,7 +43,7 @@ public class BaseComponentItem extends Item {
     }
 
     public static void setVariantIndex(ItemStack stack, int index) {
-        stack.set(ModDataComponents.BASE_COMPONENT_INDEX.get(), index);
+        stack.set(ModDataComponents.BASE_COMPONENT_INDEX.get(), index < 0 ? 0 : Math.min(index, NAMES.size() - 1));
     }
 
     public static ItemStack createStack(int index, Item item) {
