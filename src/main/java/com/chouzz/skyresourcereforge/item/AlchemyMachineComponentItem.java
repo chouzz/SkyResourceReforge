@@ -20,7 +20,7 @@ public class AlchemyMachineComponentItem extends Item {
     }
 
     public static void setVariantIndex(ItemStack stack, int index) {
-        stack.set(ModDataComponents.ALCHEMY_MACHINE_INDEX.get(), index);
+        stack.set(ModDataComponents.ALCHEMY_MACHINE_INDEX.get(), index < 0 ? 0 : Math.min(index, HeatVariants.size() - 1));
     }
 
     public static ItemStack createStack(int index, Item item) {
