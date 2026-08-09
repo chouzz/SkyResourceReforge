@@ -60,7 +60,10 @@ public class WaterExtractorExtractRecipeCategory implements IRecipeCategory<Proc
         builder.addSlot(RecipeIngredientRole.INPUT, 32, 1)
             .addItemStack(new ItemStack(ModItems.WATER_EXTRACTOR.get()));
 
-        for (int i = 0; i < recipe.getInputs().size(); i++) {
+        // Cap input slots to what fits within the 150px background (max 5 slots before overflow)
+        int maxInputs = (150 - 53) / 18;
+        int inputCount = Math.min(recipe.getInputs().size(), maxInputs);
+        for (int i = 0; i < inputCount; i++) {
             var ingredient = recipe.getInputs().get(i);
             builder.addSlot(RecipeIngredientRole.INPUT, 53 + i * 18, 29)
                 .addIngredients(VanillaTypes.ITEM_STACK, ingredient.getStacksWithCount());
