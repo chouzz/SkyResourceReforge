@@ -81,7 +81,7 @@ public class WaterExtractorItem extends Item {
                     handler.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
                     BlockState resultState = getRecipeBlockOutput(recipe);
                     level.setBlockAndUpdate(pos, resultState != null ? resultState : Blocks.AIR.defaultBlockState());
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             } else if (state.is(Blocks.WATER) && state.getFluidState().isSource()) {
                 FluidStack water = new FluidStack(net.minecraft.world.level.material.Fluids.WATER, FluidType.BUCKET_VOLUME);
@@ -89,7 +89,7 @@ public class WaterExtractorItem extends Item {
                 if (filled == water.getAmount()) {
                     handler.fill(water, IFluidHandler.FluidAction.EXECUTE);
                     level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             }
         }
@@ -114,7 +114,7 @@ public class WaterExtractorItem extends Item {
                 if (!level.isClientSide) {
                     int filled = blockHandler.fill(drained, IFluidHandler.FluidAction.EXECUTE);
                     handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -136,7 +136,7 @@ public class WaterExtractorItem extends Item {
                     if (!level.isClientSide) {
                         handler.drain(requiredFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);
                         level.setBlockAndUpdate(pos, resultState);
-                        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                        level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                     }
                     return InteractionResult.SUCCESS;
                 }
