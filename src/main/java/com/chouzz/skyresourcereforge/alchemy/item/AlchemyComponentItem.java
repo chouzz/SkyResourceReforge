@@ -39,7 +39,7 @@ public class AlchemyComponentItem extends Item {
 
     public AlchemyComponentItem(int componentType, Properties properties) {
         super(properties);
-        this.defaultComponentType = componentType;
+        this.defaultComponentType = Math.min(Math.max(componentType, 0), NAMES.size() - 1);
     }
 
     public static List<String> getNames() {
