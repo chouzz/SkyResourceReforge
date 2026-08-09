@@ -28,6 +28,9 @@ public class RockCrusherBlockEntity extends BlockEntity {
 
     private float progress = 0;
     private final List<ItemStack> bufferStacks = new ArrayList<>();
+    // Transient cache: avoids per-tick recipe scan when input hasn't changed
+    private ProcessRecipe cachedRecipe = null;
+    private ItemStack cachedInput = ItemStack.EMPTY;
 
     public RockCrusherBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ROCK_CRUSHER.get(), pos, state);
@@ -54,25 +57,31 @@ public class RockCrusherBlockEntity extends BlockEntity {
         ItemStack input = blockEntity.inventory.getStackInSlot(0);
         if (input.isEmpty()) {
             blockEntity.progress = 0;
+            blockEntity.cachedRecipe = null;
+            blockEntity.cachedInput = ItemStack.EMPTY;
             blockEntity.setChanged();
             return;
         }
 
-        ProcessRecipeInput recipeInput = new ProcessRecipeInput(List.of(input));
-        List<ProcessRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.ROCK_CRUSHER.get())
-                .stream()
-                .map(holder -> holder.value())
-                .toList();
+        // Only re-resolve recipe when input item changes (item, count, or components)
+        if (!ItemStack.matches(input, blockEntity.cachedInput)) {
+            ProcessRecipeInput recipeInput = new ProcessRecipeInput(List.of(input));
+            List<ProcessRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.ROCK_CRUSHER.get())
+                    .stream()
+                    .map(holder -> holder.value())
+                    .toList();
 
-        boolean hasRecipe = false;
-        for (ProcessRecipe recipe : recipes) {
-            if (recipe.matches(recipeInput, level)) {
-                hasRecipe = true;
-                break;
+            blockEntity.cachedRecipe = null;
+            for (ProcessRecipe recipe : recipes) {
+                if (recipe.matches(recipeInput, level)) {
+                    blockEntity.cachedRecipe = recipe;
+                    break;
+                }
             }
+            blockEntity.cachedInput = input.copy();
         }
 
-        if (!hasRecipe) {
+        if (blockEntity.cachedRecipe == null) {
             blockEntity.progress = 0;
             blockEntity.setChanged();
             return;
@@ -83,13 +92,8 @@ public class RockCrusherBlockEntity extends BlockEntity {
         }
 
         if (blockEntity.progress >= 100) {
-            for (ProcessRecipe recipe : recipes) {
-                if (!recipe.matches(recipeInput, level)) {
-                    continue;
-                }
-                if (recipe.getOutputs().isEmpty()) {
-                    continue;
-                }
+            ProcessRecipe recipe = blockEntity.cachedRecipe;
+            if (!recipe.getOutputs().isEmpty()) {
                 float chance = recipe.getParameter() * 1.2f;
                 while (chance >= 1f) {
                     blockEntity.bufferStacks.add(recipe.getOutputs().get(0).copy());
@@ -104,6 +108,9 @@ public class RockCrusherBlockEntity extends BlockEntity {
                 blockEntity.inventory.setStackInSlot(0, ItemStack.EMPTY);
             }
             blockEntity.progress = 0;
+            // Invalidate cache since input count changed
+            blockEntity.cachedRecipe = null;
+            blockEntity.cachedInput = ItemStack.EMPTY;
         }
         blockEntity.setChanged();
     }
