@@ -8,6 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class AlchemyComponentItem extends Item {
+    private final int defaultComponentType;
+
     private static final List<String> NAMES = List.of(
         "cactus_needle",
         "crystal_shard",
@@ -37,18 +39,19 @@ public class AlchemyComponentItem extends Item {
 
     public AlchemyComponentItem(int componentType, Properties properties) {
         super(properties);
+        this.defaultComponentType = Math.min(Math.max(componentType, 0), NAMES.size() - 1);
     }
 
     public static List<String> getNames() {
         return NAMES;
     }
 
-    public static int getVariantIndex(ItemStack stack) {
+    public int getVariantIndex(ItemStack stack) {
         Integer index = stack.get(ModDataComponents.ALCHEMY_COMPONENT_INDEX.get());
         if (index != null && index >= 0 && index < NAMES.size()) {
             return index;
         }
-        return 0;
+        return defaultComponentType;
     }
 
     public static void setVariantIndex(ItemStack stack, int index) {

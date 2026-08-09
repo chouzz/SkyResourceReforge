@@ -367,9 +367,11 @@ public class SkyResourceJEIPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(
             ModItems.ALCHEMY_COMPONENT.get(),
             (stack, context) -> {
-                int index = AlchemyComponentItem.getVariantIndex(stack);
-                if (index >= 0 && index < AlchemyComponentItem.getNames().size()) {
-                    return AlchemyComponentItem.getNames().get(index);
+                if (stack.getItem() instanceof AlchemyComponentItem aci) {
+                    int index = aci.getVariantIndex(stack);
+                    if (index >= 0 && index < AlchemyComponentItem.getNames().size()) {
+                        return AlchemyComponentItem.getNames().get(index);
+                    }
                 }
                 return "unknown";
             }
