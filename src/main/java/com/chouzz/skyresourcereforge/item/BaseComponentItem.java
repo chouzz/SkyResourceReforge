@@ -18,6 +18,14 @@ public class BaseComponentItem extends Item {
             "quartz_amp"
     );
 
+    /** Named index constants — single source of truth for variant positions. */
+    public static final int PLANT_MATTER = 0;
+    public static final int STEEL_POWER_COMPONENT = 1;
+    public static final int FROZEN_IRON_COOLING_COMPONENT = 2;
+    public static final int ENRICHED_BONEMEAL = 3;
+    public static final int SAWDUST = 4;
+    public static final int QUARTZ_AMP = 5;
+
     public BaseComponentItem(Properties properties) {
         super(properties);
     }

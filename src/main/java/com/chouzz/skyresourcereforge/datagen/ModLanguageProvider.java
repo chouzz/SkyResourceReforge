@@ -1,6 +1,10 @@
 package com.chouzz.skyresourcereforge.datagen;
 
 import com.chouzz.skyresourcereforge.SkyResourceReforge;
+import com.chouzz.skyresourcereforge.alchemy.item.AlchemyComponentItem;
+import com.chouzz.skyresourcereforge.heat.HeatVariants;
+import com.chouzz.skyresourcereforge.item.BaseComponentItem;
+import com.chouzz.skyresourcereforge.item.TechComponentItem;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -30,41 +34,17 @@ public abstract class ModLanguageProvider extends LanguageProvider {
         "spinel", "black_diamond", "quartz", "ender_essence"
     };
 
-    protected static final String[] HEAT_VARIANT_NAMES = {
-        "wood", "stone", "bronze", "iron", "steel", "electrum", "netherbrick", "lead",
-        "manyullyn", "signalum", "endstone", "enderium", "darkmatter", "lightmatter",
-        "osmium", "refinedobsidian"
-    };
+    protected static final String[] HEAT_VARIANT_NAMES =
+            HeatVariants.NAMES.toArray(new String[0]);
 
-    protected static final String[] BASE_COMPONENT_NAMES = {
-        "plant_matter",
-        "steel_power_component",
-        "frozen_iron_cooling_component",
-        "enriched_bonemeal",
-        "sawdust",
-        "quartz_amp"
-    };
+    protected static final String[] BASE_COMPONENT_NAMES =
+            BaseComponentItem.getNames().toArray(new String[0]);
 
-    protected static final String[] TECH_COMPONENT_NAMES = {
-        "stone_crushed",
-        "radioactive_mix",
-        "frozen_iron_ingot",
-        "netherrack_crushed"
-    };
+    protected static final String[] TECH_COMPONENT_NAMES =
+            TechComponentItem.getNames().toArray(new String[0]);
 
-    protected static final String[] ALCHEMY_COMPONENT_NAMES = {
-        "cactus_needle",
-        "crystal_shard",
-        "alch_dust_1",
-        "alch_dust_2",
-        "alch_dust_3",
-        "alch_dust_4",
-        "alch_coal",
-        "alch_gold_ingot",
-        "alch_iron_ingot",
-        "alch_gold_needle",
-        "alch_diamond"
-    };
+    protected static final String[] ALCHEMY_COMPONENT_NAMES =
+            AlchemyComponentItem.getNames().toArray(new String[0]);
 
     public ModLanguageProvider(PackOutput output, String locale) {
         super(output, SkyResourceReforge.MODID, locale);
