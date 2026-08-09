@@ -67,7 +67,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return outputs.isEmpty() ? ItemStack.EMPTY : outputs.get(0);
+        return outputs.isEmpty() ? ItemStack.EMPTY : outputs.get(0).copy();
     }
 
     @Override
