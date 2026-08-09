@@ -66,7 +66,8 @@ public class FusionRecipeCategory implements IRecipeCategory<ProcessRecipe> {
             }
         }
 
-        builder.addSlot(RecipeIngredientRole.CATALYST, 66, 7);
+        builder.addSlot(RecipeIngredientRole.CATALYST, 66, 7)
+            .addItemStack(new ItemStack(ModBlocks.FUSION_TABLE.get()));
 
         List<ItemStack> outputs = recipe.getOutputs();
         if (!outputs.isEmpty()) {
