@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class ItemHelper {
     }
 
     public static List<ItemStack> getInfusionStones() {
-        return infusionStones;
+        return Collections.unmodifiableList(infusionStones);
     }
 
     public static void addInfusionStone(Item item) {
@@ -52,7 +53,7 @@ public class ItemHelper {
     }
 
     public static List<ItemStack> getRockGrinders() {
-        return rockGrinders;
+        return Collections.unmodifiableList(rockGrinders);
     }
 
     public static void addRockGrinder(Item item) {
@@ -60,7 +61,7 @@ public class ItemHelper {
     }
 
     public static List<ItemStack> getKnives() {
-        return knives;
+        return Collections.unmodifiableList(knives);
     }
 
     public static void addKnife(Item item) {
