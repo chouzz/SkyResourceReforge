@@ -28,7 +28,12 @@ public class AqueousConcentratorBlockEntity extends BlockEntity implements IFlui
         }
     };
 
-    private final FluidTank tank = new FluidTank(4000);
+    private final FluidTank tank = new FluidTank(4000) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+        }
+    };
     private int progress = 0;
     private final boolean isConcentrator;
 
