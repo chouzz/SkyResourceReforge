@@ -21,8 +21,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProcessRecipe implements Recipe<RecipeInput> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessRecipe.class);
+    /** Set of recipeTypeId values that failed to resolve, to log each only once. */
+    private static final Set<ResourceLocation> UNRESOLVED_WARNINGS = ConcurrentHashMap.newKeySet();
+
     private final ResourceLocation recipeTypeId;
     private final List<CountedIngredient> inputs;
     private final List<ItemStack> outputs;
@@ -78,7 +86,18 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
     @Override
     public RecipeType<?> getType() {
         Optional<RecipeType<?>> type = BuiltInRegistries.RECIPE_TYPE.getOptional(recipeTypeId);
-        return type.orElse(ModRecipeTypes.COMBUSTION.get());
+        if (type.isPresent()) {
+            return type.get();
+        }
+        if (recipeTypeId.equals(Serializer.DEFAULT_TYPE)) {
+            return ModRecipeTypes.COMBUSTION.get();
+        }
+        if (UNRESOLVED_WARNINGS.add(recipeTypeId)) {
+            LOGGER.warn("ProcessRecipe has unknown recipeType '{}' — falling back to COMBUSTION. "
+                    + "Check that the recipe type is registered and the ID is spelled correctly.",
+                    recipeTypeId);
+        }
+        return ModRecipeTypes.COMBUSTION.get();
     }
 
     public ResourceLocation getRecipeTypeId() { return recipeTypeId; }
