@@ -15,6 +15,12 @@ public class TechComponentItem extends Item {
             "netherrack_crushed"
     );
 
+    /** Named index constants — single source of truth for variant positions. */
+    public static final int STONE_CRUSHED = 0;
+    public static final int RADIOACTIVE_MIX = 1;
+    public static final int FROZEN_IRON_INGOT = 2;
+    public static final int NETHERRACK_CRUSHED = 3;
+
     public TechComponentItem(Properties properties) {
         super(properties);
     }

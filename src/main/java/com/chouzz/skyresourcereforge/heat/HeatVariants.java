@@ -22,6 +22,24 @@ public final class HeatVariants {
             "refinedobsidian"
     );
 
+    /** Named index constants — single source of truth for variant positions. */
+    public static final int WOOD = 0;
+    public static final int STONE = 1;
+    public static final int BRONZE = 2;
+    public static final int IRON = 3;
+    public static final int STEEL = 4;
+    public static final int ELECTRUM = 5;
+    public static final int NETHER_BRICK = 6;
+    public static final int LEAD = 7;
+    public static final int MANYULLYN = 8;
+    public static final int SIGNALUM = 9;
+    public static final int END_STONE = 10;
+    public static final int ENDERIUM = 11;
+    public static final int DARK_MATTER = 12;
+    public static final int LIGHT_MATTER = 13;
+    public static final int OSMIUM = 14;
+    public static final int REFINED_OBSIDIAN = 15;
+
     public static final List<Integer> HEAT_VALUES = List.of(
             100, 600, 950, 1538, 1370, 1878, 3072, 328,
             2324, 1362, 2164, 3166, 4042, 1566, 3033, 3768

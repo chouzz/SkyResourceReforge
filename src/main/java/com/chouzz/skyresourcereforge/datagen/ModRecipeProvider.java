@@ -87,8 +87,8 @@ public class ModRecipeProvider extends RecipeProvider {
                         ModRecipeTypes.COMBUSTION.getId(),
                         List.of(
                                 CountedIngredient.of(Ingredient.of(ModBlocks.HEAVY_SNOW.get()), 5),
-                                CountedIngredient.of(techComponentIngredient(2), 4),
-                                CountedIngredient.of(Ingredient.of(alchemyComponent(7)), 4),
+                                CountedIngredient.of(techComponentIngredient(TechComponentItem.FROZEN_IRON_INGOT), 4),
+                                CountedIngredient.of(Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_IRON_INGOT)), 4),
                                 CountedIngredient.of(Ingredient.of(Blocks.END_STONE), 3)
                         ),
                         List.of(new ItemStack(ModItems.LIGHT_MATTER.get())),
@@ -112,7 +112,7 @@ public class ModRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CACTUS_KNIFE.get())
                 .pattern(" #")
                 .pattern("# ")
-                .define('#', Ingredient.of(alchemyComponent(0)))
+                .define('#', Ingredient.of(alchemyComponent(AlchemyComponentItem.CACTUS_NEEDLE)))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "cactus_knife"));
 
@@ -175,14 +175,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("X")
                 .pattern("Y")
                 .define('X', ModItems.CACTUS_FRUIT.get())
-                .define('Y', Ingredient.of(alchemyComponent(0)))
+                .define('Y', Ingredient.of(alchemyComponent(AlchemyComponentItem.CACTUS_NEEDLE)))
                 .unlockedBy("has_cactus_fruit", has(ModItems.CACTUS_FRUIT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "cactus_fruit_needle"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_SANDSTONE.get())
                 .pattern("X")
                 .pattern("Y")
-                .define('X', Ingredient.of(alchemyComponent(0)))
+                .define('X', Ingredient.of(alchemyComponent(AlchemyComponentItem.CACTUS_NEEDLE)))
                 .define('Y', Blocks.SANDSTONE)
                 .unlockedBy("has_sandstone", has(Blocks.SANDSTONE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_sandstone"));
@@ -190,7 +190,7 @@ public class ModRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_RED_SANDSTONE.get())
                 .pattern("X")
                 .pattern("Y")
-                .define('X', Ingredient.of(alchemyComponent(0)))
+                .define('X', Ingredient.of(alchemyComponent(AlchemyComponentItem.CACTUS_NEEDLE)))
                 .define('Y', Blocks.RED_SANDSTONE)
                 .unlockedBy("has_red_sandstone", has(Blocks.RED_SANDSTONE))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_red_sandstone"));
@@ -198,14 +198,14 @@ public class ModRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INFUSION_STONE_ALCHEMICAL.get())
                 .pattern("X")
                 .pattern("Y")
-                .define('X', Ingredient.of(alchemyComponent(9)))
-                .define('Y', Ingredient.of(alchemyComponent(10)))
+                .define('X', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_GOLD_NEEDLE)))
+                .define('Y', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_DIAMOND)))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "infusion_stone_alchemical"));
 
         addPlantMatterRecipes(output);
 
-        ItemStack enrichedBonemeal = baseComponent(3);
+        ItemStack enrichedBonemeal = baseComponent(BaseComponentItem.ENRICHED_BONEMEAL);
         enrichedBonemeal.setCount(4);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, enrichedBonemeal)
                 .requires(Items.ROTTEN_FLESH)
@@ -215,7 +215,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_rotten_flesh", has(Items.ROTTEN_FLESH))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/enriched_bonemeal"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(1))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(BaseComponentItem.STEEL_POWER_COMPONENT))
                 .pattern("XZX")
                 .pattern("XYX")
                 .pattern("XZX")
@@ -225,17 +225,17 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_steel_power_material", has(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/steel_power_component"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(2))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(BaseComponentItem.FROZEN_IRON_COOLING_COMPONENT))
                 .pattern("XZX")
                 .pattern("XYX")
                 .pattern("XYX")
-                .define('X', techComponentIngredient(2))
+                .define('X', techComponentIngredient(TechComponentItem.FROZEN_IRON_INGOT))
                 .define('Y', Items.GLOWSTONE_DUST)
                 .define('Z', Items.LAPIS_LAZULI)
                 .unlockedBy("has_frozen_iron_ingot", has(ModItems.TECH_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "base_component/frozen_iron_cooling_component"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(5))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, baseComponent(BaseComponentItem.QUARTZ_AMP))
                 .pattern(" X ")
                 .pattern("XYX")
                 .pattern(" X ")
@@ -249,8 +249,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XZX")
                 .pattern("X X")
                 .define('X', Items.NETHER_BRICK)
-                .define('Y', alchemyComponentIngredient(6))
-                .define('Z', baseComponentIngredient(2))
+                .define('Y', alchemyComponentIngredient(AlchemyComponentItem.ALCH_COAL))
+                .define('Z', baseComponentIngredient(BaseComponentItem.FROZEN_IRON_COOLING_COMPONENT))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "nether_brick_condenser"));
 
@@ -259,8 +259,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XYX")
                 .pattern("XZX")
                 .define('X', Items.NETHER_BRICK)
-                .define('Y', heatComponentIngredient(6))
-                .define('Z', baseComponentIngredient(2))
+                .define('Y', heatComponentIngredient(HeatVariants.NETHER_BRICK))
+                .define('Z', baseComponentIngredient(BaseComponentItem.FROZEN_IRON_COOLING_COMPONENT))
                 .unlockedBy("has_heat_component", has(ModItems.HEAT_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "nether_brick_combustion_heater"));
 
@@ -301,7 +301,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XXX")
                 .pattern("XXX")
-                .define('X', Ingredient.of(alchemyComponent(6)))
+                .define('X', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_COAL)))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "coal_infused_block"));
 
@@ -323,7 +323,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .pattern("XZX")
                 .pattern("XXX")
-                .define('X', techComponentIngredient(2))
+                .define('X', techComponentIngredient(TechComponentItem.FROZEN_IRON_INGOT))
                 .define('Z', ModBlocks.MINI_FREEZER.get())
                 .unlockedBy("has_mini_freezer", has(ModBlocks.MINI_FREEZER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "iron_freezer"));
@@ -342,7 +342,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XZX")
                 .pattern("XYX")
                 .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
-                .define('Y', baseComponentIngredient(1))
+                .define('Y', baseComponentIngredient(BaseComponentItem.STEEL_POWER_COMPONENT))
                 .define('Z', ModItems.WATER_EXTRACTOR.get())
                 .define('A', Blocks.SNOW)
                 .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
@@ -353,7 +353,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XZX")
                 .pattern("XYX")
                 .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
-                .define('Y', baseComponentIngredient(1))
+                .define('Y', baseComponentIngredient(BaseComponentItem.STEEL_POWER_COMPONENT))
                 .define('Z', ModItems.WATER_EXTRACTOR.get())
                 .define('A', Blocks.SAND)
                 .unlockedBy("has_water_extractor", has(ModItems.WATER_EXTRACTOR.get()))
@@ -384,8 +384,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XXX")
                 .define('X', ModBlocks.DARK_MATTER_BLOCK.get())
                 .define('Y', Items.ENDER_EYE)
-                .define('Z', baseComponentIngredient(5))
-                .define('A', Ingredient.of(alchemyComponent(7)))
+                .define('Z', baseComponentIngredient(BaseComponentItem.QUARTZ_AMP))
+                .define('A', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_IRON_INGOT)))
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "end_portal_core"));
@@ -468,7 +468,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_dark_matter", has(ModItems.DARK_MATTER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_warper"));
 
-        ItemStack stoneHeatComponent = HeatComponentItem.createStack(0, ModItems.HEAT_COMPONENT.get());
+        ItemStack stoneHeatComponent = HeatComponentItem.createStack(HeatVariants.STONE, ModItems.HEAT_COMPONENT.get());
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DIRT_FURNACE.get())
                 .pattern("X")
                 .pattern("Y")
@@ -499,7 +499,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XZX")
                 .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .define('Y', ModItems.DIAMOND_GRINDER.get())
-                .define('Z', baseComponentIngredient(1))
+                .define('Z', baseComponentIngredient(BaseComponentItem.STEEL_POWER_COMPONENT))
                 .unlockedBy("has_diamond_grinder", has(ModItems.DIAMOND_GRINDER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_crusher"));
 
@@ -509,7 +509,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XZX")
                 .define('X', Ingredient.of(ModTags.STEEL_POWER_COMPONENT_MATERIALS))
                 .define('Y', Items.CAULDRON)
-                .define('Z', baseComponentIngredient(1))
+                .define('Z', baseComponentIngredient(BaseComponentItem.STEEL_POWER_COMPONENT))
                 .unlockedBy("has_cauldron", has(Items.CAULDRON))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "rock_cleaner"));
 
@@ -527,8 +527,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("XYX")
                 .pattern("X X")
                 .define('X', ItemTags.PLANKS)
-                .define('Y', Ingredient.of(alchemyComponent(1)))
-                .define('Z', Ingredient.of(alchemyComponent(2)))
+                .define('Y', Ingredient.of(alchemyComponent(AlchemyComponentItem.CRYSTAL_SHARD)))
+                .define('Z', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_DUST_1)))
                 .unlockedBy("has_alchemy_component", has(ModItems.ALCHEMY_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "fusion_table"));
 
@@ -562,7 +562,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // Knife recipes have parameter 0 (not used), fortune affects output count
 
         // Cactus -> Cactus Needle (4 output)
-        ItemStack needles = alchemyComponent(0);
+        ItemStack needles = alchemyComponent(AlchemyComponentItem.CACTUS_NEEDLE);
         needles.setCount(4);
         output.accept(
             ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "knife/cactus_to_needle"),
@@ -748,10 +748,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.COMBUSTION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Items.QUARTZ), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(0), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.CACTUS_NEEDLE), 1),
                     CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 1)
                 ),
-                List.of(alchemyComponent(1)),
+                List.of(alchemyComponent(AlchemyComponentItem.CRYSTAL_SHARD)),
                 List.of(),
                 List.of(),
                 600.0f
@@ -770,7 +770,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 1),
                     CountedIngredient.of(Ingredient.of(Items.COAL), 1)
                 ),
-                List.of(techComponent(1)),
+                List.of(techComponent(TechComponentItem.RADIOACTIVE_MIX)),
                 List.of(),
                 List.of(),
                 1200.0f
@@ -785,7 +785,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 List.of(
                     CountedIngredient.of(Ingredient.of(Blocks.BONE_BLOCK), 1),
                     CountedIngredient.of(Ingredient.of(Items.BLACK_DYE), 8),
-                    CountedIngredient.of(baseComponentIngredient(0), 8)
+                    CountedIngredient.of(baseComponentIngredient(BaseComponentItem.PLANT_MATTER), 8)
                 ),
                 List.of(new ItemStack(ModBlocks.DRY_CACTUS.get())),
                 List.of(),
@@ -804,7 +804,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     CountedIngredient.of(Ingredient.of(Items.BLAZE_POWDER), 2),
                     CountedIngredient.of(Ingredient.of(Items.COAL), 1)
                 ),
-                List.of(alchemyComponent(2)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_DUST_1)),
                 List.of(),
                 List.of(),
                 335.0f
@@ -925,7 +925,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 ModRecipeTypes.FREEZER.getId(),
                 List.of(CountedIngredient.of(Ingredient.of(Items.IRON_INGOT), 1)),
-                List.of(techComponent(2)),
+                List.of(techComponent(TechComponentItem.FROZEN_IRON_INGOT)),
                 List.of(),
                 List.of(),
                 3000.0f
@@ -956,9 +956,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Items.COAL), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(1), 1)
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD), 1)
                 ),
-                List.of(alchemyComponent(6)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_COAL)),
                 List.of(),
                 List.of(),
                 0.01f
@@ -972,9 +972,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Items.IRON_INGOT), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(6), 1)
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.ALCH_COAL), 1)
                 ),
-                List.of(alchemyComponent(8)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_IRON_INGOT)),
                 List.of(),
                 List.of(),
                 0.012f
@@ -988,9 +988,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Items.GOLD_INGOT), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(6), 1)
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.ALCH_COAL), 1)
                 ),
-                List.of(alchemyComponent(7)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_GOLD_INGOT)),
                 List.of(),
                 List.of(),
                 0.014f
@@ -1003,10 +1003,10 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
-                    CountedIngredient.of(alchemyComponentIngredient(0), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(7), 1)
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.CACTUS_NEEDLE), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.ALCH_GOLD_INGOT), 1)
                 ),
-                List.of(alchemyComponent(9)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_GOLD_NEEDLE)),
                 List.of(),
                 List.of(),
                 0.018f
@@ -1020,9 +1020,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Items.DIAMOND), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(9), 1)
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.ALCH_GOLD_NEEDLE), 1)
                 ),
-                List.of(alchemyComponent(10)),
+                List.of(alchemyComponent(AlchemyComponentItem.ALCH_DIAMOND)),
                 List.of(),
                 List.of(),
                 0.02f
@@ -1037,7 +1037,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 List.of(
                     CountedIngredient.of(Ingredient.of(Blocks.MAGMA_BLOCK), 1),
                     CountedIngredient.of(Ingredient.of(Blocks.STONE), 1),
-                    CountedIngredient.of(Ingredient.of(alchemyComponent(6)), 2)
+                    CountedIngredient.of(Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_COAL)), 2)
                 ),
                 List.of(new ItemStack(ModBlocks.MAGMAFIED_STONE.get())),
                 List.of(),
@@ -1053,7 +1053,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModRecipeTypes.FUSION.getId(),
                 List.of(
                     CountedIngredient.of(Ingredient.of(Blocks.SAND), 1),
-                    CountedIngredient.of(alchemyComponentIngredient(1), 1),
+                    CountedIngredient.of(alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD), 1),
                     CountedIngredient.of(Ingredient.of(Items.PRISMARINE_CRYSTALS), 1)
                 ),
                 List.of(new ItemStack(ModBlocks.ALCHEMICAL_GLASS.get())),
@@ -1088,7 +1088,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 ModRecipeTypes.INFUSION.getId(),
                 List.of(
-                    CountedIngredient.of(Ingredient.of(alchemyComponent(10)), 1),
+                    CountedIngredient.of(Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_DIAMOND)), 1),
                     CountedIngredient.of(Ingredient.of(Blocks.CHORUS_FLOWER), 1)
                 ),
                 List.of(new ItemStack(ModItems.HEALTH_GEM.get())),
@@ -1152,7 +1152,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.STONE), 1)),
-                List.of(techComponent(0)),
+                List.of(techComponent(TechComponentItem.STONE_CRUSHED)),
                 List.of(),
                 List.of(),
                 0.44f
@@ -1166,7 +1166,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.NETHERRACK), 1)),
-                List.of(techComponent(3)),
+                List.of(techComponent(TechComponentItem.NETHERRACK_CRUSHED)),
                 List.of(),
                 List.of(),
                 0.44f
@@ -1181,7 +1181,7 @@ public class ModRecipeProvider extends RecipeProvider {
             new ProcessRecipe(
                 recipeTypeId,
                 List.of(CountedIngredient.of(Ingredient.of(Blocks.OAK_LOG), 1)),
-                List.of(baseComponent(4)),
+                List.of(baseComponent(BaseComponentItem.SAWDUST)),
                 List.of(),
                 List.of(),
                 1.5f
@@ -1322,25 +1322,25 @@ public class ModRecipeProvider extends RecipeProvider {
             Ingredient.of(Items.BONE),
             Ingredient.of(Items.SUGAR),
             Ingredient.of(Items.WHEAT),
-            alchemyComponentIngredient(1),
-            alchemyComponentIngredient(1),
-            baseComponentIngredient(0),
+            alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD),
+            alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD),
+            baseComponentIngredient(BaseComponentItem.PLANT_MATTER),
             Ingredient.of(Blocks.CLAY),
-            alchemyComponentIngredient(1),
-            alchemyComponentIngredient(1),
-            alchemyComponentIngredient(1),
+            alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD),
+            alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD),
+            alchemyComponentIngredient(AlchemyComponentItem.CRYSTAL_SHARD),
             Ingredient.of(Items.DRAGON_BREATH),
             Ingredient.of(Items.CHARCOAL),
             Ingredient.of(Blocks.OBSIDIAN),
             Ingredient.of(Items.SUGAR),
-            techComponentIngredient(1),
+            techComponentIngredient(TechComponentItem.RADIOACTIVE_MIX),
             Ingredient.of(Blocks.SOUL_SAND),
             Ingredient.of(Items.PRISMARINE_SHARD),
-            baseComponentIngredient(0),
+            baseComponentIngredient(BaseComponentItem.PLANT_MATTER),
             Ingredient.of(Items.DIAMOND),
-            techComponentIngredient(1),
-            techComponentIngredient(1),
-            techComponentIngredient(1)
+            techComponentIngredient(TechComponentItem.RADIOACTIVE_MIX),
+            techComponentIngredient(TechComponentItem.RADIOACTIVE_MIX),
+            techComponentIngredient(TechComponentItem.RADIOACTIVE_MIX)
         );
 
         int variantCount = Math.min(ItemOreAlchDust.getOreInfos().size(), components.size());
@@ -1439,10 +1439,10 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private Ingredient alchemyMaterialDustIngredient(int variantIndex) {
         return switch (variantIndex) {
-            case 0, 1, 2, 3 -> alchemyComponentIngredient(2);
-            case 4, 5, 6, 7, 14 -> alchemyComponentIngredient(3);
-            case 8, 9, 10, 11, 15 -> alchemyComponentIngredient(4);
-            default -> alchemyComponentIngredient(5);
+            case 0, 1, 2, 3 -> alchemyComponentIngredient(AlchemyComponentItem.ALCH_DUST_1);
+            case 4, 5, 6, 7, 14 -> alchemyComponentIngredient(AlchemyComponentItem.ALCH_DUST_2);
+            case 8, 9, 10, 11, 15 -> alchemyComponentIngredient(AlchemyComponentItem.ALCH_DUST_3);
+            default -> alchemyComponentIngredient(AlchemyComponentItem.ALCH_DUST_4);
         };
     }
 
@@ -1458,7 +1458,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void addPlantMatterRecipe(RecipeOutput output, String name, Ingredient ingredient, Criterion<?> unlock) {
-        ItemStack outputStack = baseComponent(0);
+        ItemStack outputStack = baseComponent(BaseComponentItem.PLANT_MATTER);
         outputStack.setCount(3);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputStack)
             .pattern(" X ")

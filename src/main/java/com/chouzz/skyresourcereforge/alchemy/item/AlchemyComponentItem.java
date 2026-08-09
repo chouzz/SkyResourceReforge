@@ -22,6 +22,19 @@ public class AlchemyComponentItem extends Item {
         "alch_diamond"
     );
 
+    /** Named index constants — single source of truth for variant positions. */
+    public static final int CACTUS_NEEDLE = 0;
+    public static final int CRYSTAL_SHARD = 1;
+    public static final int ALCH_DUST_1 = 2;
+    public static final int ALCH_DUST_2 = 3;
+    public static final int ALCH_DUST_3 = 4;
+    public static final int ALCH_DUST_4 = 5;
+    public static final int ALCH_COAL = 6;
+    public static final int ALCH_GOLD_INGOT = 7;
+    public static final int ALCH_IRON_INGOT = 8;
+    public static final int ALCH_GOLD_NEEDLE = 9;
+    public static final int ALCH_DIAMOND = 10;
+
     public AlchemyComponentItem(int componentType, Properties properties) {
         super(properties);
     }
