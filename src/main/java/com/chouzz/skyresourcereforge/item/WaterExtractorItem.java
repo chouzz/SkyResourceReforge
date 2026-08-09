@@ -98,7 +98,6 @@ public class WaterExtractorItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        Player player = context.getPlayer();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
         ItemStack stack = context.getItemInHand();
