@@ -2,6 +2,7 @@ package com.chouzz.skyresourcereforge;
 
 import com.chouzz.skyresourcereforge.registration.*;
 import com.chouzz.skyresourcereforge.gametest.RecipeGameTests;
+import com.chouzz.skyresourcereforge.gametest.ProcessRecipeMatchingGameTest;
 import com.chouzz.skyresourcereforge.util.ItemHelper;
 import com.chouzz.skyresourcereforge.item.WaterExtractorItem;
 import com.chouzz.skyresourcereforge.block.entity.AqueousConcentratorBlockEntity;
@@ -92,5 +93,6 @@ public class SkyResourceReforge {
     private void registerGameTests(RegisterGameTestsEvent event) {
         LOGGER.info("Registering SkyResourceReforge GameTests");
         event.register(RecipeGameTests.class);
+        event.register(ProcessRecipeMatchingGameTest.class);
     }
 }
