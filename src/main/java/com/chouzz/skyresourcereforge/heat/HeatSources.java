@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public class HeatSources {
     }
 
     public static Map<BlockState, Integer> getHeatSources() {
-        return VALID_HEAT_SOURCES;
+        return Collections.unmodifiableMap(VALID_HEAT_SOURCES);
     }
 
     public static void registerDefaults() {
