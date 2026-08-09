@@ -88,7 +88,7 @@ public class ModRecipeProvider extends RecipeProvider {
                         List.of(
                                 CountedIngredient.of(Ingredient.of(ModBlocks.HEAVY_SNOW.get()), 5),
                                 CountedIngredient.of(techComponentIngredient(TechComponentItem.FROZEN_IRON_INGOT), 4),
-                                CountedIngredient.of(Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_IRON_INGOT)), 4),
+                                CountedIngredient.of(Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_GOLD_INGOT)), 4),
                                 CountedIngredient.of(Ingredient.of(Blocks.END_STONE), 3)
                         ),
                         List.of(new ItemStack(ModItems.LIGHT_MATTER.get())),
@@ -385,7 +385,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('X', ModBlocks.DARK_MATTER_BLOCK.get())
                 .define('Y', Items.ENDER_EYE)
                 .define('Z', baseComponentIngredient(BaseComponentItem.QUARTZ_AMP))
-                .define('A', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_IRON_INGOT)))
+                .define('A', Ingredient.of(alchemyComponent(AlchemyComponentItem.ALCH_GOLD_INGOT)))
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy("has_dark_matter_block", has(ModBlocks.DARK_MATTER_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "end_portal_core"));
@@ -468,12 +468,12 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_dark_matter", has(ModItems.DARK_MATTER.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dark_matter_warper"));
 
-        ItemStack stoneHeatComponent = HeatComponentItem.createStack(HeatVariants.STONE, ModItems.HEAT_COMPONENT.get());
+        ItemStack woodHeatComponent = HeatComponentItem.createStack(HeatVariants.WOOD, ModItems.HEAT_COMPONENT.get());
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DIRT_FURNACE.get())
                 .pattern("X")
                 .pattern("Y")
                 .define('X', Items.DIRT)
-                .define('Y', Ingredient.of(stoneHeatComponent))
+                .define('Y', Ingredient.of(woodHeatComponent))
                 .unlockedBy("has_heat_component", has(ModItems.HEAT_COMPONENT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(SkyResourceReforge.MODID, "dirt_furnace"));
 
