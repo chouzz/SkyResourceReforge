@@ -93,6 +93,7 @@ public class RockCrusherBlockEntity extends BlockEntity {
 
         if (blockEntity.progress >= 100) {
             ProcessRecipe recipe = blockEntity.cachedRecipe;
+            // Only consume input and produce output if the recipe has outputs
             if (!recipe.getOutputs().isEmpty()) {
                 float chance = recipe.getParameter() * 1.2f;
                 while (chance >= 1f) {
@@ -102,13 +103,13 @@ public class RockCrusherBlockEntity extends BlockEntity {
                 if (level.random.nextFloat() <= chance) {
                     blockEntity.bufferStacks.add(recipe.getOutputs().get(0).copy());
                 }
-            }
-            input.shrink(1);
-            if (input.isEmpty()) {
-                blockEntity.inventory.setStackInSlot(0, ItemStack.EMPTY);
+                input.shrink(1);
+                if (input.isEmpty()) {
+                    blockEntity.inventory.setStackInSlot(0, ItemStack.EMPTY);
+                }
             }
             blockEntity.progress = 0;
-            // Invalidate cache since input count changed
+            // Invalidate cache since input may have changed
             blockEntity.cachedRecipe = null;
             blockEntity.cachedInput = ItemStack.EMPTY;
         }
