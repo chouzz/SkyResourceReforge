@@ -14,7 +14,8 @@ import net.minecraft.world.phys.HitResult;
 public class HeavyExplosiveSnowballEntity extends ThrowableItemProjectile {
     private static final int DAMAGE = 12;
     private static final float BLAZE_MULTIPLIER = 1.7f;
-    private static final float EXPLOSION_RADIUS = 0.01f;
+    // Functional blast radius — the old 0.01f was a placeholder that made the explosion a no-op.
+    private static final float EXPLOSION_RADIUS = 2.0f;
 
     public HeavyExplosiveSnowballEntity(EntityType<? extends HeavyExplosiveSnowballEntity> type, Level level) {
         super(type, level);
