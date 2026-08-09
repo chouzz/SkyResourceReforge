@@ -32,7 +32,6 @@ public class SkyResourceReforge {
         
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilities);
-        modEventBus.addListener(this::registerItemHelpers);
         modEventBus.addListener(this::registerGameTests);
 
         ModBlocks.register(modEventBus);
@@ -88,12 +87,6 @@ public class SkyResourceReforge {
         event.registerBlock(Capabilities.ItemHandler.BLOCK,
                 (level, pos, state, be, side) -> be instanceof com.chouzz.skyresourcereforge.block.entity.WildlifeAttractorBlockEntity wae ? wae.getInventory() : null,
                 ModBlocks.WILDLIFE_ATTRACTOR.get());
-    }
-
-    private void registerItemHelpers(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            // Already initialized in constructor
-        });
     }
 
     private void registerGameTests(RegisterGameTestsEvent event) {

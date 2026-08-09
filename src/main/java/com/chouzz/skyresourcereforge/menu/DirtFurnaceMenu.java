@@ -1,6 +1,5 @@
 package com.chouzz.skyresourcereforge.menu;
 
-import com.chouzz.skyresourcereforge.block.entity.DirtFurnaceBlockEntity;
 import com.chouzz.skyresourcereforge.registration.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
