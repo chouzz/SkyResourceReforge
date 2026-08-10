@@ -193,7 +193,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         boolean[] visited = new boolean[nj];
         for (int i = 0; i < ni; i++) {
             Arrays.fill(visited, false);
-            if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
+            if (tryAugmentIngredient(adj, matchJ, visited, i)) {
                 matchCount++;
             }
         }
@@ -278,11 +278,11 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
      * Try to find an augmenting path for ingredient i (left side) using Kuhn's algorithm.
      */
     private static boolean tryAugmentIngredient(List<List<Integer>> adj, int[] matchJ,
-                                                boolean[] visited, int u, int nj) {
+                                                boolean[] visited, int u) {
         for (int v : adj.get(u)) {
             if (visited[v]) continue;
             visited[v] = true;
-            if (matchJ[v] == -1 || tryAugmentIngredient(adj, matchJ, visited, matchJ[v], nj)) {
+            if (matchJ[v] == -1 || tryAugmentIngredient(adj, matchJ, visited, matchJ[v])) {
                 matchJ[v] = u;
                 return true;
             }
@@ -317,7 +317,7 @@ public class ProcessRecipe implements Recipe<RecipeInput> {
         boolean[] visited = new boolean[nj];
         for (int i = 0; i < ni; i++) {
             Arrays.fill(visited, false);
-            if (tryAugmentIngredient(adj, matchJ, visited, i, nj)) {
+            if (tryAugmentIngredient(adj, matchJ, visited, i)) {
                 matchCount++;
             }
         }
