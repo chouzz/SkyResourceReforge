@@ -23,6 +23,7 @@ public class ModCreativeTabs {
                 output.accept(ModItems.STONE_GRINDER.get());
                 output.accept(ModItems.IRON_GRINDER.get());
                 output.accept(ModItems.DIAMOND_GRINDER.get());
+                output.accept(ModItems.SURVIVALIST_FISHING_ROD.get());
                 output.accept(ModItems.WATER_EXTRACTOR.get());
                 output.accept(ModItems.NETHER_BRICK_CONDENSER.get());
                 output.accept(ModItems.NETHER_BRICK_COMBUSTION_HEATER.get());
@@ -61,6 +62,10 @@ public class ModCreativeTabs {
                 for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
                     output.accept(com.chouzz.skyresourcereforge.item.HeatProviderItem.createStack(i, ModItems.HEAT_PROVIDER.get()));
                 }
+                output.accept(ModItems.INFUSION_STONE_SANDSTONE.get());
+                output.accept(ModItems.INFUSION_STONE_RED_SANDSTONE.get());
+                output.accept(ModItems.INFUSION_STONE_ALCHEMICAL.get());
+                output.accept(ModItems.HEALTH_GEM.get());
                 for (int i = 0; i < com.chouzz.skyresourcereforge.heat.HeatVariants.size(); i++) {
                     output.accept(com.chouzz.skyresourcereforge.item.AlchemyMachineComponentItem.createStack(i, ModItems.ALCHEMY.get()));
                 }
@@ -69,6 +74,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.HEAVY_SNOW.get());
                 output.accept(ModItems.HEAVY_SNOWBALL.get());
                 output.accept(ModItems.HEAVY_EXPLOSIVE_SNOWBALL.get());
+                output.accept(ModItems.FLESHY_SNOW_NUGGET.get());
                 output.accept(ModBlocks.ALCHEMICAL_GLASS.get());
                 output.accept(ModBlocks.LIFE_INFUSER.get());
                 output.accept(ModBlocks.FUSION_TABLE.get());
