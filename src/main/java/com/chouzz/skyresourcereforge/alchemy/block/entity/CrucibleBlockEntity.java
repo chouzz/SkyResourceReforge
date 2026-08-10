@@ -24,8 +24,6 @@ import java.util.List;
 public class CrucibleBlockEntity extends BlockEntity {
     private static final int TANK_CAPACITY = 4000;
     private static final int MAX_ITEM_AMOUNT = 4000;
-    private static final int BASE_SPEED = 8;
-
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -147,7 +145,7 @@ public class CrucibleBlockEntity extends BlockEntity {
         if (HeatSources.isValidHeatSource(pos.below(), level)) {
             int base = HeatSources.getHeatSourceValue(pos.below(), level);
             if (base > 0) {
-                return Math.max((int) ((float) base * (float) BASE_SPEED / 8f), 1);
+                return Math.max(base, 1);
             }
         }
         return 0;
