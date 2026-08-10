@@ -48,15 +48,12 @@ public class ToolEventHandler {
 
     private static void handleKnifeBreak(ServerLevel level, ServerPlayer player, ItemStack tool, BlockPos pos, BlockState state, BlockEvent.BreakEvent event) {
         // Get knife recipes
-        List<ProcessRecipe> recipes = level.getRecipeManager()
-            .getAllRecipesFor(ModRecipeTypes.KNIFE.get())
-            .stream()
-            .map(recipeHolder -> recipeHolder.value())
-            .toList();
+        var recipeHolders = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.KNIFE.get());
+        ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
 
         // Check each recipe
-        for (ProcessRecipe recipe : recipes) {
-            ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
+        for (var recipeHolder : recipeHolders) {
+            ProcessRecipe recipe = recipeHolder.value();
             if (recipe.matches(input, level)) {
                 if (recipe.getOutputs().isEmpty()) {
                     continue;
@@ -92,15 +89,12 @@ public class ToolEventHandler {
 
     private static void handleRockGrinderBreak(ServerLevel level, ServerPlayer player, ItemStack tool, BlockPos pos, BlockState state, BlockEvent.BreakEvent event) {
         // Get rock grinder recipes
-        List<ProcessRecipe> recipes = level.getRecipeManager()
-            .getAllRecipesFor(ModRecipeTypes.ROCK_GRINDER.get())
-            .stream()
-            .map(recipeHolder -> recipeHolder.value())
-            .toList();
+        var recipeHolders = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.ROCK_GRINDER.get());
+        ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
 
         // Check each recipe
-        for (ProcessRecipe recipe : recipes) {
-            ProcessRecipeInput input = new ProcessRecipeInput(List.of(new ItemStack(state.getBlock())));
+        for (var recipeHolder : recipeHolders) {
+            ProcessRecipe recipe = recipeHolder.value();
             if (recipe.matches(input, level)) {
                 if (recipe.getOutputs().isEmpty()) {
                     continue;
